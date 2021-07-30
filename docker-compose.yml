@@ -1,0 +1,18 @@
+# Use postgres/example user/password credentials
+version: '3.1'
+
+services:
+
+  web:
+    build: src/Library.Api/
+    ports: 
+      - "5000:5000"
+      
+  library_db:
+    image: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB: library_db
+      POSTGRES_PASSWORD: post_pwd123
