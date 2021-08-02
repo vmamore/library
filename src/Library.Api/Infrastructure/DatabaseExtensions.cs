@@ -17,12 +17,12 @@ namespace Library.Api.Infrastructure
 
         private static void EnsureContextIsMigrated(DbContext context)
         {
-            if (!context.Database.EnsureCreated())
-            {
-                var migrations = context.Database.GetPendingMigrations();
-                if (migrations.Any())
-                    context.Database.Migrate();
-            }
+            //if (!context.Database.EnsureCreated())
+            //{
+            //    var migrations = context.Database.GetPendingMigrations();
+            //    if (migrations.Any())
+            //        context.Database.Migrate();
+            //}
         }
 
         public static IServiceCollection AddPostgresDbContext<T>(this IServiceCollection services,

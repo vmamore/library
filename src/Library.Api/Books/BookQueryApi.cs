@@ -16,5 +16,10 @@ using System.Data.Common;
         [Route("all")]
         public Task<IActionResult> Get(QueryModels.GetAllBooks request)
             => RequestHandler.HandleQuery(() => _connection.Query(request));
+
+        [HttpGet]
+        [Route("{id}")]
+        public Task<IActionResult> GetById(QueryModels.GetBookById request)
+            => RequestHandler.HandleQuery(() => _connection.Query(request));
     }
 }

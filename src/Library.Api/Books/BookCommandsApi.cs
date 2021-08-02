@@ -14,5 +14,13 @@ namespace Library.Api.Books
         [HttpPost]
         public Task<IActionResult> Post([FromBody] Commands.V1.RegisterBook request)
             => RequestHandler.HandleCommand(request, _applicationService.Handle);
+
+        [HttpPost("{bookId}/rent")]
+        public Task<IActionResult> Post([FromBody] Commands.V1.RentBook request)
+            => RequestHandler.HandleCommand(request, _applicationService.Handle);
+
+        [HttpPost("{bookId}/return")]
+        public Task<IActionResult> Post([FromBody] Commands.V1.ReturnBook request)
+            => RequestHandler.HandleCommand(request, _applicationService.Handle);
     }
 }

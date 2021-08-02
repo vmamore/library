@@ -3,6 +3,7 @@ namespace Library.Api.Books
     using System;
     using System.Threading.Tasks;
     using Library.Api.Infrastructure;
+    using Microsoft.EntityFrameworkCore;
 
     public class BookRepository : IBookRepository, IDisposable
     {
@@ -16,8 +17,8 @@ namespace Library.Api.Books
         public async ValueTask<bool> Exists(Guid id)
             => await _dbContext.Books.FindAsync(id) != null;
 
-        public ValueTask<Book> Load(Guid id)
-            => _dbContext.Books.FindAsync(id);
+        public Task<Book> Load(Guid id)
+            => _dbContext.Books.Include(b => b.Rents).FirstOrDefaultAsync(b => b.Id == id);
 
         public void Dispose() => _dbContext.Dispose();
     }

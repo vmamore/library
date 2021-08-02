@@ -2,6 +2,7 @@ namespace Library.UnitTests
 {
     using System;
     using System.Linq;
+    using System.Threading.Tasks;
     using FluentAssertions;
     using Library.Api.Books;
     using Xunit;
@@ -37,7 +38,8 @@ namespace Library.UnitTests
         public void Rented_Book()
         {
             var personid = Guid.NewGuid();
-            var dayToReturn = DateTime.UtcNow.AddDays(5);
+            Func<Task<DateTime>> dayToReturn = () => Task.FromResult(DateTime.UtcNow.AddDays(5));
+
             Book.Rent(personid, dayToReturn);
 
             Book.Status.Should().Be(BookStatus.Rented);
@@ -50,7 +52,7 @@ namespace Library.UnitTests
         public void Returned_Book()
         {
             var personid = Guid.NewGuid();
-            var dayToReturn = DateTime.UtcNow.AddDays(5);
+            Func<Task<DateTime>> dayToReturn = () => Task.FromResult(DateTime.UtcNow.AddDays(5));
             Book.Rent(personid, dayToReturn);
             Book.Returned("It's fine");
             Book.Status.Should().Be(BookStatus.Available);

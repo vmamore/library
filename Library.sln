@@ -12,8 +12,11 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BDCFDE55-B530-41E1-B3A5-770327E339EB}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		.gitignore = .gitignore
 		docker-compose.yml = docker-compose.yml
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.AcceptanceTests", "tests\Library.AcceptanceTests\Library.AcceptanceTests.csproj", "{3FC100F4-450D-4595-ABDB-EC0B48572904}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,12 +32,17 @@ Global
 		{E62A9218-0498-4C66-BB38-E3EE008D5730}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E62A9218-0498-4C66-BB38-E3EE008D5730}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E62A9218-0498-4C66-BB38-E3EE008D5730}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3FC100F4-450D-4595-ABDB-EC0B48572904}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3FC100F4-450D-4595-ABDB-EC0B48572904}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3FC100F4-450D-4595-ABDB-EC0B48572904}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3FC100F4-450D-4595-ABDB-EC0B48572904}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{E62A9218-0498-4C66-BB38-E3EE008D5730} = {5640F94B-5C7A-4516-A572-F2A1E49F6FD9}
+		{3FC100F4-450D-4595-ABDB-EC0B48572904} = {5640F94B-5C7A-4516-A572-F2A1E49F6FD9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A0E0A007-D7DC-4197-8138-A6FC5A3BE128}

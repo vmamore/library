@@ -3,6 +3,7 @@ namespace Library.Api.Books
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
     using Library.Api.Core;
     using static Library.Api.Books.Events.V1;
 
@@ -39,19 +40,21 @@ namespace Library.Api.Books
         public int Version { get; private set; }
 
 
-        List<BookRent> _rents;
+        List<BookRent> _rents = new List<BookRent>();
         public IEnumerable<BookRent> Rents => _rents.AsEnumerable();
         BookRent _currentRent => _rents.FirstOrDefault(c => c.Status == BookRent.BookRentStatus.OnGoing);
 
         public BookStatus Status { get; private set; }
 
-        public void Rent(Guid personId, DateTime dayToReturn)
+        public async Task Rent(Guid personId, Func<Task<DateTime>> getDayToReturnBook)
         {
+            var dayToReturnBook = await getDayToReturnBook();
+
             Apply(new BookRented
             {
                 BookId = this.Id,
                 PersonId = personId,
-                DayToReturn = dayToReturn,
+                DayToReturn = dayToReturnBook,
                 BookRentedId = Guid.NewGuid(),
                 RentedDay = DateTime.UtcNow
             });
@@ -95,6 +98,20 @@ namespace Library.Api.Books
             }
         }
 
-        public override void EnsureValidState() { }
+        public override void EnsureValidState()
+        {
+            var valid = (Status switch
+            {
+                BookStatus.Available =>
+                    _currentRent == null,
+                BookStatus.Rented =>
+                    _currentRent != null,
+                _ => true
+            });
+
+            if (!valid)
+                throw new Exception("Invalid state");
+
+        }
     }
 }

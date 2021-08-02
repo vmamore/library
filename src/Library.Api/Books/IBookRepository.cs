@@ -5,7 +5,7 @@ namespace Library.Api.Books
 
     public interface IBookRepository
     {
-        ValueTask<Book> Load(Guid id);
+        Task<Book> Load(Guid id);
 
         ValueTask Add(Book entity);
 

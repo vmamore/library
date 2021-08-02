@@ -3,7 +3,6 @@ namespace Library.Api.Infrastructure
     using System;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.Logging;
 
     public static class RequestHandler
     {

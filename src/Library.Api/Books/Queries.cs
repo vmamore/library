@@ -14,5 +14,13 @@ namespace Library.Api.Books
             => connection.QueryAsync<BookListItem>(
                 "SELECT \"Id\", \"Title\", \"Author\"" +
                 "FROM \"Books\"");
+
+        public static Task<BookItem> Query(
+            this DbConnection connection,
+            QueryModels.GetBookById query)
+            => connection.QueryFirstAsync<BookItem>(
+                "SELECT \"Id\", \"Title\", \"Author\"" +
+                "FROM \"Books\"" +
+                "WHERE \"Id\" = @id", new { id = query.id});
     }
 }

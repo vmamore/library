@@ -1,8 +1,8 @@
-namespace Library.Api.Infrastructure.Migrations
-{
-    using System;
-    using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
+namespace Library.Api.Migrations
+{
     public partial class InitialCreation : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -35,7 +35,7 @@ namespace Library.Api.Infrastructure.Migrations
                     DayToReturn = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     ReturnedDay = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     Status = table.Column<int>(type: "integer", nullable: false),
-                    BookCondition = table.Column<string>(type: "text", nullable: true)
+                    BookCondition = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true)
                 },
                 constraints: table =>
                 {

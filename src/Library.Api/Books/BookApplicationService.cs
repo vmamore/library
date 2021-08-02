@@ -9,17 +9,23 @@ namespace Library.Api.Books
     {
         private readonly IBookRepository _repository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IHolidayClient _holidayClient;
 
-        public BookApplicationService(IBookRepository repository, IUnitOfWork unitOfWork)
+        public BookApplicationService(IBookRepository repository, IUnitOfWork unitOfWork, IHolidayClient holidayClient)
         {
             _repository = repository;
             _unitOfWork = unitOfWork;
+            _holidayClient = holidayClient;
         }
 
         public Task Handle(ICommand command) => command switch
         {
             V1.RegisterBook cmd =>
                 HandleCreate(cmd),
+            V1.RentBook cmd =>
+                HandleUpdate(cmd.BookId, async c => await c.Rent(cmd.PersonId, _holidayClient.GetNextBusinessDate)),
+            V1.ReturnBook cmd =>
+                HandleUpdate(cmd.BookId, c => c.Returned(cmd.condition)),
             _ => Task.CompletedTask
         };
 

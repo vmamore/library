@@ -2,6 +2,7 @@ using System.Data.Common;
 using Library.Api.Books;
 using Library.Api.Core;
 using Library.Api.Infrastructure;
+using Library.Api.Infrastructure.Clients;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
@@ -18,7 +19,7 @@ public class Startup
         services.AddScoped<DbConnection>(c => new NpgsqlConnection(connectionString));
         services.AddHealthChecks()
                 .AddNpgSql(connectionString);
-
+        services.AddScoped<IHolidayClient, HolidayClient>();
         services.AddScoped<IUnitOfWork, EfCoreUnitOfWork>();
         services.AddScoped<IBookRepository, BookRepository>();
         services.AddScoped<BookApplicationService>();
