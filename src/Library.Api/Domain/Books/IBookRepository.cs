@@ -1,4 +1,4 @@
-namespace Library.Api.Books
+namespace Library.Api.Domain.Books
 {
     using System;
     using System.Threading.Tasks;

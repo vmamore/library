@@ -2,7 +2,7 @@ namespace Library.Api.Infrastructure.Clients
 {
     using System;
     using System.Threading.Tasks;
-    using Library.Api.Books;
+    using Library.Api.Application.Shared;
 
     public class HolidayClient : IHolidayClient
     {

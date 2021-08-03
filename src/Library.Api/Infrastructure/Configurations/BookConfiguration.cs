@@ -1,6 +1,6 @@
 namespace Library.Api.Infrastructure.Configurations
 {
-    using Library.Api.Books;
+    using Library.Api.Domain.Books;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

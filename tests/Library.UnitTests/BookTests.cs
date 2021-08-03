@@ -4,10 +4,10 @@ namespace Library.UnitTests
     using System.Linq;
     using System.Threading.Tasks;
     using FluentAssertions;
-    using Library.Api.Books;
+    using Library.Api.Domain.Books;
     using Xunit;
-    using static Library.Api.Books.Book;
-    using static Library.Api.Books.Events.V1;
+    using static Library.Api.Domain.Books.Book;
+    using static Library.Api.Domain.Books.Events.V1;
 
     public class BookTests
     {

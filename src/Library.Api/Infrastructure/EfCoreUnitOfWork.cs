@@ -1,7 +1,7 @@
 namespace Library.Api.Infrastructure
 {
     using System.Threading.Tasks;
-    using Library.Api.Core;
+    using Library.Api.Domain.Core;
 
     public class EfCoreUnitOfWork : IUnitOfWork
     {

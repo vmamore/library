@@ -1,8 +1,8 @@
-namespace Library.Api.Books
+namespace Library.Api.Infrastructure
 {
     using System;
     using System.Threading.Tasks;
-    using Library.Api.Infrastructure;
+    using Library.Api.Domain.Books;
     using Microsoft.EntityFrameworkCore;
 
     public class BookRepository : IBookRepository, IDisposable

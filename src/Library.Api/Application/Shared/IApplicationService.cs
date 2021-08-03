@@ -1,4 +1,4 @@
-namespace Library.Api.Core
+namespace Library.Api.Application.Core
 {
     using System.Threading.Tasks;
 

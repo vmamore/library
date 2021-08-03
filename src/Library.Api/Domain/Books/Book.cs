@@ -1,11 +1,11 @@
-namespace Library.Api.Books
+namespace Library.Api.Domain.Books
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using Library.Api.Core;
-    using static Library.Api.Books.Events.V1;
+    using Library.Api.Domain.Core;
+    using static Library.Api.Domain.Books.Events.V1;
 
     public class Book : AggregateRoot
     {

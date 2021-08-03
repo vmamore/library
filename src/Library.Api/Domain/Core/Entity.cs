@@ -1,4 +1,4 @@
-namespace Library.Api.Core
+namespace Library.Api.Domain.Core
 {
     public abstract class Entity : IInternalEventHandler
     {

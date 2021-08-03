@@ -1,6 +1,8 @@
 using System.Data.Common;
-using Library.Api.Books;
-using Library.Api.Core;
+using Library.Api.Application.Books;
+using Library.Api.Application.Shared;
+using Library.Api.Domain.Books;
+using Library.Api.Domain.Core;
 using Library.Api.Infrastructure;
 using Library.Api.Infrastructure.Clients;
 using Microsoft.AspNetCore.Builder;

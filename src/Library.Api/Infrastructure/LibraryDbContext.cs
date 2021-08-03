@@ -1,6 +1,6 @@
 namespace Library.Api.Infrastructure
 {
-    using Library.Api.Books;
+    using Library.Api.Domain.Books;
     using Library.Api.Infrastructure.Configurations;
     using Microsoft.EntityFrameworkCore;
 

@@ -1,9 +1,12 @@
-namespace Library.Api.Books
+namespace Library.Api.Application.Books
 {
     using System;
     using System.Threading.Tasks;
-    using Library.Api.Core;
-    using static Library.Api.Books.Commands;
+    using Library.Api.Application.Core;
+    using Library.Api.Application.Shared;
+    using Library.Api.Domain.Books;
+    using Library.Api.Domain.Core;
+    using static Library.Api.Application.Books.Commands;
 
     public class BookApplicationService : IApplicationService
     {

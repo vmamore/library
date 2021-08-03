@@ -1,4 +1,4 @@
-namespace Library.Api.Books
+namespace Library.Api.Application.Books
 {
     using System.Threading.Tasks;
     using Library.Api.Infrastructure;

@@ -1,8 +1,8 @@
-namespace Library.Api.Books
+namespace Library.Api.Application.Books
 {
     using System;
     using System.ComponentModel.DataAnnotations;
-    using Library.Api.Core;
+    using Library.Api.Application.Core;
 
     public static class Commands
     {

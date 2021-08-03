@@ -1,7 +1,7 @@
-namespace Library.Api.Books
+namespace Library.Api.Domain.Books
 {
     using System;
-    using Library.Api.Core;
+    using Library.Api.Domain.Core;
 
     public static class Events
     {

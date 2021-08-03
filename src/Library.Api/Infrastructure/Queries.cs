@@ -1,4 +1,4 @@
-namespace Library.Api.Books
+namespace Library.Api.Infrastructure
 {
     using System;
     using System.Collections.Generic;
@@ -6,7 +6,8 @@ namespace Library.Api.Books
     using System.Linq;
     using System.Threading.Tasks;
     using Dapper;
-    using static Library.Api.Books.ReadModels;
+    using Library.Api.Application.Books;
+    using static Library.Api.Infrastructure.ReadModels;
 
     public static class Queries
     {

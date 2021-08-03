@@ -1,8 +1,8 @@
-namespace Library.Api.Books
+namespace Library.Api.Domain.Books
 {
     using System;
-    using Library.Api.Core;
-    using static Library.Api.Books.Events.V1;
+    using Library.Api.Domain.Core;
+    using static Library.Api.Domain.Books.Events.V1;
 
     public class BookRent : Entity
     {

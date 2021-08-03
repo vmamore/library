@@ -1,4 +1,4 @@
-namespace Library.Api.Books
+namespace Library.Api.Application.Shared
 {
     using System;
     using System.Threading.Tasks;
