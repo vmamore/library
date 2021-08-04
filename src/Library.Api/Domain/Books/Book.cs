@@ -46,27 +46,29 @@ namespace Library.Api.Domain.Books
 
         public BookStatus Status { get; private set; }
 
-        public async Task Rent(Guid personId, Func<Task<DateTime>> getDayToReturnBook)
+        public async Task Rent(Guid personId, Guid librarianId, Func<Task<DateTime>> getDayToReturnBook)
         {
             var dayToReturnBook = await getDayToReturnBook();
 
             Apply(new BookRented
             {
                 BookId = this.Id,
-                PersonId = personId,
+                LocatorId = personId,
                 DayToReturn = dayToReturnBook,
                 BookRentedId = Guid.NewGuid(),
-                RentedDay = DateTime.UtcNow
+                RentedDay = DateTime.UtcNow,
+                LibrarianId = librarianId
             });
         }
 
-        public void Returned(string bookCondition)
+        public void Returned(Guid librarianId, string bookCondition)
         {
             Apply(new BookReturned
             {
                 BookCondition = bookCondition,
                 BookId = this.Id,
-                ReturnedDay = DateTime.UtcNow
+                ReturnedDay = DateTime.UtcNow,
+                LibrarianId = librarianId
             });
         }
 

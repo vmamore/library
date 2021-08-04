@@ -26,9 +26,9 @@ namespace Library.Api.Application.Books
             V1.RegisterBook cmd =>
                 HandleCreate(cmd),
             V1.RentBook cmd =>
-                HandleUpdate(cmd.BookId, async c => await c.Rent(cmd.PersonId, _holidayClient.GetNextBusinessDate)),
+                HandleUpdate(cmd.BookId, async c => await c.Rent(cmd.PersonId, cmd.LibrarianId, _holidayClient.GetNextBusinessDate)),
             V1.ReturnBook cmd =>
-                HandleUpdate(cmd.BookId, c => c.Returned(cmd.condition)),
+                HandleUpdate(cmd.BookId, c => c.Returned(cmd.LibrarianId, cmd.Condition)),
             _ => Task.CompletedTask
         };
 

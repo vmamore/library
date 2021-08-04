@@ -20,7 +20,8 @@ namespace Library.Api.Domain.Books
             {
                 public DateTime DayToReturn { get; set; }
                 public Guid BookId { get; set; }
-                public Guid PersonId { get; set; }
+                public Guid LocatorId { get; set; }
+                public Guid LibrarianId { get; set; }
                 public DateTime RentedDay { get; set; }
                 public Guid BookRentedId { get; set; }
             }
@@ -28,6 +29,7 @@ namespace Library.Api.Domain.Books
             public class BookReturned : DomainEvent
             {
                 public Guid BookId { get; set; }
+                public Guid LibrarianId { get; set; }
                 public DateTime ReturnedDay { get; set; }
                 public string BookCondition { get; set; }
             }

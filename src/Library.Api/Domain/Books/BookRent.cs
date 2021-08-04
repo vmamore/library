@@ -29,7 +29,7 @@ namespace Library.Api.Domain.Books
                     Status = BookRentStatus.OnGoing;
                     Id = e.BookRentedId;
                     RentedDay = e.RentedDay;
-                    PersonId = e.PersonId;
+                    PersonId = e.LocatorId;
                     BookId = e.BookId;
                     DayToReturn = e.DayToReturn;
                     break;

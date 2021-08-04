@@ -25,6 +25,44 @@ namespace Library.Api.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Librarian",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    FirstName = table.Column<string>(type: "text", nullable: true),
+                    LastName = table.Column<string>(type: "text", nullable: true),
+                    BirthDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    Street = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
+                    City = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
+                    Number = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: true),
+                    District = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: true),
+                    Cpf = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Librarian", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Locator",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    FirstName = table.Column<string>(type: "text", nullable: true),
+                    LastName = table.Column<string>(type: "text", nullable: true),
+                    BirthDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    Street = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
+                    City = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
+                    Number = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: true),
+                    District = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: true),
+                    Cpf = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Locator", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "BookRent",
                 columns: table => new
                 {
@@ -58,6 +96,12 @@ namespace Library.Api.Migrations
         {
             migrationBuilder.DropTable(
                 name: "BookRent");
+
+            migrationBuilder.DropTable(
+                name: "Librarian");
+
+            migrationBuilder.DropTable(
+                name: "Locator");
 
             migrationBuilder.DropTable(
                 name: "Books");
