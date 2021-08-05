@@ -1,5 +1,6 @@
 using System.Data.Common;
 using Library.Api.Application.Books;
+using Library.Api.Application.Locators;
 using Library.Api.Application.Shared;
 using Library.Api.Domain.Books;
 using Library.Api.Domain.Core;
@@ -25,6 +26,7 @@ public class Startup
         services.AddScoped<IUnitOfWork, EfCoreUnitOfWork>();
         services.AddScoped<IBookRepository, BookRepository>();
         services.AddScoped<BookApplicationService>();
+        services.AddScoped<LocatorApplicationService>();
 
         services.AddMvc();
         services.AddSwaggerGen(c => c.SwaggerDoc("v1",
