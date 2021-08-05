@@ -38,9 +38,10 @@ namespace Library.UnitTests
         public void Rented_Book()
         {
             var personid = Guid.NewGuid();
+            var librarianId = Guid.NewGuid();
             Func<Task<DateTime>> dayToReturn = () => Task.FromResult(DateTime.UtcNow.AddDays(5));
 
-            Book.Rent(personid, dayToReturn);
+            Book.Rent(personid, librarianId, dayToReturn);
 
             Book.Status.Should().Be(BookStatus.Rented);
             Book.Rents.Should().ContainSingle();
@@ -51,10 +52,11 @@ namespace Library.UnitTests
         [Fact]
         public void Returned_Book()
         {
-            var personid = Guid.NewGuid();
+            var librarianId = Guid.NewGuid();
+            var personId = Guid.NewGuid();
             Func<Task<DateTime>> dayToReturn = () => Task.FromResult(DateTime.UtcNow.AddDays(5));
-            Book.Rent(personid, dayToReturn);
-            Book.Returned("It's fine");
+            Book.Rent(personId, librarianId, dayToReturn);
+            Book.Returned(librarianId, "It's fine");
             Book.Status.Should().Be(BookStatus.Available);
         }
     }
