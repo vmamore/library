@@ -1,4 +1,4 @@
-namespace Library.Api.Domain.Users.ValueObjects
+namespace Library.Api.Domain.Shared.ValueObjects
 {
     using System;
 
