@@ -1,51 +1,50 @@
-namespace Library.Api.Application.Locators
+namespace Library.Api.Application.Librarians
 {
     using System;
     using System.Threading.Tasks;
     using Library.Api.Application.Core;
-    using Library.Api.Domain.BookRentals;
     using Library.Api.Domain.Users;
-    using static Library.Api.Application.Locators.Commands;
+    using static Library.Api.Application.Librarians.Commands;
 
-    public class LocatorApplicationService : IApplicationService
+    public class LibrarianApplicationService : IApplicationService
     {
-        private readonly ILocatorRepository _repository;
+        private readonly ILibrarianRepository _repository;
 
-        public LocatorApplicationService(ILocatorRepository repository)
+        public LibrarianApplicationService(ILibrarianRepository repository)
         {
             _repository = repository;
         }
 
         public Task Handle(ICommand command) => command switch
         {
-            V1.RegisterLocator cmd =>
+            V1.RegisterLibrarian cmd =>
                 HandleCreate(cmd),
             _ => Task.CompletedTask
         };
 
-        private async Task HandleCreate(V1.RegisterLocator cmd)
+        private async Task HandleCreate(V1.RegisterLibrarian cmd)
         {
-            var newLocator = Locator.Create(
+            var newLibrarian = Librarian.Create(
                 cmd.FirstName,
                 cmd.LastName,
                 cmd.BirthDate,
                 cmd.CPF,
                 cmd.City, cmd.District, cmd.Street, cmd.Number);
 
-            await _repository.Add(newLocator);
+            await _repository.Add(newLibrarian);
         }
 
         private async Task HandleUpdate(
-            Guid locatorId,
-            Action<Locator> operation
+            Guid librarianId,
+            Action<Librarian> operation
         )
         {
             var book = await _repository
-                .Load(locatorId);
+                .Load(librarianId);
 
             if (book == null)
                 throw new InvalidOperationException(
-                    $"Entity with id {locatorId} cannot be found"
+                    $"Entity with id {librarianId} cannot be found"
                 );
 
             operation(book);

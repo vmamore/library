@@ -1,7 +1,7 @@
 namespace Library.Api.Application.Users
 {
     using System.Threading.Tasks;
-using Library.Api.Application.Locators;
+    using Library.Api.Application.Locators;
     using Library.Api.Infrastructure;
     using Microsoft.AspNetCore.Mvc;
 

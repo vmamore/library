@@ -16,11 +16,11 @@ namespace Library.Api.Application.Books
             => RequestHandler.HandleCommand(request, _applicationService.Handle);
 
         [HttpPost("{bookId}/rent")]
-        public Task<IActionResult> Post([FromBody] Commands.V1.RentBook request)
+        public Task<IActionResult> Post([FromBody] Commands.V1.RentBooks request)
             => RequestHandler.HandleCommand(request, _applicationService.Handle);
 
         [HttpPost("{bookId}/return")]
-        public Task<IActionResult> Post([FromBody] Commands.V1.ReturnBook request)
+        public Task<IActionResult> Post([FromBody] Commands.V1.ReturnBookRental request)
             => RequestHandler.HandleCommand(request, _applicationService.Handle);
     }
 }

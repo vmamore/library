@@ -6,7 +6,7 @@ namespace Library.Api.Application.Books
 
     public static class QueryModels
     {
-        public class GetAllBooks {}
+        public class GetAllBooks { }
 
         public record GetBookById([FromRoute][Required] Guid id);
     }
