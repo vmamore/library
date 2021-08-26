@@ -19,6 +19,7 @@ namespace Library.Api.Domain.Users
             switch (@event)
             {
                 case LibrarianCreated e:
+                    Id = Guid.NewGuid();
                     Name = Name.Create(e.FirstName, e.LastName);
                     Age = new(e.BirthDate);
                     Cpf = new(e.CPF);
@@ -29,6 +30,28 @@ namespace Library.Api.Domain.Users
             }
         }
 
-        public override void EnsureValidState() => throw new NotImplementedException();
+        public static Librarian Create(
+            string firstName, string lastName, DateTime birthDate,
+            string cpf, string city, string district,
+            string street, string number)
+        {
+            var librarian = new Librarian();
+
+            librarian.Apply(new LibrarianCreated
+            {
+                FirstName = firstName,
+                LastName = lastName,
+                CPF = cpf,
+                City = city,
+                District = district,
+                Street = street,
+                Number = number,
+                BirthDate = birthDate
+            });
+
+            return librarian;
+        }
+
+        public override void EnsureValidState() { }
     }
 }

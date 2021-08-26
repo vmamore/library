@@ -24,18 +24,6 @@ namespace Library.Api.Domain.Users
                 public string Number { get; set; }
                 public string District { get; set; }
             }
-
-            public class LocatorCreated : DomainEvent
-            {
-                public string FirstName { get; set; }
-                public string LastName { get; set; }
-                public string CPF { get; set; }
-                public DateTime BirthDate { get; set; }
-                public string Street { get; set; }
-                public string City { get; set; }
-                public string Number { get; set; }
-                public string District { get; set; }
-            }
         }
     }
 }

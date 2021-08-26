@@ -21,6 +21,6 @@ namespace Library.Api.Domain.Users
             }
         }
 
-        public override void EnsureValidState() {}
+        public override void EnsureValidState() { }
     }
 }
