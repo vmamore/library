@@ -1,6 +1,6 @@
-namespace Library.Api.Infrastructure.Configurations
+namespace Library.Api.Infrastructure.Inventory.Configurations
 {
-    using Library.Api.Domain.Books;
+    using Library.Api.Domain.Inventory;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -28,6 +28,15 @@ namespace Library.Api.Infrastructure.Configurations
                 .HasMaxLength(5);
 
             builder
+                .OwnsOne(x => x.ISBN, x =>
+                {
+                    x.Property(x => x.Value)
+                    .IsRequired()
+                    .HasMaxLength(100)
+                    .HasColumnName("ISBN");
+                });
+
+            builder
                 .Property(x => x.Pages)
                 .IsRequired()
                 .HasMaxLength(5);
@@ -37,9 +46,7 @@ namespace Library.Api.Infrastructure.Configurations
                 .IsRequired()
                 .HasMaxLength(5);
 
-            builder.HasMany(x => x.Rents)
-                .WithOne()
-                .HasForeignKey(x => x.BookId);
+            builder.ToTable("books", "inventory");
         }
     }
 }

@@ -1,12 +1,12 @@
-namespace Library.Api.Infrastructure.Configurations
+namespace Library.Api.Infrastructure.Users.Configurations
 {
     using Library.Api.Domain.Users;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-    public class LocatorConfiguration : IEntityTypeConfiguration<Locator>
+    public class LibrarianConfiguration : IEntityTypeConfiguration<Librarian>
     {
-        public void Configure(EntityTypeBuilder<Locator> builder)
+        public void Configure(EntityTypeBuilder<Librarian> builder)
         {
             builder
                 .Property(x => x.Id)
@@ -50,6 +50,8 @@ namespace Library.Api.Infrastructure.Configurations
                     .HasMaxLength(20)
                     .HasColumnName("District");
             });
+
+            builder.ToTable("librarians", "users");
         }
     }
 }
