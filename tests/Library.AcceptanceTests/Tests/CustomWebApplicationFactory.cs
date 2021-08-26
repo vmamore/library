@@ -14,16 +14,16 @@ namespace Library.AcceptanceTests.Tests
         {
             builder.ConfigureServices(services =>
             {
-                var descriptor = services.SingleOrDefault(
-                    d => d.ServiceType ==
-                        typeof(DbContextOptions<LibraryDbContext>));
+                //var descriptor = services.SingleOrDefault(
+                //    d => d.ServiceType ==
+                //        typeof(DbContextOptions<LibraryDbContext>));
 
-                services.Remove(descriptor);
+                //services.Remove(descriptor);
 
-                services.AddDbContext<LibraryDbContext>(options =>
-                {
-                    options.UseInMemoryDatabase("InMemoryDbForTesting");
-                });
+                //services.AddDbContext<LibraryDbContext>(options =>
+                //{
+                //    options.UseInMemoryDatabase("InMemoryDbForTesting");
+                //});
             });
         }
     }
