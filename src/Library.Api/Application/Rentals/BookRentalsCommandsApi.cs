@@ -1,19 +1,15 @@
-namespace Library.Api.Application.Books
+namespace Library.Api.Application.Rentals
 {
     using System.Threading.Tasks;
     using Library.Api.Infrastructure;
     using Microsoft.AspNetCore.Mvc;
 
-    [Route("/books")]
-    public class BookCommandsApi : Controller
+    [Route("rentals/books")]
+    public class BookRentalsCommandsApi : Controller
     {
-        private readonly BookApplicationService _applicationService;
+        private readonly BookRentalApplicationService _applicationService;
 
-        public BookCommandsApi(BookApplicationService applicationService) => _applicationService = applicationService;
-
-        [HttpPost]
-        public Task<IActionResult> Post([FromBody] Commands.V1.RegisterBook request)
-            => RequestHandler.HandleCommand(request, _applicationService.Handle);
+        public BookRentalsCommandsApi(BookRentalApplicationService applicationService) => _applicationService = applicationService;
 
         [HttpPost("{bookId}/rent")]
         public Task<IActionResult> Post([FromBody] Commands.V1.RentBooks request)

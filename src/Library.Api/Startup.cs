@@ -1,15 +1,22 @@
 using System.Data.Common;
-using Library.Api.Application.Books;
+using Library.Api.Application.Inventories;
+using Library.Api.Application.Librarians;
 using Library.Api.Application.Locators;
+using Library.Api.Application.Rentals;
 using Library.Api.Application.Shared;
 using Library.Api.Domain.BookRentals;
 using Library.Api.Domain.Inventory;
+using Library.Api.Domain.Users;
 using Library.Api.Infrastructure;
 using Library.Api.Infrastructure.BookRentals;
 using Library.Api.Infrastructure.Clients;
+using Library.Api.Infrastructure.Integrations;
 using Library.Api.Infrastructure.Inventory;
+using Library.Api.Infrastructure.Users;
 using Microsoft.OpenApi.Models;
 using Npgsql;
+using IntegrationEventHandler = Library.Api.Infrastructure.Integrations.IntegrationEventHandler;
+using BookRentalsIntegrationEventHandler = Library.Api.Infrastructure.BookRentals.IntegrationEventHandler;
 
 public class Startup
 {
@@ -20,14 +27,23 @@ public class Startup
         services.AddEntityFrameworkNpgsql();
         services.AddPostgresDbContext<InventoryDbContext>(connectionString);
         services.AddPostgresDbContext<BookRentalDbContext>(connectionString);
+        services.AddPostgresDbContext<UsersDbContext>(connectionString);
         services.AddScoped<DbConnection>(c => new NpgsqlConnection(connectionString));
         services.AddHealthChecks()
                 .AddNpgSql(connectionString);
         services.AddScoped<IHolidayClient, HolidayClient>();
         services.AddScoped<IBookRentalRepository, BookRentalRepository>();
         services.AddScoped<IBookRepository, BookRepository>();
+        services.AddScoped<ILocatorRepository, LocatorRepository>();
+        services.AddScoped<ILibrarianRepository, LibrarianRepository>();
+        services.AddScoped<BookRentalApplicationService>();
         services.AddScoped<BookApplicationService>();
         services.AddScoped<LocatorApplicationService>();
+        services.AddScoped<LibrarianApplicationService>();
+        services.AddScoped<IIntegrationEventsMapper, Mapper>();
+        services.AddScoped<IIntegrationEventHandler, IntegrationEventHandler>();
+        services.AddScoped<BookRentalsIntegrationEventHandler>();
+
 
         services.AddMvc();
         services.AddSwaggerGen(c => c.SwaggerDoc("v1",

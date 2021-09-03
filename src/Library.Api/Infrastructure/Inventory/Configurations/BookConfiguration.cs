@@ -25,7 +25,7 @@ namespace Library.Api.Infrastructure.Inventory.Configurations
             builder
                 .Property(x => x.ReleasedYear)
                 .IsRequired()
-                .HasMaxLength(5);
+                .HasMaxLength(12);
 
             builder
                 .OwnsOne(x => x.ISBN, x =>
@@ -38,13 +38,11 @@ namespace Library.Api.Infrastructure.Inventory.Configurations
 
             builder
                 .Property(x => x.Pages)
-                .IsRequired()
-                .HasMaxLength(5);
+                .IsRequired();
 
             builder
                 .Property(x => x.Version)
-                .IsRequired()
-                .HasMaxLength(5);
+                .IsRequired();
 
             builder.ToTable("books", "inventory");
         }

@@ -32,6 +32,8 @@ namespace Library.Api.Application.Librarians
                 cmd.City, cmd.District, cmd.Street, cmd.Number);
 
             await _repository.Add(newLibrarian);
+
+            await _repository.Commit();
         }
 
         private async Task HandleUpdate(

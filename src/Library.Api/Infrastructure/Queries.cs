@@ -6,7 +6,7 @@ namespace Library.Api.Infrastructure
     using System.Linq;
     using System.Threading.Tasks;
     using Dapper;
-    using Library.Api.Application.Books;
+    using Library.Api.Application.Inventories;
     using static Library.Api.Infrastructure.ReadModels;
 
     public static class Queries

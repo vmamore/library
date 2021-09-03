@@ -18,13 +18,9 @@ namespace Library.Api.Infrastructure.BookRentals.Configurations
                 .HasMaxLength(150);
 
             builder
-                .OwnsOne(x => x.ISBN, x =>
-                {
-                    x.Property(x => x.Value)
-                    .IsRequired()
-                    .HasMaxLength(100)
-                    .HasColumnName("ISBN");
-                });
+                .Property(x => x.Author)
+                .IsRequired()
+                .HasMaxLength(150);
 
             builder
                 .Property(x => x.Status)

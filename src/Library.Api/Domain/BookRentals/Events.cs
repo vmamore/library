@@ -9,7 +9,7 @@ namespace Library.Api.Domain.BookRentals
         {
             public class BookRegistered : DomainEvent
             {
-                public string ISBN { get; set; }
+                public string Author { get; set; }
                 public string Title { get; set; }
             }
             public class RentalCreated : DomainEvent

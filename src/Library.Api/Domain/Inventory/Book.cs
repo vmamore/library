@@ -5,11 +5,11 @@ namespace Library.Api.Domain.Inventory
     using Library.Api.Domain.Shared.ValueObjects;
     using static Library.Api.Domain.Inventory.Events.V1;
 
-    public class Book : Entity
+    public class Book : AggregateRoot
     {
         private Book() => this.Id = Guid.NewGuid();
 
-        public static Book Create(string title, string author, string releasedYear, int pages, int version)
+        public static Book Create(string title, string author, string releasedYear, string isbn, int pages, int version)
         {
             var book = new Book();
 
@@ -19,7 +19,8 @@ namespace Library.Api.Domain.Inventory
                 Author = author,
                 ReleasedYear = releasedYear,
                 Version = version,
-                Pages = pages
+                Pages = pages,
+                ISBN = isbn
             });
 
             return book;
@@ -34,7 +35,7 @@ namespace Library.Api.Domain.Inventory
         public int Version { get; private set; }
         public ISBN ISBN { get; private set; }
 
-        protected override void When(DomainEvent @event)
+        public override void When(DomainEvent @event)
         {
             switch (@event)
             {
@@ -50,5 +51,7 @@ namespace Library.Api.Domain.Inventory
                     break;
             }
         }
+
+        public override void EnsureValidState() { }
     }
 }

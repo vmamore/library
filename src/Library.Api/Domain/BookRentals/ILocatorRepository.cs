@@ -5,10 +5,12 @@ namespace Library.Api.Domain.BookRentals
 
     public interface ILocatorRepository
     {
-        Task<Locator> Load(Guid id);
+        ValueTask<Locator> Load(Guid id);
 
         ValueTask Add(Locator entity);
 
         ValueTask<bool> Exists(Guid id);
+
+        Task Commit();
     }
 }

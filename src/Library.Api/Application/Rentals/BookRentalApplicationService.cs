@@ -1,13 +1,13 @@
-namespace Library.Api.Application.Books
+
+namespace Library.Api.Application.Rentals
 {
     using System;
     using System.Threading.Tasks;
     using Library.Api.Application.Core;
     using Library.Api.Application.Shared;
     using Library.Api.Domain.BookRentals;
-    using Library.Api.Domain.Core;
     using Library.Api.Domain.Users;
-    using static Library.Api.Application.Books.Commands;
+    using static Library.Api.Application.Rentals.Commands;
 
     public class BookRentalApplicationService : IApplicationService
     {

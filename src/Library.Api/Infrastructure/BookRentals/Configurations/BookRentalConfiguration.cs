@@ -38,10 +38,13 @@ namespace Library.Api.Infrastructure.BookRentals.Configurations
                 .WithMany()
                 .OnDelete(DeleteBehavior.NoAction);
 
-            builder.HasMany(r => r.Books)
-                .WithOne();
+            builder.HasMany(x => x.Books).WithMany(x => x.Rentals).
+            UsingEntity<Dictionary<string, object>>(
+                "booksrentals",
+                b => b.HasOne<Book>().WithMany().HasForeignKey("BookId"),
+                b => b.HasOne<BookRental>().WithMany().HasForeignKey("BookRentalId"));
 
-            builder.ToTable("bookrentals", "rentals");
+            builder.ToTable("rentals", "rentals");
         }
     }
 }

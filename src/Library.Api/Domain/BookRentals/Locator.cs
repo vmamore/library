@@ -28,6 +28,7 @@ namespace Library.Api.Domain.BookRentals
             switch (@event)
             {
                 case LocatorCreated e:
+                    Id = Guid.NewGuid();
                     Name = Name.Create(e.FirstName, e.LastName);
                     Age = new(e.BirthDate);
                     Cpf = new(e.CPF);
@@ -59,7 +60,8 @@ namespace Library.Api.Domain.BookRentals
                 City = city,
                 District = district,
                 Street = street,
-                Number = number
+                Number = number,
+                BirthDate = birthDate
             });
 
             return locator;

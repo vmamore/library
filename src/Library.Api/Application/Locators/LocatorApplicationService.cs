@@ -4,7 +4,6 @@ namespace Library.Api.Application.Locators
     using System.Threading.Tasks;
     using Library.Api.Application.Core;
     using Library.Api.Domain.BookRentals;
-    using Library.Api.Domain.Users;
     using static Library.Api.Application.Locators.Commands;
 
     public class LocatorApplicationService : IApplicationService
@@ -33,6 +32,8 @@ namespace Library.Api.Application.Locators
                 cmd.City, cmd.District, cmd.Street, cmd.Number);
 
             await _repository.Add(newLocator);
+
+            await _repository.Commit();
         }
 
         private async Task HandleUpdate(

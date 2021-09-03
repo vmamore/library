@@ -11,5 +11,8 @@ namespace Library.Api.Domain.BookRentals
 
         ValueTask<bool> Exists(Guid id);
         Task<IEnumerable<Book>> LoadBooks(Guid[] booksId);
+
+        ValueTask Add(Book entity);
+        Task Commit();
     }
 }

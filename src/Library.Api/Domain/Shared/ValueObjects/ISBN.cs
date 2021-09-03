@@ -7,7 +7,7 @@ namespace Library.Api.Domain.Shared.ValueObjects
         public ISBN(string value)
         {
             if (string.IsNullOrEmpty(value))
-                throw new ArgumentNullException("Invalid value cannot be CPF");
+                throw new ArgumentNullException("Invalid value cannot be ISBN");
 
             Value = value;
         }

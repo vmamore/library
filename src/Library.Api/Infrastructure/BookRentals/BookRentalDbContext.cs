@@ -7,6 +7,7 @@ namespace Library.Api.Infrastructure.BookRentals
     {
         public DbSet<Book> Books { get; set; }
         public DbSet<BookRental> BookRentals { get; set; }
+        public DbSet<Locator> Locators { get; set; }
 
         public BookRentalDbContext(DbContextOptions<BookRentalDbContext> options) : base(options) { }
 

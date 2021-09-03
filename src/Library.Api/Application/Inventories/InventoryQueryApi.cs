@@ -1,16 +1,16 @@
-namespace Library.Api.Application.Books
+namespace Library.Api.Application.Inventories
 {
     using System.Data.Common;
     using System.Threading.Tasks;
     using Library.Api.Infrastructure;
     using Microsoft.AspNetCore.Mvc;
 
-    [Route("/books")]
-    public class BookQueryApi : Controller
+    [Route("inventory/books")]
+    public class InventoryQueryApi : Controller
     {
         private readonly DbConnection _connection;
 
-        public BookQueryApi(DbConnection connection) => _connection = connection;
+        public InventoryQueryApi(DbConnection connection) => _connection = connection;
 
         [HttpGet]
         [Route("all")]

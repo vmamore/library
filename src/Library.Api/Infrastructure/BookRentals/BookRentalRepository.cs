@@ -6,7 +6,7 @@ namespace Library.Api.Infrastructure.BookRentals
     using Library.Api.Domain.BookRentals;
     using Microsoft.EntityFrameworkCore;
 
-    public class BookRentalRepository : IBookRentalRepository, IDisposable
+    public class BookRentalRepository : IBookRentalRepository
     {
         private readonly BookRentalDbContext _dbContext;
 
@@ -17,7 +17,7 @@ namespace Library.Api.Infrastructure.BookRentals
         public ValueTask<BookRental> Load(Guid id) => _dbContext.BookRentals.FindAsync(id);
 
         public async Task<IEnumerable<Book>> LoadBooks(Guid[] booksId) => await _dbContext.Books.Where(b => booksId.Contains(b.Id)).ToListAsync();
-        public void Dispose() => _dbContext.Dispose();
-
+        public async ValueTask Add(Book entity) => await _dbContext.Books.AddAsync(entity);
+        public async Task Commit() => await _dbContext.SaveChangesAsync();
     }
 }

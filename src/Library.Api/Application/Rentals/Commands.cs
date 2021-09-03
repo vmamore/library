@@ -1,4 +1,4 @@
-namespace Library.Api.Application.Books
+namespace Library.Api.Application.Rentals
 {
     using System;
     using System.ComponentModel.DataAnnotations;
@@ -8,9 +8,9 @@ namespace Library.Api.Application.Books
     {
         public static class V1
         {
-            public record RegisterBook([Required] string Title, [Required] string Author, [Required] string ReleasedYear, int Pages, int Version) : ICommand;
             public record RentBooks([Required] Guid[] BooksId, [Required] Guid PersonId, [Required] Guid LibrarianId, [Required] Guid LocatorId) : ICommand;
             public record ReturnBookRental([Required] Guid BookRentalIdId, [Required] string Condition, [Required] Guid LibrarianId) : ICommand;
         }
     }
 }
+

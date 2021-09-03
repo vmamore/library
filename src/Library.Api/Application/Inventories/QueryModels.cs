@@ -1,4 +1,4 @@
-namespace Library.Api.Application.Books
+namespace Library.Api.Application.Inventories
 {
     using System;
     using System.ComponentModel.DataAnnotations;

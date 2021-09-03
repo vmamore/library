@@ -10,5 +10,7 @@ namespace Library.Api.Domain.Inventory
         ValueTask Add(Book entity);
 
         ValueTask<bool> Exists(Guid id);
+
+        Task Commit();
     }
 }

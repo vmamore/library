@@ -9,6 +9,7 @@ namespace Library.UnitTests
                 "Fight Club",
                 "Chuck Palahniuk",
                 "1996",
+                "ISBN",
                 208,
                 1);
 

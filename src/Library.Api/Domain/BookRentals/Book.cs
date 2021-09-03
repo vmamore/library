@@ -13,14 +13,14 @@ namespace Library.Api.Domain.BookRentals
         }
 
         private Book() { }
-        public static Book Create(string title, string isbn)
+        public static Book Create(string title, string author)
         {
             var book = new Book();
 
             book.Apply(new BookRegistered
             {
                 Title = title,
-                ISBN = isbn
+                Author = author
             });
 
             return book;
@@ -28,8 +28,9 @@ namespace Library.Api.Domain.BookRentals
 
         public Guid Id { get; private set; }
         public string Title { get; private set; }
+        public string Author { get; private set; }
         public BookStatus Status { get; private set; }
-        public ISBN ISBN { get; private set; }
+        public IEnumerable<BookRental> Rentals { get; private set; }
 
         public bool IsRented() => this.Status == BookStatus.Rented;
 
@@ -38,9 +39,10 @@ namespace Library.Api.Domain.BookRentals
             switch (@event)
             {
                 case BookRegistered e:
+                    this.Id = Guid.NewGuid();
                     this.Status = BookStatus.Free;
                     this.Title = e.Title;
-                    this.ISBN = new ISBN(e.ISBN);
+                    this.Author = e.Author;
                     break;
                 case RentalCreated:
                     this.Status = BookStatus.Rented;

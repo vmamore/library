@@ -4,7 +4,7 @@ namespace Library.Api.Infrastructure.Inventory
     using System.Threading.Tasks;
     using Library.Api.Domain.Inventory;
 
-    public class BookRepository : IBookRepository, IDisposable
+    public class BookRepository : IBookRepository
     {
         private readonly InventoryDbContext _dbContext;
 
@@ -13,7 +13,6 @@ namespace Library.Api.Infrastructure.Inventory
         public async ValueTask Add(Book entity) => await _dbContext.Books.AddAsync(entity);
         public async ValueTask<bool> Exists(Guid id) => await Load(id) != null;
         public ValueTask<Book> Load(Guid id) => _dbContext.Books.FindAsync(id);
-
-        public void Dispose() => _dbContext.Dispose();
+        public async Task Commit() => _dbContext.SaveChangesAsync();
     }
 }
