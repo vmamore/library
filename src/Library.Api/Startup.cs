@@ -15,8 +15,8 @@ using Library.Api.Infrastructure.Inventory;
 using Library.Api.Infrastructure.Users;
 using Microsoft.OpenApi.Models;
 using Npgsql;
-using IntegrationEventHandler = Library.Api.Infrastructure.Integrations.IntegrationEventHandler;
 using BookRentalsIntegrationEventHandler = Library.Api.Infrastructure.BookRentals.IntegrationEventHandler;
+using IntegrationEventHandler = Library.Api.Infrastructure.Integrations.IntegrationEventHandler;
 
 public class Startup
 {

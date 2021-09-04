@@ -18,8 +18,10 @@ namespace Library.Api.Infrastructure
 
         public static Task<BookItem> Query(
             this DbConnection connection,
-            QueryModels.GetBookById query) => connection.QueryFirstOrDefaultAsync<BookItem>(
+            QueryModels.GetBookById query)
+            => connection.QueryFirstOrDefaultAsync<BookItem>(
                  "SELECT \"Id\", \"Title\", \"Author\"" +
-                 "FROM \"rentals\".\"Books\" Where \"Id\" = @id", new { id = query.Id });
+                 "FROM \"rentals\".\"Books\" Where \"Id\" = @id",
+                 new { id = query.Id });
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Library.Api.Infrastructure.Integrations
+namespace Library.Api.Infrastructure.Integrations
 {
     using Library.Api.Domain.Core;
 
