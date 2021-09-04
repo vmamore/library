@@ -1,4 +1,4 @@
-namespace Library.Api.Application.Inventories
+namespace Library.Api.Application.Rentals
 {
     using System;
     using System.ComponentModel.DataAnnotations;
@@ -8,6 +8,6 @@ namespace Library.Api.Application.Inventories
     {
         public class GetAllBooks { }
 
-        public record GetBookById([FromRoute][Required] Guid id);
+        public record GetBookById([FromRoute][Required] Guid Id);
     }
 }

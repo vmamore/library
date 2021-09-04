@@ -1,4 +1,4 @@
-namespace Library.Api.Infrastructure
+namespace Library.Api.Infrastructure.BookRentals
 {
     using System;
     using System.Collections.Generic;

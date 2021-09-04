@@ -1,4 +1,4 @@
-namespace Library.Api.Application.Inventories
+namespace Library.Api.Application.Rentals
 {
     using System.Data.Common;
     using System.Threading.Tasks;
