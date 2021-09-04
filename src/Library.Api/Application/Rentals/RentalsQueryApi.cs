@@ -3,14 +3,15 @@ namespace Library.Api.Application.Rentals
     using System.Data.Common;
     using System.Threading.Tasks;
     using Library.Api.Infrastructure;
+    using Library.Api.Infrastructure.BookRentals;
     using Microsoft.AspNetCore.Mvc;
 
-    [Route("inventory/books")]
-    public class InventoryQueryApi : Controller
+    [Route("rentals/books")]
+    public class RentalsQueryApi : Controller
     {
         private readonly DbConnection _connection;
 
-        public InventoryQueryApi(DbConnection connection) => _connection = connection;
+        public RentalsQueryApi(DbConnection connection) => _connection = connection;
 
         [HttpGet]
         [Route("all")]
