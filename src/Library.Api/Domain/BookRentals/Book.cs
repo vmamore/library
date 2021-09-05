@@ -1,7 +1,6 @@
 namespace Library.Api.Domain.BookRentals
 {
     using Library.Api.Domain.Core;
-    using Library.Api.Domain.Shared.ValueObjects;
     using static Library.Api.Domain.BookRentals.Events.V1;
 
     public class Book : Entity

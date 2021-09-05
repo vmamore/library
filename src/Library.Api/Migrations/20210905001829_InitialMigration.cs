@@ -13,9 +13,6 @@ namespace Library.Api.Migrations
             migrationBuilder.EnsureSchema(
                 name: "rentals");
 
-            migrationBuilder.EnsureSchema(
-                name: "users");
-
             migrationBuilder.CreateTable(
                 name: "books",
                 schema: "inventory",
@@ -51,7 +48,7 @@ namespace Library.Api.Migrations
 
             migrationBuilder.CreateTable(
                 name: "librarians",
-                schema: "users",
+                schema: "rentals",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -122,8 +119,8 @@ namespace Library.Api.Migrations
                     DayToReturn = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
                     ReturnedDay = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
                     Status = table.Column<int>(type: "integer", nullable: false),
-                    LocatorId = table.Column<Guid>(type: "uuid", nullable: false),
-                    LibrarianId = table.Column<Guid>(type: "uuid", nullable: false)
+                    LocatorId = table.Column<Guid>(type: "uuid", nullable: true),
+                    LibrarianId = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -131,7 +128,7 @@ namespace Library.Api.Migrations
                     table.ForeignKey(
                         name: "FK_rentals_librarians_LibrarianId",
                         column: x => x.LibrarianId,
-                        principalSchema: "users",
+                        principalSchema: "rentals",
                         principalTable: "librarians",
                         principalColumn: "Id");
                     table.ForeignKey(
@@ -218,7 +215,7 @@ namespace Library.Api.Migrations
 
             migrationBuilder.DropTable(
                 name: "librarians",
-                schema: "users");
+                schema: "rentals");
 
             migrationBuilder.DropTable(
                 name: "locators",

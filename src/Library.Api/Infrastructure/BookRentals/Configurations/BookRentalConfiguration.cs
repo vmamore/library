@@ -30,12 +30,14 @@ namespace Library.Api.Infrastructure.BookRentals.Configurations
                 .Property(x => x.Status)
                 .IsRequired();
 
-            builder.HasOne("_locator")
+            builder.HasOne(x => x.Librarian)
                 .WithMany()
+                .HasForeignKey("LibrarianId")
                 .OnDelete(DeleteBehavior.NoAction);
 
-            builder.HasOne("_librarian")
+            builder.HasOne(x => x.Locator)
                 .WithMany()
+                .HasForeignKey("LocatorId")
                 .OnDelete(DeleteBehavior.NoAction);
 
             builder.HasMany(x => x.Books).WithMany(x => x.Rentals).

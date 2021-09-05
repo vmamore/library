@@ -1,9 +1,9 @@
-namespace Library.Api.Domain.Users
+namespace Library.Api.Domain.BookRentals.Users
 {
     using System;
     using Library.Api.Domain.Core;
     using Library.Api.Domain.Shared.ValueObjects;
-    using static Library.Api.Domain.Users.Events.V1;
+    using static Library.Api.Domain.BookRentals.Users.Events.V1;
 
     public class Librarian : AggregateRoot
     {

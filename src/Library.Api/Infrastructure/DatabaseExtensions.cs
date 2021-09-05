@@ -12,6 +12,8 @@ namespace Library.Api.Infrastructure
             {
                 options.UseNpgsql(connectionString);
                 options.EnableSensitiveDataLogging();
+                options.EnableDetailedErrors();
+                options.UseLoggerFactory(LoggerFactory.Create(builder => builder.AddConsole()));
             });
             return services;
         }

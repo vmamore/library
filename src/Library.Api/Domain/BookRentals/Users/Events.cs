@@ -1,4 +1,4 @@
-namespace Library.Api.Domain.Users
+namespace Library.Api.Domain.BookRentals.Users
 {
     using System;
     using Library.Api.Domain.Core;
@@ -7,12 +7,6 @@ namespace Library.Api.Domain.Users
     {
         public static class V1
         {
-            public class UserCreated : DomainEvent
-            {
-                public string Login { get; set; }
-                public string Password { get; set; }
-            }
-
             public class LibrarianCreated : DomainEvent
             {
                 public string FirstName { get; set; }

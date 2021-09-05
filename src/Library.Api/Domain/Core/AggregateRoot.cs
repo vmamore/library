@@ -22,5 +22,11 @@ namespace Library.Api.Domain.Core
         void IInternalEventHandler.Handle(DomainEvent @event) => When(@event);
 
         protected void ApplyToEntity(IInternalEventHandler entity, DomainEvent @event) => entity?.Handle(@event);
+
+        protected void ApplyToEntity(IEnumerable<IInternalEventHandler> entities, DomainEvent @event)
+        {
+            foreach (var entity in entities)
+                this.ApplyToEntity(entity, @event);
+        }
     }
 }

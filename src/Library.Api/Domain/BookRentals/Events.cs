@@ -16,8 +16,6 @@ namespace Library.Api.Domain.BookRentals
             {
                 public DateTime DayToReturn { get; set; }
                 public Guid[] BooksId { get; set; }
-                public Guid LocatorId { get; set; }
-                public Guid LibrarianId { get; set; }
                 public DateTime RentedDay { get; set; }
             }
 

@@ -2,8 +2,8 @@ namespace Library.Api.Domain.BookRentals
 {
     using System;
     using System.Collections.Generic;
+    using Library.Api.Domain.BookRentals.Users;
     using Library.Api.Domain.Core;
-    using Library.Api.Domain.Users;
     using static Library.Api.Domain.BookRentals.Events.V1;
 
     public class BookRental : AggregateRoot
@@ -22,12 +22,16 @@ namespace Library.Api.Domain.BookRentals
 
         public BookRentStatus Status { get; private set; }
 
-
         private List<Book> _books;
-        public Guid LocatorId { get; private set; }
-        private Locator _locator;
-        public Guid LibrarianId { get; private set; }
-        private Librarian _librarian;
+        public Locator Locator
+        {
+            get; private set;
+        }
+
+        public Librarian Librarian
+        {
+            get; private set;
+        }
 
         public IEnumerable<Book> Books => _books.AsReadOnly();
 
@@ -36,17 +40,15 @@ namespace Library.Api.Domain.BookRentals
         private BookRental(IEnumerable<Book> books, Locator locator, Librarian librarian, BookReturnDate dayToReturnBook)
         {
             _books = books.ToList();
-            _locator = locator;
-            _librarian = librarian;
+            Locator = locator;
+            Librarian = librarian;
             DayToReturn = dayToReturnBook;
 
             Apply(new RentalCreated
             {
                 RentedDay = DateTime.UtcNow,
                 BooksId = _books.Select(b => b.Id).ToArray(),
-                DayToReturn = dayToReturnBook,
-                LibrarianId = librarian.Id,
-                LocatorId = locator.Id
+                DayToReturn = dayToReturnBook
             });
         }
 
@@ -55,13 +57,22 @@ namespace Library.Api.Domain.BookRentals
             if (locator is null)
                 throw new InvalidOperationException("Locator must be valid.");
 
+            if (books.Count() == 0)
+                throw new ArgumentException("Cannot create rental with empty books.");
+
             if (books.Any(c => c.IsRented()))
                 throw new InvalidOperationException("Cannot rent a book that is rented.");
 
             return new BookRental(books, locator, librarian, BookReturnDate.Create(dayToReturnBooks));
         }
 
-        public void Returned(Guid librarianId) => throw new NotImplementedException();
+        public void Returned(Guid librarianId)
+        {
+            Apply(new RentalReturned
+            {
+                ReturnedDay = DateTime.UtcNow
+            });
+        }
 
         public override void When(DomainEvent @event)
         {
@@ -71,13 +82,13 @@ namespace Library.Api.Domain.BookRentals
                     Id = Guid.NewGuid();
                     Status = BookRentStatus.OnGoing;
                     RentedDay = e.RentedDay;
-                    LocatorId = e.LocatorId;
-                    LibrarianId = e.LibrarianId;
                     DayToReturn = BookReturnDate.Create(e.DayToReturn);
+                    ApplyToEntity(_books, e);
                     break;
                 case RentalReturned e:
                     Status = BookRentStatus.Done;
                     ReturnedDay = e.ReturnedDay;
+                    ApplyToEntity(_books, e);
                     break;
                 default:
                     break;

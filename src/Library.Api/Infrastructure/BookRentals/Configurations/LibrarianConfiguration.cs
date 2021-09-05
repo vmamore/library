@@ -1,6 +1,6 @@
-namespace Library.Api.Infrastructure.Users.Configurations
+namespace Library.Api.Infrastructure.BookRentals.Configurations
 {
-    using Library.Api.Domain.Users;
+    using Library.Api.Domain.BookRentals.Users;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -51,7 +51,7 @@ namespace Library.Api.Infrastructure.Users.Configurations
                     .HasColumnName("District");
             });
 
-            builder.ToTable("librarians", "users");
+            builder.ToTable("librarians", "rentals");
         }
     }
 }

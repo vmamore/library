@@ -1,14 +1,14 @@
-namespace Library.Api.Infrastructure.Users
+namespace Library.Api.Infrastructure.BookRentals
 {
     using System;
     using System.Threading.Tasks;
-    using Library.Api.Domain.Users;
+    using Library.Api.Domain.BookRentals.Users;
 
     public class LibrarianRepository : ILibrarianRepository, IDisposable
     {
-        private readonly UsersDbContext _dbContext;
+        private readonly BookRentalDbContext _dbContext;
 
-        public LibrarianRepository(UsersDbContext dbContext) => _dbContext = dbContext;
+        public LibrarianRepository(BookRentalDbContext dbContext) => _dbContext = dbContext;
 
         public async ValueTask Add(Librarian entity) => await _dbContext.Librarians.AddAsync(entity);
         public async ValueTask<Librarian> Load(Guid id) => await _dbContext.Librarians.FindAsync(id);

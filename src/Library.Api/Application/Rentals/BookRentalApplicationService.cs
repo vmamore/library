@@ -6,19 +6,25 @@ namespace Library.Api.Application.Rentals
     using Library.Api.Application.Core;
     using Library.Api.Application.Shared;
     using Library.Api.Domain.BookRentals;
-    using Library.Api.Domain.Users;
+    using Library.Api.Domain.BookRentals.Users;
     using static Library.Api.Application.Rentals.Commands;
 
     public class BookRentalApplicationService : IApplicationService
     {
-        private readonly IBookRentalRepository _repository;
+        private readonly IBookRentalRepository _bookRentalRepository;
         private readonly ILibrarianRepository _librarianRepository;
         private readonly ILocatorRepository _locatorRepository;
         private readonly IHolidayClient _holidayClient;
 
-        public BookRentalApplicationService(IBookRentalRepository repository, IHolidayClient holidayClient)
+        public BookRentalApplicationService(
+            IBookRentalRepository bookRentalRepository,
+            ILibrarianRepository librarianRepository,
+            ILocatorRepository locatorRepository,
+            IHolidayClient holidayClient)
         {
-            _repository = repository;
+            _bookRentalRepository = bookRentalRepository;
+            _librarianRepository = librarianRepository;
+            _locatorRepository = locatorRepository;
             _holidayClient = holidayClient;
         }
 
@@ -37,13 +43,15 @@ namespace Library.Api.Application.Rentals
 
             var locator = await _locatorRepository.Load(command.LocatorId);
 
-            var books = await _repository.LoadBooks(command.BooksId);
+            var books = await _bookRentalRepository.LoadBooks(command.BooksId);
 
             var date = await _holidayClient.GetNextBusinessDate();
 
-            var newBook = await BookRental.Create(librarian, locator, books, date);
+            var bookRental = await BookRental.Create(librarian, locator, books, date);
 
-            await _repository.Add(newBook);
+            await _bookRentalRepository.Add(bookRental);
+
+            await _bookRentalRepository.Commit();
         }
 
         private async Task HandleUpdate(
@@ -51,15 +59,17 @@ namespace Library.Api.Application.Rentals
             Action<BookRental> operation
         )
         {
-            var book = await _repository
+            var bookRental = await _bookRentalRepository
                 .Load(bookRentalId);
 
-            if (book == null)
+            if (bookRental == null)
                 throw new InvalidOperationException(
                     $"Entity with id {bookRentalId} cannot be found"
                 );
 
-            operation(book);
+            operation(bookRental);
+
+            await _bookRentalRepository.Commit();
         }
     }
 }

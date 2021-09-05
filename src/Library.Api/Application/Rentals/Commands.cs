@@ -8,8 +8,8 @@ namespace Library.Api.Application.Rentals
     {
         public static class V1
         {
-            public record RentBooks([Required] Guid[] BooksId, [Required] Guid PersonId, [Required] Guid LibrarianId, [Required] Guid LocatorId) : ICommand;
-            public record ReturnBookRental([Required] Guid BookRentalIdId, [Required] string Condition, [Required] Guid LibrarianId) : ICommand;
+            public record RentBooks([Required] Guid[] BooksId, [Required] Guid LibrarianId, [Required] Guid LocatorId) : ICommand;
+            public record ReturnBookRental(Guid BookRentalIdId, [Required] string Condition, [Required] Guid LibrarianId) : ICommand;
         }
     }
 }
