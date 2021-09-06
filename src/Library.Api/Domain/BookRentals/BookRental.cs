@@ -23,6 +23,7 @@ namespace Library.Api.Domain.BookRentals
         public BookRentStatus Status { get; private set; }
 
         private List<Book> _books;
+
         public Locator Locator
         {
             get; private set;
@@ -52,7 +53,7 @@ namespace Library.Api.Domain.BookRentals
             });
         }
 
-        public static async Task<BookRental> Create(Librarian librarian, Locator locator, IEnumerable<Book> books, DateTime dayToReturnBooks)
+        public static BookRental Create(Librarian librarian, Locator locator, IEnumerable<Book> books, DateTime dayToReturnBooks)
         {
             if (locator is null)
                 throw new InvalidOperationException("Locator must be valid.");

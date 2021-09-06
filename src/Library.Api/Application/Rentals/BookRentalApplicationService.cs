@@ -47,7 +47,7 @@ namespace Library.Api.Application.Rentals
 
             var date = await _holidayClient.GetNextBusinessDate();
 
-            var bookRental = await BookRental.Create(librarian, locator, books, date);
+            var bookRental = BookRental.Create(librarian, locator, books, date);
 
             await _bookRentalRepository.Add(bookRental);
 
