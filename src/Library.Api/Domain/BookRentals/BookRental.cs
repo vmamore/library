@@ -67,7 +67,7 @@ namespace Library.Api.Domain.BookRentals
             return new BookRental(books, locator, librarian, BookReturnDate.Create(dayToReturnBooks));
         }
 
-        public void Returned(Guid librarianId)
+        public void Returned()
         {
             Apply(new RentalReturned
             {
