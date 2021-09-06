@@ -35,17 +35,18 @@ namespace Library.UnitTests.BookRentals
             bookRental.Books.Should().HaveCount(Books.Count());
             var rentedEvent = bookRental.GetChanges().Last();
             rentedEvent.Should().BeOfType<RentalCreated>();
+            bookRental.Books.All(b => b.Status == Book.BookStatus.Rented).Should().BeTrue();
         }
 
-        //[Fact]
-        //public void Returned_Book()
-        //{
-        //    var librarianId = Guid.NewGuid();
-        //    var personId = Guid.NewGuid();
-        //    Func<Task<DateTime>> dayToReturn = () => Task.FromResult(DateTime.UtcNow.AddDays(5));
-        //    Book.Rent(personId, librarianId, dayToReturn);
-        //    Book.Returned(librarianId, "It's fine");
-        //    Book.Status.Should().Be(BookStatus.Available);
-        //}
+        [Fact]
+        public void Returned_Book()
+        {
+            var bookRental = BookRental.Create(Librarian, Locator, Books, DateTime.UtcNow.AddDays(14));
+            bookRental.Status.Should().Be(BookRentStatus.OnGoing);
+            bookRental.Returned();
+            var rentalReturnedEvent = bookRental.GetChanges().Last();
+            rentalReturnedEvent.Should().BeOfType<RentalReturned>();
+            bookRental.Status.Should().Be(BookRentStatus.Done);
+        }
     }
 }
