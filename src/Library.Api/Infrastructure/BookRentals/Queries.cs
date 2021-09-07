@@ -17,14 +17,17 @@ namespace Library.Api.Infrastructure.BookRentals
             var offset = (query.page - 1) * rows;
 
             var reader = await connection.QueryMultipleAsync(
-                "SELECT count(*) FROM \"rentals\".\"books\";" +
+                "SELECT count(*) FROM \"rentals\".\"books\"" +
+                "WHERE \"Title\" ILIKE CONCAT('%', @title, '%');" +
                 "SELECT \"Id\", \"Title\", \"Author\"" +
-                "FROM \"rentals\".\"books\"" +
+                "FROM \"rentals\".\"books\" " +
+                "WHERE \"Title\" ILIKE CONCAT('%', @title, '%') " +
                 "LIMIT @rows " +
                 "OFFSET @offset", new
                 {
                     offset,
-                    rows
+                    rows,
+                    query.title
                 });
 
             return new GetAllBooksPaginated()

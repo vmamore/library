@@ -6,7 +6,7 @@ namespace Library.Api.Application.Rentals
 
     public static class QueryModels
     {
-        public record GetAllBooks([FromQuery] int page = 1) { }
+        public record GetAllBooks([FromQuery] int page = 1, [FromQuery] string title = null) { }
 
         public record GetBookById([FromRoute][Required] Guid Id);
     }
