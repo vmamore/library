@@ -12,9 +12,20 @@ namespace Library.Api.Infrastructure.BookRentals
         public static Task<IEnumerable<BookListItem>> Query(
             this DbConnection connection,
             QueryModels.GetAllBooks query)
-            => connection.QueryAsync<BookListItem>(
+        {
+            var rows = 10;
+            var offset = (query.page - 1) * rows;
+
+            return connection.QueryAsync<BookListItem>(
                 "SELECT \"Id\", \"Title\", \"Author\"" +
-                "FROM \"rentals\".\"books\"");
+                "FROM \"rentals\".\"books\"" +
+                "LIMIT @rows " +
+                "OFFSET @offset", new
+                {
+                    offset,
+                    rows
+                });
+        }
 
         public static Task<BookItem> Query(
             this DbConnection connection,
