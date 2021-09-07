@@ -5,11 +5,19 @@ namespace Library.Api.Infrastructure.BookRentals
 
     public class ReadModels
     {
-        public class BookListItem
+        public class GetAllBooksPaginated
         {
-            public Guid Id { get; set; }
-            public string Title { get; set; }
-            public string Author { get; set; }
+            public IEnumerable<BookListItem> Books { get; set; }
+            public int CurrentPage { get; set; }
+            public long TotalCount { get; set; }
+            public long TotalPages => (int)Math.Ceiling((TotalCount / (decimal)10));
+
+            public class BookListItem
+            {
+                public Guid Id { get; set; }
+                public string Title { get; set; }
+                public string Author { get; set; }
+            }
         }
 
         public class BookItem

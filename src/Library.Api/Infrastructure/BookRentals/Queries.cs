@@ -9,14 +9,15 @@ namespace Library.Api.Infrastructure.BookRentals
 
     public static class Queries
     {
-        public static Task<IEnumerable<BookListItem>> Query(
+        public static async Task<GetAllBooksPaginated> Query(
             this DbConnection connection,
             QueryModels.GetAllBooks query)
         {
             var rows = 10;
             var offset = (query.page - 1) * rows;
 
-            return connection.QueryAsync<BookListItem>(
+            var reader = await connection.QueryMultipleAsync(
+                "SELECT count(*) FROM \"rentals\".\"books\";" +
                 "SELECT \"Id\", \"Title\", \"Author\"" +
                 "FROM \"rentals\".\"books\"" +
                 "LIMIT @rows " +
@@ -25,6 +26,13 @@ namespace Library.Api.Infrastructure.BookRentals
                     offset,
                     rows
                 });
+
+            return new GetAllBooksPaginated()
+            {
+                CurrentPage = query.page,
+                TotalCount = await reader.ReadFirstAsync<long>(),
+                Books = await reader.ReadAsync<GetAllBooksPaginated.BookListItem>()
+            };
         }
 
         public static Task<BookItem> Query(
