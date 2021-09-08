@@ -14,6 +14,7 @@ namespace Library.Api.Domain.Inventory
                 public string ReleasedYear { get; set; }
                 public int Pages { get; set; }
                 public int Version { get; set; }
+                public string PhotoUrl { get; internal set; }
             }
         }
     }

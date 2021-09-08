@@ -23,6 +23,11 @@ namespace Library.Api.Infrastructure.BookRentals.Configurations
                 .HasMaxLength(150);
 
             builder
+                .Property(x => x.PhotoUrl)
+                .IsRequired()
+                .HasMaxLength(450);
+
+            builder
                 .Property(x => x.Status)
                 .IsRequired();
 

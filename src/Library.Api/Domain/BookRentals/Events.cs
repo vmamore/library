@@ -11,6 +11,7 @@ namespace Library.Api.Domain.BookRentals
             {
                 public string Author { get; set; }
                 public string Title { get; set; }
+                public string PhotoUrl { get; set; }
             }
             public class RentalCreated : DomainEvent
             {

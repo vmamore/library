@@ -9,7 +9,7 @@ namespace Library.Api.Domain.Inventory
     {
         private Book() => this.Id = Guid.NewGuid();
 
-        public static Book Create(string title, string author, string releasedYear, string isbn, int pages, int version)
+        public static Book Create(string title, string author, string releasedYear, string isbn, int pages, int version, string photoUrl)
         {
             var book = new Book();
 
@@ -20,7 +20,8 @@ namespace Library.Api.Domain.Inventory
                 ReleasedYear = releasedYear,
                 Version = version,
                 Pages = pages,
-                ISBN = isbn
+                ISBN = isbn,
+                PhotoUrl = photoUrl
             });
 
             return book;
@@ -30,6 +31,7 @@ namespace Library.Api.Domain.Inventory
         public string Title { get; private set; }
         public string Author { get; private set; }
         public string ReleasedYear { get; private set; }
+        public string PhotoUrl { get; private set; }
 
         public int Pages { get; private set; }
         public int Version { get; private set; }
@@ -46,6 +48,7 @@ namespace Library.Api.Domain.Inventory
                     this.Pages = e.Pages;
                     this.Version = e.Version;
                     this.ISBN = new ISBN(e.ISBN);
+                    this.PhotoUrl = e.PhotoUrl;
                     break;
                 default:
                     break;

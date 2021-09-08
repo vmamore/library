@@ -23,7 +23,7 @@ namespace Library.Api.Application.Inventories
 
         private async Task HandleCreate(V1.RegisterBook command)
         {
-            var newBook = Book.Create(command.Title, command.Author, command.ReleasedYear, command.ISBN, command.Pages, command.Version);
+            var newBook = Book.Create(command.Title, command.Author, command.ReleasedYear, command.ISBN, command.Pages, command.Version, command.PhotoUrl);
 
             await _repository.Add(newBook);
 

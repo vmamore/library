@@ -20,7 +20,8 @@ namespace Library.Api.Infrastructure.Integrations
                         new IntegrationEvents.BookRegistered
                         {
                             Title = e.Title,
-                            Author = e.Author
+                            Author = e.Author,
+                            PhotoUrl = e.PhotoUrl
                         });
                     return;
                 default:

@@ -14,7 +14,7 @@ namespace Library.Api.Application.Rentals
 
         public async Task Handle(BookRegistered bookRegisteredEvent)
         {
-            var newBook = Book.Create(bookRegisteredEvent.Title, bookRegisteredEvent.Author);
+            var newBook = Book.Create(bookRegisteredEvent.Title, bookRegisteredEvent.Author, bookRegisteredEvent.PhotoUrl);
 
             await _repository.Add(newBook);
 

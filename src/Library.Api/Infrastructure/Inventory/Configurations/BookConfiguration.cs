@@ -28,6 +28,11 @@ namespace Library.Api.Infrastructure.Inventory.Configurations
                 .HasMaxLength(12);
 
             builder
+                .Property(x => x.PhotoUrl)
+                .IsRequired()
+                .HasMaxLength(450);
+
+            builder
                 .OwnsOne(x => x.ISBN, x =>
                 {
                     x.Property(x => x.Value)

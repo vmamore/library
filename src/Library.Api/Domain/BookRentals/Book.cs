@@ -12,14 +12,15 @@ namespace Library.Api.Domain.BookRentals
         }
 
         private Book() { }
-        public static Book Create(string title, string author)
+        public static Book Create(string title, string author, string photoUrl)
         {
             var book = new Book();
 
             book.Apply(new BookRegistered
             {
                 Title = title,
-                Author = author
+                Author = author,
+                PhotoUrl = photoUrl
             });
 
             return book;
@@ -28,6 +29,7 @@ namespace Library.Api.Domain.BookRentals
         public Guid Id { get; private set; }
         public string Title { get; private set; }
         public string Author { get; private set; }
+        public string PhotoUrl { get; private set; }
         public BookStatus Status { get; private set; }
         public IEnumerable<BookRental> Rentals { get; private set; }
 
@@ -42,6 +44,7 @@ namespace Library.Api.Domain.BookRentals
                     this.Status = BookStatus.Free;
                     this.Title = e.Title;
                     this.Author = e.Author;
+                    this.PhotoUrl = e.PhotoUrl;
                     break;
                 case RentalCreated:
                     this.Status = BookStatus.Rented;

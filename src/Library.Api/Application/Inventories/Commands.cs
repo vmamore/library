@@ -7,7 +7,7 @@ namespace Library.Api.Application.Inventories
     {
         public static class V1
         {
-            public record RegisterBook([Required] string Title, [Required] string Author, [Required] string ReleasedYear, [Required] string ISBN, int Pages, int Version) : ICommand;
+            public record RegisterBook([Required] string Title, [Required] string Author, [Required] string ReleasedYear, [Required] string ISBN, string PhotoUrl, int Pages, int Version) : ICommand;
         }
     }
 }

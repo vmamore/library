@@ -11,7 +11,7 @@ namespace Library.Api.Infrastructure.BookRentals
 
         public async Task Handle(IntegrationEvents.BookRegistered bookRegistered)
         {
-            var book = Book.Create(bookRegistered.Title, bookRegistered.Author);
+            var book = Book.Create(bookRegistered.Title, bookRegistered.Author, bookRegistered.PhotoUrl);
 
             await _context.Books.AddAsync(book);
 
