@@ -14,9 +14,9 @@ namespace Library.UnitTests.BookRentals
         public BookRentalTests()
             => Books = new List<Book>()
             {
-                Book.Create("Fight Club", "Chuck Palahniuk"),
-                Book.Create("Fight Club", "Chuck Palahniuk"),
-                Book.Create("Fight Club", "Chuck Palahniuk"),
+                Book.Create("Fight Club", "Chuck Palahniuk", "https://photo"),
+                Book.Create("Fight Club", "Chuck Palahniuk", "https://photo"),
+                Book.Create("Fight Club", "Chuck Palahniuk", "https://photo"),
             };
 
         Librarian Librarian { get; } = Librarian.Create("Vinicius", "Mamoré", new DateTime(1997, 10, 25),

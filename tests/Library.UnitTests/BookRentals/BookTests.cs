@@ -9,7 +9,8 @@ namespace Library.UnitTests.BookRentals
         public BookTests()
             => Book = Book.Create(
                 "Fight Club",
-                "Chuck Palahniuk");
+                "Chuck Palahniuk",
+                "https://photo");
 
         Book Book { get; }
 

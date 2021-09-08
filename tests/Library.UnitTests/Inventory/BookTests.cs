@@ -14,7 +14,8 @@ namespace Library.UnitTests.Inventory
                 "1996",
                 "ISBN",
                 208,
-                1);
+                1,
+                "https://photo");
 
         Book Book { get; }
 
