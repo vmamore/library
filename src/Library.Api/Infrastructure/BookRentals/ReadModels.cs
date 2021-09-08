@@ -17,7 +17,7 @@ namespace Library.Api.Infrastructure.BookRentals
                 public Guid Id { get; set; }
                 public string Title { get; set; }
                 public string Author { get; set; }
-                public string PhotoUrl { get; set; } = "https://images-na.ssl-images-amazon.com/images/I/81-4eCJEtjL.jpg";
+                public string PhotoUrl { get; set; }
             }
         }
 

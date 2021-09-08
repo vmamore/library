@@ -1,6 +1,5 @@
 namespace Library.Api.Infrastructure.BookRentals
 {
-    using System.Collections.Generic;
     using System.Data.Common;
     using System.Threading.Tasks;
     using Dapper;
@@ -19,7 +18,7 @@ namespace Library.Api.Infrastructure.BookRentals
             var reader = await connection.QueryMultipleAsync(
                 "SELECT count(*) FROM \"rentals\".\"books\"" +
                 "WHERE \"Title\" ILIKE CONCAT('%', @title, '%');" +
-                "SELECT \"Id\", \"Title\", \"Author\"" +
+                "SELECT \"Id\", \"Title\", \"Author\", \"PhotoUrl\"" +
                 "FROM \"rentals\".\"books\" " +
                 "WHERE \"Title\" ILIKE CONCAT('%', @title, '%') " +
                 "LIMIT @rows " +
