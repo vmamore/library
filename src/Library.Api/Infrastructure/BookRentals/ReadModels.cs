@@ -21,22 +21,20 @@ namespace Library.Api.Infrastructure.BookRentals
             }
         }
 
-        public class BookItem
+
+        public class BookRental
         {
             public Guid Id { get; set; }
-            public string Title { get; set; }
-            public string Author { get; set; }
-            public ICollection<BookRentItem> Rents { get; set; }
-
-            public class BookRentItem
+            public DateTime RentedDay { get; set; }
+            public DateTime DayToReturn { get; set; }
+            public DateTime? ReturnedDay { get; set; }
+            public string Status { get; set; }
+            public string LibrarianName { get; set; }
+            public ICollection<BookRented> Books { get; set; }
+            public class BookRented
             {
-                public DateTime RentedDay { get; set; }
-                public DateTime DayToReturn { get; set; }
-                public DateTime ReturnedDay { get; set; }
-                public string Condition { get; set; }
-                public string Status { get; set; }
-                public Guid PersonId { get; set; }
-
+                public string Title { get; set; }
+                public string Author { get; set; }
             }
         }
     }

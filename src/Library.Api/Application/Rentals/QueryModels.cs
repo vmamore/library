@@ -9,5 +9,7 @@ namespace Library.Api.Application.Rentals
         public record GetAllBooks([FromQuery] int page = 1, [FromQuery] string title = null) { }
 
         public record GetBookById([FromRoute][Required] Guid Id);
+
+        public record GetRentalByLocator([FromRoute][Required] Guid locatorId);
     }
 }

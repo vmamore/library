@@ -37,12 +37,47 @@ namespace Library.Api.Infrastructure.BookRentals
             };
         }
 
-        public static Task<BookItem> Query(
+        public static async Task<BookRental> Query(
             this DbConnection connection,
-            QueryModels.GetBookById query)
-            => connection.QueryFirstOrDefaultAsync<BookItem>(
-                 "SELECT \"Id\", \"Title\", \"Author\"" +
-                 "FROM \"rentals\".\"books\" Where \"Id\" = @id",
-                 new { id = query.Id });
+            QueryModels.GetRentalByLocator query)
+        {
+            var bookRentalDictionary = new Dictionary<Guid, BookRental>();
+
+            var list = await connection.QueryAsync<BookRental, BookRental.BookRented, BookRental>(
+                 "SELECT " +
+                    "r.\"Id\"," +
+                    "r.\"RentedDay\"," +
+                    "r.\"DayToReturn\"," +
+                    "r.\"ReturnedDay\", " +
+                    "CASE " +
+                        "WHEN r.\"Status\" = 1 THEN 'On Going'" +
+                        "WHEN r.\"Status\" = 2 THEN 'Done'" +
+                        "WHEN r.\"Status\" = 3 THEN 'Late'" +
+                    "END \"Status\"," +
+                    "CONCAT(l.\"FirstName\",' ', l.\"LastName\") as \"LibrarianName\"," +
+                    "b.\"Title\"," +
+                    "b.\"Author\"" +
+                "FROM \"rentals\".\"rentals\" r " +
+                "INNER JOIN \"rentals\".\"librarians\" l ON r.\"LibrarianId\" = l.\"Id\"" +
+                "INNER JOIN \"rentals\".\"booksrentals\" br ON br.\"BookRentalId\" = r.\"Id\"" +
+                "INNER JOIN \"rentals\".\"books\" b ON b.\"Id\" = br.\"BookId\"" +
+                "WHERE r.\"LocatorId\" = @locatorId",
+                 (bookRental, bookRented) =>
+                 {
+                     BookRental bookRentalEntry;
+
+                     if (!bookRentalDictionary.TryGetValue(bookRental.Id, out bookRentalEntry))
+                     {
+                         bookRentalEntry = bookRental;
+                         bookRentalEntry.Books = new List<BookRental.BookRented>();
+                         bookRentalDictionary.Add(bookRentalEntry.Id, bookRentalEntry);
+                     }
+
+                     bookRentalEntry.Books.Add(bookRented);
+                     return bookRentalEntry;
+                 }, new { query.locatorId }, splitOn: "Title");
+
+            return bookRentalDictionary.First().Value;
+        }
     }
 }
