@@ -22,7 +22,7 @@ public class Startup
     public void ConfigureServices(IServiceCollection services)
     {
         const string connectionString =
-            "Server=localhost;Port=5432;Database=library_db;User Id=postgres;Password=post_pwd123;Include Error Detail=true;";
+            "Server=library_db;Port=5432;Database=library_db;User Id=postgres;Password=post_pwd123;Include Error Detail=true;";
         services.AddEntityFrameworkNpgsql();
         services.AddPostgresDbContext<InventoryDbContext>(connectionString);
         services.AddPostgresDbContext<BookRentalDbContext>(connectionString);
