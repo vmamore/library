@@ -77,6 +77,11 @@ namespace Library.Api.Infrastructure.BookRentals
                      return bookRentalEntry;
                  }, new { query.locatorId }, splitOn: "Title");
 
+            if (list.Any())
+            {
+                return null;
+            }
+
             return bookRentalDictionary.First().Value;
         }
     }
