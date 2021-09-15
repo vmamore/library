@@ -7,6 +7,7 @@ using Library.Api.Application.Shared;
 using Library.Api.Domain.BookRentals;
 using Library.Api.Domain.BookRentals.Users;
 using Library.Api.Domain.Inventory;
+using Library.Api.Domain.Shared;
 using Library.Api.Infrastructure;
 using Library.Api.Infrastructure.BookRentals;
 using Library.Api.Infrastructure.Clients;
@@ -41,7 +42,7 @@ public class Startup
         services.AddScoped<IIntegrationEventsMapper, Mapper>();
         services.AddScoped<IIntegrationEventHandler, IntegrationEventHandler>();
         services.AddScoped<BookRentalsIntegrationEventHandler>();
-
+        services.AddSingleton<ISystemClock, SystemClock>();
 
         services.AddMvc();
         services.AddSwaggerGen(c => c.SwaggerDoc("v1",
