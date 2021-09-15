@@ -1,0 +1,1 @@
+dotnet ef migrations script -o ../sql/migrations.sql --project ../src/Library.Api/Library.Api.csproj --context BookRentalDbContext --idempotent -- "Server=localhost;Port=5432;Database=library_db;User Id=postgres;Password=post_pwd123;"
