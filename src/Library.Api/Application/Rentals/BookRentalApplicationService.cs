@@ -7,6 +7,7 @@ namespace Library.Api.Application.Rentals
     using Library.Api.Application.Shared;
     using Library.Api.Domain.BookRentals;
     using Library.Api.Domain.BookRentals.Users;
+    using Library.Api.Domain.Shared;
     using static Library.Api.Application.Rentals.Commands;
 
     public class BookRentalApplicationService : IApplicationService
@@ -15,17 +16,20 @@ namespace Library.Api.Application.Rentals
         private readonly ILibrarianRepository _librarianRepository;
         private readonly ILocatorRepository _locatorRepository;
         private readonly IHolidayClient _holidayClient;
+        private readonly ISystemClock _clock;
 
         public BookRentalApplicationService(
             IBookRentalRepository bookRentalRepository,
             ILibrarianRepository librarianRepository,
             ILocatorRepository locatorRepository,
-            IHolidayClient holidayClient)
+            IHolidayClient holidayClient,
+            ISystemClock clock)
         {
             _bookRentalRepository = bookRentalRepository;
             _librarianRepository = librarianRepository;
             _locatorRepository = locatorRepository;
             _holidayClient = holidayClient;
+            _clock = clock;
         }
 
         public Task Handle(ICommand command) => command switch
@@ -33,7 +37,7 @@ namespace Library.Api.Application.Rentals
             V1.RentBooks cmd =>
                 HandleCreate(cmd),
             V1.ReturnBookRental cmd =>
-                HandleUpdate(cmd.BookRentalIdId, c => c.Returned()),
+                HandleUpdate(cmd.BookRentalIdId, c => c.Returned(_clock)),
             _ => Task.CompletedTask
         };
 
