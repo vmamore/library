@@ -2,6 +2,7 @@ namespace Library.Api.Domain.BookRentals
 {
     using System;
     using Library.Api.Domain.Core;
+    using Library.Api.Domain.Shared;
     using static Library.Api.Domain.BookRentals.Events.V1;
 
     public class Penalty : Entity
@@ -16,6 +17,8 @@ namespace Library.Api.Domain.BookRentals
         public DateTime CreatedDate { get; private set; }
         public DateTime EndDate { get; private set; }
         public string Reason { get; set; }
+
+        public bool IsActive(ISystemClock _clock) => this.EndDate > _clock.UtcNow;
         protected override void When(DomainEvent @event)
         {
             switch (@event)

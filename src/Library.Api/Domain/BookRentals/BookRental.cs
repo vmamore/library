@@ -4,10 +4,13 @@ namespace Library.Api.Domain.BookRentals
     using System.Collections.Generic;
     using Library.Api.Domain.BookRentals.Users;
     using Library.Api.Domain.Core;
+    using Library.Api.Domain.Shared;
     using static Library.Api.Domain.BookRentals.Events.V1;
 
     public class BookRental : AggregateRoot
     {
+        private const int DEFAULT_PENALTY_DAYS = 7;
+
         public Guid Id { get; private set; }
         public enum BookRentStatus
         {
@@ -67,11 +70,20 @@ namespace Library.Api.Domain.BookRentals
             return new BookRental(books, locator, librarian, BookReturnDate.Create(dayToReturnBooks));
         }
 
-        public void Returned()
+        public void Returned(ISystemClock clock)
         {
+            if (clock.UtcNow > DayToReturn)
+            {
+                this.Locator.Apply(new LocatorPenalized
+                {
+                    PenalizedDate = clock.UtcNow,
+                    PenaltyEnd = clock.UtcNow.AddDays(DEFAULT_PENALTY_DAYS),
+                    Reason = $"Late return. Expected: {DayToReturn.Value.Date} Day Returned: {clock.UtcNow.Date}"
+                });
+            }
             Apply(new RentalReturned
             {
-                ReturnedDay = DateTime.UtcNow
+                ReturnedDay = clock.UtcNow
             });
         }
 
@@ -90,6 +102,7 @@ namespace Library.Api.Domain.BookRentals
                     Status = BookRentStatus.Done;
                     ReturnedDay = e.ReturnedDay;
                     ApplyToEntity(_books, e);
+                    ApplyToEntity(Locator, e);
                     break;
                 default:
                     break;

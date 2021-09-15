@@ -3,6 +3,7 @@ namespace Library.Api.Domain.BookRentals
     using System;
     using System.Collections.Generic;
     using Library.Api.Domain.Core;
+    using Library.Api.Domain.Shared;
     using Library.Api.Domain.Shared.ValueObjects;
     using static Library.Api.Domain.BookRentals.Events.V1;
 
@@ -16,6 +17,8 @@ namespace Library.Api.Domain.BookRentals
         public CPF Cpf { get; private set; }
 
         private List<Penalty> _penalties;
+
+        public bool IsPenalized(ISystemClock _clock) => _penalties != null && _penalties.Any(c => c.IsActive(_clock));
 
         private Locator() { }
 
