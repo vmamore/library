@@ -8,10 +8,15 @@ services:
     ports: 
       - 5001:80
     restart: on-failure
+    depends_on: 
+      - library_db
 
   library_db:
     image: postgres
     restart: always
+    volumes: 
+      - ./sql/migrations.sql:/docker-entrypoint-initdb.d/1-migrations.sql
+      - ./sql/data.sql:/docker-entrypoint-initdb.d/2-data.sql
     ports:
       - 5432:5432
     environment:
