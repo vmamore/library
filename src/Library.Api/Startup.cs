@@ -13,7 +13,9 @@ using Library.Api.Infrastructure.BookRentals;
 using Library.Api.Infrastructure.Clients;
 using Library.Api.Infrastructure.Integrations;
 using Library.Api.Infrastructure.Inventory;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Npgsql;
@@ -22,29 +24,51 @@ using IntegrationEventHandler = Library.Api.Infrastructure.Integrations.Integrat
 
 public class Startup
 {
+    IConfiguration Configuration;
+
+    public Startup(IConfiguration configuration) => Configuration = configuration;
+
     public void ConfigureServices(IServiceCollection services)
     {
-        const string connectionString =
-            "Server=library_db;Port=5432;Database=library_db;User Id=postgres;Password=post_pwd123;Include Error Detail=true;";
+        var connectionString = Configuration.GetConnectionString("LibraryDb");
+        services.AddHealthChecks()
+                .AddNpgSql(connectionString);
         services.AddEntityFrameworkNpgsql();
         services.AddPostgresDbContext<InventoryDbContext>(connectionString);
         services.AddPostgresDbContext<BookRentalDbContext>(connectionString);
         services.AddScoped<DbConnection>(c => new NpgsqlConnection(connectionString));
-        services.AddHealthChecks()
-                .AddNpgSql(connectionString);
+
+        services.AddSingleton<ISystemClock, SystemClock>();
+
         services.AddScoped<IHolidayClient, HolidayClient>();
+
         services.AddScoped<IBookRentalRepository, BookRentalRepository>();
         services.AddScoped<IBookRepository, BookRepository>();
         services.AddScoped<ILocatorRepository, LocatorRepository>();
         services.AddScoped<ILibrarianRepository, LibrarianRepository>();
+
         services.AddScoped<BookRentalApplicationService>();
         services.AddScoped<BookApplicationService>();
         services.AddScoped<LocatorApplicationService>();
         services.AddScoped<LibrarianApplicationService>();
+
         services.AddScoped<IIntegrationEventsMapper, Mapper>();
         services.AddScoped<IIntegrationEventHandler, IntegrationEventHandler>();
         services.AddScoped<BookRentalsIntegrationEventHandler>();
-        services.AddSingleton<ISystemClock, SystemClock>();
+
+        var keycloackSettings = Configuration.GetSection(KeycloackSettings.Path).Get<KeycloackSettings>();
+
+        services.AddAuthentication(options =>
+        {
+            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        })
+                .AddJwtBearer(options =>
+                {
+                    options.Authority = $"{keycloackSettings.Authority}{keycloackSettings.LibraryRealmPath}";
+                    options.Audience = keycloackSettings.Audience;
+                    options.RequireHttpsMetadata = false;
+                });
 
         services.AddMvc();
         services.AddSwaggerGen(c => c.SwaggerDoc("v1",
@@ -57,6 +81,8 @@ public class Startup
 
     public void Configure(IApplicationBuilder app)
     {
+        app.UseAuthorization();
+        app.UseAuthentication();
         app.UseRouting();
         app.UseHttpLogging();
         app.UseCors(x => x

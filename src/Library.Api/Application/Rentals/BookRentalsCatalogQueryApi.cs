@@ -4,8 +4,10 @@ namespace Library.Api.Application.Rentals
     using System.Threading.Tasks;
     using Library.Api.Infrastructure;
     using Library.Api.Infrastructure.BookRentals;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
+    [Authorize]
     [Route("rentals/books")]
     public class BookRentalsCatalogQueryApi : Controller
     {
