@@ -81,9 +81,9 @@ public class Startup
 
     public void Configure(IApplicationBuilder app)
     {
-        app.UseAuthorization();
-        app.UseAuthentication();
+        app.UseMiddleware<ExceptionHandlerMiddleware>();
         app.UseRouting();
+        app.UseAuthorization();
         app.UseHttpLogging();
         app.UseCors(x => x
                 .AllowAnyOrigin()
