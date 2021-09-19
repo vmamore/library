@@ -13,6 +13,8 @@ using Library.Api.Infrastructure.BookRentals;
 using Library.Api.Infrastructure.Clients;
 using Library.Api.Infrastructure.Integrations;
 using Library.Api.Infrastructure.Inventory;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Npgsql;
 using BookRentalsIntegrationEventHandler = Library.Api.Infrastructure.BookRentals.IntegrationEventHandler;

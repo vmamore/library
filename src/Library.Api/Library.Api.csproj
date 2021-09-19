@@ -2,10 +2,10 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <LangVersion>preview</LangVersion>
     <UserSecretsId>17b8f76b-a3a2-4986-9886-9e1b129e039d</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>..\..</DockerfileContext>
+    <ImplicitUsings>enabled</ImplicitUsings>
   </PropertyGroup>
 
   <ItemGroup>

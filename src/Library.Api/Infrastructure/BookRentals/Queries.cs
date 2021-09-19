@@ -1,6 +1,9 @@
 namespace Library.Api.Infrastructure.BookRentals
 {
+    using System;
+    using System.Collections.Generic;
     using System.Data.Common;
+    using System.Linq;
     using System.Threading.Tasks;
     using Dapper;
     using Library.Api.Application.Rentals;

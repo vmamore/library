@@ -1,5 +1,6 @@
 namespace Library.Api.Infrastructure.BookRentals.Configurations
 {
+    using System.Collections.Generic;
     using Library.Api.Domain.BookRentals;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;

@@ -2,6 +2,7 @@ namespace Library.Api.Domain.BookRentals
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Library.Api.Domain.Core;
     using Library.Api.Domain.Shared;
     using Library.Api.Domain.Shared.ValueObjects;

@@ -1,5 +1,7 @@
 namespace Library.Api.Domain.BookRentals
 {
+    using System;
+    using System.Collections.Generic;
     using Library.Api.Domain.Core;
     using static Library.Api.Domain.BookRentals.Events.V1;
 

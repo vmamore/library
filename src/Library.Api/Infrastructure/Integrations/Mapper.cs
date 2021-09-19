@@ -1,5 +1,8 @@
 namespace Library.Api.Infrastructure.Integrations
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
     using Library.Api.Application.Inventories;
     using Library.Api.Domain.Core;
     using static Library.Api.Domain.Inventory.Events.V1;

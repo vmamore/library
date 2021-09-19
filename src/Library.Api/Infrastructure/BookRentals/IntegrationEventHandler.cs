@@ -1,5 +1,6 @@
 namespace Library.Api.Infrastructure.BookRentals
 {
+    using System.Threading.Tasks;
     using Library.Api.Domain.BookRentals;
     using Library.Api.Infrastructure.Integrations;
 

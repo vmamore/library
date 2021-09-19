@@ -1,5 +1,7 @@
 namespace Library.Api.Domain.Shared.ValueObjects
 {
+    using System;
+
     public class ISBN
     {
         public string Value { get; init; }

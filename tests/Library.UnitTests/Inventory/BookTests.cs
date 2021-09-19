@@ -1,5 +1,6 @@
 using FluentAssertions;
 using Library.Api.Domain.Inventory;
+using System.Linq;
 using Xunit;
 using static Library.Api.Domain.Inventory.Events.V1;
 

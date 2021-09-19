@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using Library.Api.Domain.BookRentals;
+using System;
 using Xunit;
 
 namespace Library.UnitTests.BookRentals

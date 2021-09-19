@@ -1,5 +1,7 @@
 namespace Library.Api.Domain.BookRentals
 {
+    using System;
+
     public class BookReturnDate
     {
         public DateTime Value { get; private set; }

@@ -1,3 +1,4 @@
+using System;
 using Library.Api.Domain.Shared;
 
 namespace Library.Api.Application.Shared;

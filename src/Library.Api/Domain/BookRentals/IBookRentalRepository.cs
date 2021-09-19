@@ -1,6 +1,7 @@
 namespace Library.Api.Domain.BookRentals
 {
     using System;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     public interface IBookRentalRepository

@@ -1,5 +1,6 @@
 namespace Library.Api.Application.Rentals
 {
+    using System;
     using System.Threading.Tasks;
     using Library.Api.Infrastructure;
     using Microsoft.AspNetCore.Mvc;
