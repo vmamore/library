@@ -10,10 +10,10 @@ namespace Library.Api.Domain.Shared.ValueObjects
         {
             Value = value;
 
-            if (!Validate())
+            if (IsValid() == false)
                 throw new ArgumentOutOfRangeException("Invalid value cannot be CPF");
         }
 
-        private bool Validate() => true;
+        private bool IsValid() => !string.IsNullOrEmpty(Value) && Value.Length == 11;
     }
 }
