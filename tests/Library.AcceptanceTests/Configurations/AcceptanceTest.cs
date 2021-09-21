@@ -11,6 +11,8 @@ namespace Library.AcceptanceTests.Configurations
     {
         private const string INVENTORY_POST_BOOK = "inventory/books";
 
+        private const string RENTALS_POST_Librarians = "librarians";
+
         private const string RENTALS_GET_ALL_BOOKS = "rentals/books/all";
 
         private readonly CustomWebApplicationFactory<Startup> _factory;
@@ -34,6 +36,8 @@ namespace Library.AcceptanceTests.Configurations
         public async Task<HttpResponseMessage> CreateBookInInventory(StringContent content) => await Client.PostAsync(INVENTORY_POST_BOOK, content);
 
         public async Task<HttpResponseMessage> GetAllBooksInRentals(int page = 1, string title = null) => await Client.GetAsync($"{RENTALS_GET_ALL_BOOKS}?page={page}&title={title}");
+
+        public async Task<HttpResponseMessage> CreateLibrarian(StringContent content) => await Client.PostAsync(RENTALS_POST_Librarians, content);
 
 
     }
