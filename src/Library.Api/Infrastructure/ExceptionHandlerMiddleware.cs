@@ -8,16 +8,13 @@ namespace Library.Api.Infrastructure
 
     public class ExceptionHandlerMiddleware
     {
-        private readonly RequestDelegate _next;
-        public ExceptionHandlerMiddleware(RequestDelegate next)
-        {
-            _next = next;
-        }
+        private readonly RequestDelegate next;
+        public ExceptionHandlerMiddleware(RequestDelegate next) => this.next = next;
         public async Task Invoke(HttpContext context)
         {
             try
             {
-                await _next(context);
+                await this.next(context);
             }
             catch (Exception error)
             {
