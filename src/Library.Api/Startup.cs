@@ -14,9 +14,11 @@ using Library.Api.Infrastructure.Clients;
 using Library.Api.Infrastructure.Integrations;
 using Library.Api.Infrastructure.Inventory;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Npgsql;
 using BookRentalsIntegrationEventHandler = Library.Api.Infrastructure.BookRentals.IntegrationEventHandler;
@@ -56,7 +58,7 @@ public class Startup
         services.AddScoped<IIntegrationEventHandler, IntegrationEventHandler>();
         services.AddScoped<BookRentalsIntegrationEventHandler>();
 
-        var keycloackSettings = Configuration.GetSection(KeycloackSettings.Path).Get<KeycloackSettings>();
+        var keycloackSettings = this.Configuration.GetSection(KeycloackSettings.Path).Get<KeycloackSettings>();
 
         services.AddAuthentication(options =>
         {
@@ -68,7 +70,23 @@ public class Startup
                     options.Authority = $"{keycloackSettings.Authority}{keycloackSettings.LibraryRealmPath}";
                     options.Audience = keycloackSettings.Audience;
                     options.RequireHttpsMetadata = false;
+                    options.IncludeErrorDetails = true;
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateAudience = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidateIssuer = true,
+                        ValidateLifetime = true
+                    };
+                    options.TokenValidationParameters.ValidIssuer = options.Authority;
                 });
+
+        services.AddAuthorization(options =>
+        {
+            options.AddPolicy("Bearer", new AuthorizationPolicyBuilder()
+                    .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
+                    .RequireAuthenticatedUser().Build());
+        });
 
         services.AddMvc();
         services.AddSwaggerGen(c => c.SwaggerDoc("v1",
@@ -83,6 +101,7 @@ public class Startup
     {
         app.UseMiddleware<ExceptionHandlerMiddleware>();
         app.UseRouting();
+        app.UseAuthentication();
         app.UseAuthorization();
         app.UseHttpLogging();
         app.UseCors(x => x
