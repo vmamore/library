@@ -16,22 +16,23 @@ services:
   auth:
     image: jboss/keycloak
     ports:
-      - 10001:8080
+      - 8080:8080
     volumes:
       - ./imports:/opt/jboss/keycloak/imports
     environment:
       KEYCLOAK_IMPORT: /opt/jboss/keycloak/imports/realm-export.json -Dkeycloak.profile.feature.upload_scripts=enabled
       KEYCLOAK_USER: admin
       KEYCLOAK_PASSWORD: secret
+      KEYCLOAK_FRONTEND_URL: http://localhost:8080/auth
 
   library_db:
     image: postgres
     restart: always
+    ports:
+      - 5432:5432
     volumes: 
       - ./sql/migrations.sql:/docker-entrypoint-initdb.d/1-migrations.sql
       - ./sql/data.sql:/docker-entrypoint-initdb.d/2-data.sql
-    ports:
-      - 5432:5432
     environment:
       POSTGRES_DB: library_db
       POSTGRES_PASSWORD: post_pwd123
