@@ -2,8 +2,10 @@ namespace Library.Api.Application.Librarians
 {
     using System.Threading.Tasks;
     using Library.Api.Infrastructure;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
+    [Authorize]
     [Route("/librarians")]
     public class LibrariansCommandsApi : Controller
     {
