@@ -1,3 +1,4 @@
+using System;
 using System.Data.Common;
 using Library.Api.Application.Inventories;
 using Library.Api.Application.Librarians;
@@ -89,12 +90,35 @@ public class Startup
         });
 
         services.AddMvc();
-        services.AddSwaggerGen(c => c.SwaggerDoc("v1",
+        services.AddSwaggerGen(c =>
+        {
+            var jwtSecurityScheme = new OpenApiSecurityScheme
+            {
+                Scheme = "bearer",
+                BearerFormat = "JWT",
+                Name = "JWT Authentication",
+                In = ParameterLocation.Header,
+                Type = SecuritySchemeType.Http,
+                Description = "Put **_ONLY_** your JWT Bearer token on textbox below!",
+
+                Reference = new OpenApiReference
+                {
+                    Id = JwtBearerDefaults.AuthenticationScheme,
+                    Type = ReferenceType.SecurityScheme
+                }
+            };
+
+            c.SwaggerDoc("v1",
                 new OpenApiInfo
                 {
                     Title = "Library",
                     Version = "v1"
-                }));
+                });
+
+            c.AddSecurityDefinition(jwtSecurityScheme.Reference.Id, jwtSecurityScheme);
+
+            c.AddSecurityRequirement(new OpenApiSecurityRequirement { { jwtSecurityScheme, Array.Empty<string>() } });
+        });
     }
 
     public void Configure(IApplicationBuilder app)
