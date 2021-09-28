@@ -1,4 +1,4 @@
-namespace Library.Api.Infrastructure
+namespace Library.Api.Extensions
 {
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;

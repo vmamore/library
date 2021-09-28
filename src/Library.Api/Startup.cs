@@ -1,4 +1,3 @@
-using System;
 using System.Data.Common;
 using Library.Api.Application.Inventories;
 using Library.Api.Application.Librarians;
@@ -9,7 +8,7 @@ using Library.Api.Domain.BookRentals;
 using Library.Api.Domain.BookRentals.Users;
 using Library.Api.Domain.Inventory;
 using Library.Api.Domain.Shared;
-using Library.Api.Infrastructure;
+using Library.Api.Extensions;
 using Library.Api.Infrastructure.BookRentals;
 using Library.Api.Infrastructure.Clients;
 using Library.Api.Infrastructure.Integrations;
@@ -19,21 +18,19 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
 using Npgsql;
 using BookRentalsIntegrationEventHandler = Library.Api.Infrastructure.BookRentals.IntegrationEventHandler;
 using IntegrationEventHandler = Library.Api.Infrastructure.Integrations.IntegrationEventHandler;
 
 public class Startup
 {
-    IConfiguration Configuration;
+    private readonly IConfiguration configuration;
 
-    public Startup(IConfiguration configuration) => Configuration = configuration;
+    public Startup(IConfiguration configuration) => this.configuration = configuration;
 
     public void ConfigureServices(IServiceCollection services)
     {
-        var connectionString = Configuration.GetConnectionString("LibraryDb");
+        var connectionString = this.configuration.GetConnectionString("LibraryDb");
         services.AddHealthChecks()
                 .AddNpgSql(connectionString);
         services.AddEntityFrameworkNpgsql();
@@ -59,28 +56,7 @@ public class Startup
         services.AddScoped<IIntegrationEventHandler, IntegrationEventHandler>();
         services.AddScoped<BookRentalsIntegrationEventHandler>();
 
-        var keycloackSettings = this.Configuration.GetSection(KeycloackSettings.Path).Get<KeycloackSettings>();
-
-        services.AddAuthentication(options =>
-        {
-            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-        })
-                .AddJwtBearer(options =>
-                {
-                    options.Authority = $"{keycloackSettings.Authority}{keycloackSettings.LibraryRealmPath}";
-                    options.Audience = keycloackSettings.Audience;
-                    options.RequireHttpsMetadata = false;
-                    options.IncludeErrorDetails = true;
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateAudience = true,
-                        ValidateIssuerSigningKey = true,
-                        ValidateIssuer = true,
-                        ValidateLifetime = true
-                    };
-                    options.TokenValidationParameters.ValidIssuer = options.Authority;
-                });
+        services.AddAuth(this.configuration);
 
         services.AddAuthorization(options =>
         {
@@ -90,35 +66,7 @@ public class Startup
         });
 
         services.AddMvc();
-        services.AddSwaggerGen(c =>
-        {
-            var jwtSecurityScheme = new OpenApiSecurityScheme
-            {
-                Scheme = "bearer",
-                BearerFormat = "JWT",
-                Name = "JWT Authentication",
-                In = ParameterLocation.Header,
-                Type = SecuritySchemeType.Http,
-                Description = "Put **_ONLY_** your JWT Bearer token on textbox below!",
-
-                Reference = new OpenApiReference
-                {
-                    Id = JwtBearerDefaults.AuthenticationScheme,
-                    Type = ReferenceType.SecurityScheme
-                }
-            };
-
-            c.SwaggerDoc("v1",
-                new OpenApiInfo
-                {
-                    Title = "Library",
-                    Version = "v1"
-                });
-
-            c.AddSecurityDefinition(jwtSecurityScheme.Reference.Id, jwtSecurityScheme);
-
-            c.AddSecurityRequirement(new OpenApiSecurityRequirement { { jwtSecurityScheme, Array.Empty<string>() } });
-        });
+        services.AddSwagger();
     }
 
     public void Configure(IApplicationBuilder app)
