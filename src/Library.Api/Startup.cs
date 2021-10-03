@@ -55,7 +55,7 @@ public class Startup
         services.AddScoped<IIntegrationEventsMapper, Mapper>();
         services.AddScoped<IIntegrationEventHandler, IntegrationEventHandler>();
         services.AddScoped<BookRentalsIntegrationEventHandler>();
-
+        services.AddCors();
         services.AddAuth(this.configuration);
 
         services.AddAuthorization(options =>
@@ -72,14 +72,14 @@ public class Startup
     public void Configure(IApplicationBuilder app)
     {
         app.UseMiddleware<ExceptionHandlerMiddleware>();
-        app.UseRouting();
-        app.UseAuthentication();
-        app.UseAuthorization();
-        app.UseHttpLogging();
         app.UseCors(x => x
                 .AllowAnyOrigin()
                 .AllowAnyMethod()
                 .AllowAnyHeader());
+        app.UseRouting();
+        app.UseAuthentication();
+        app.UseAuthorization();
+        app.UseHttpLogging();
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapControllers();
