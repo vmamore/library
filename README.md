@@ -1,6 +1,6 @@
-# Library Example with Event Sourcing 📚
+# Library Project Example 📚
 
-Project applying CQRS, DDD and Event Sourcing concepts learned on [Hands-On Domain-Driven Design with .NET Core](https://www.packtpub.com/product/hands-on-domain-driven-design-with-net-core/9781788834094)
+Project applying CQRS and DDD concepts learned on [Hands-On Domain-Driven Design with .NET Core](https://www.packtpub.com/product/hands-on-domain-driven-design-with-net-core/9781788834094)
 
 ## 🚀 How to launch the application?
 1. Run docker-compose up in root folder
