@@ -2,6 +2,14 @@
 
 Project applying CQRS and DDD concepts learned on [Hands-On Domain-Driven Design with .NET Core](https://www.packtpub.com/product/hands-on-domain-driven-design-with-net-core/9781788834094)
 
+## 🧪 Tecnologies
+<ul>
+  <li>ASP .NET Core 6</li>
+  <li>Keycloak</li>
+  <li>PostgreSQL </li>
+  <li>Docker </li>
+</ul>
+
 ## 🚀 How to launch the application?
 1. Run ***docker-compose up*** in root folder
 2. Go to http://localhost:8080/auth/ to acess Keycloak
@@ -21,14 +29,6 @@ Project applying CQRS and DDD concepts learned on [Hands-On Domain-Driven Design
 ![Authentication Request](/resources/5.PNG "Authentication Request")
 10. Now you can make any request!
 ![Successful Request](/resources/6.PNG "Successful Request")
-
-## 🧪 Tecnologies
-<ul>
-  <li>ASP .NET Core 6</li>
-  <li>Keycloak</li>
-  <li>PostgreSQL </li>
-  <li>Docker </li>
-</ul>
 
 ## 🧵 Libs 
 <ul>
