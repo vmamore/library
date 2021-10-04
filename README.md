@@ -3,7 +3,7 @@
 Project applying CQRS and DDD concepts learned on [Hands-On Domain-Driven Design with .NET Core](https://www.packtpub.com/product/hands-on-domain-driven-design-with-net-core/9781788834094)
 
 ## 🚀 How to launch the application?
-1. Run docker-compose up in root folder
+1. Run ***docker-compose up*** in root folder
 2. Go to http://localhost:8080/auth/ to acess Keycloak
 3. Enter 'Administration Console' and access with 
   - Username: admin
