@@ -55,6 +55,9 @@ public class Startup
         services.AddScoped<IIntegrationEventsMapper, Mapper>();
         services.AddScoped<IIntegrationEventHandler, IntegrationEventHandler>();
         services.AddScoped<BookRentalsIntegrationEventHandler>();
+        services.AddHostedService<IntegrationService>();
+        services.AddSingleton<BackgroundWorkerQueue>();
+
         services.AddCors();
         services.AddAuth(this.configuration);
 

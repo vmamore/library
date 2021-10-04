@@ -3,17 +3,20 @@ namespace Library.Api.Application.Inventories
     using System.Threading.Tasks;
     using Library.Api.Application.Core;
     using Library.Api.Domain.Inventory;
+    using Library.Api.Infrastructure.Integrations;
     using static Library.Api.Application.Inventories.Commands;
 
     public class BookApplicationService : IApplicationService
     {
         private readonly IBookRepository _repository;
         private readonly IIntegrationEventsMapper _integrationEventsMapper;
+        private readonly BackgroundWorkerQueue _backgroundWorkerQueue;
 
-        public BookApplicationService(IBookRepository repository, IIntegrationEventsMapper integrationEventsMapper)
+        public BookApplicationService(IBookRepository repository, IIntegrationEventsMapper integrationEventsMapper, BackgroundWorkerQueue backgroundWorkerQueue)
         {
             _repository = repository;
             _integrationEventsMapper = integrationEventsMapper;
+            _backgroundWorkerQueue = backgroundWorkerQueue;
         }
 
         public Task Handle(ICommand command) => command switch
@@ -27,7 +30,10 @@ namespace Library.Api.Application.Inventories
 
             await _repository.Add(newBook);
 
-            await _integrationEventsMapper.Handle(newBook.GetChanges());
+            _backgroundWorkerQueue.QueueBackgroundWorkItem(async token =>
+            {
+                await _integrationEventsMapper.Handle(newBook.GetChanges());
+            });
 
             await _repository.Commit();
         }
