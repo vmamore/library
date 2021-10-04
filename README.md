@@ -37,10 +37,8 @@ Project applying CQRS, DDD and Event Sourcing concepts learned on [Hands-On Doma
 </ul>
 
 ## 🔹 Todo 
-- [ ] Use [Marten](https://martendb.io/) or [EventStore](https://www.eventstore.com/) to store [Events](https://github.com/vmamore/library/blob/main/src/Library.Api/Books/Events.cs)
 - [ ] Integration Tests
 - [ ] Book stock context
   - [ ] Register new books by donation   
   - [ ] Register new books buy in batch (excel, json files, api)
 - [ ] Locators registration and penalty for return book late
-- [ ] Register new librarians
