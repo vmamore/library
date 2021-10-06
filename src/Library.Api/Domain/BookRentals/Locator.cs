@@ -11,7 +11,6 @@ namespace Library.Api.Domain.BookRentals
     public class Locator : AggregateRoot
     {
         public Guid Id { get; private set; }
-
         public Name Name { get; private set; }
         public Age Age { get; private set; }
         public Address Address { get; private set; }

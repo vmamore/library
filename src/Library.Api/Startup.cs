@@ -1,3 +1,4 @@
+using System;
 using System.Data.Common;
 using Library.Api.Application.Inventories;
 using Library.Api.Application.Librarians;
@@ -57,16 +58,15 @@ public class Startup
         services.AddScoped<BookRentalsIntegrationEventHandler>();
         services.AddHostedService<IntegrationService>();
         services.AddSingleton<BackgroundWorkerQueue>();
-
+        services.AddHttpClient<IAuthenticationClient, KeycloakClient>(client =>
+        {
+            client.BaseAddress = new Uri(this.configuration["Keycloack:Authority"]);
+        });
         services.AddCors();
         services.AddAuth(this.configuration);
-
-        services.AddAuthorization(options =>
-        {
-            options.AddPolicy("Bearer", new AuthorizationPolicyBuilder()
+        services.AddAuthorization(options => options.AddPolicy("Bearer", new AuthorizationPolicyBuilder()
                     .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
-                    .RequireAuthenticatedUser().Build());
-        });
+                    .RequireAuthenticatedUser().Build()));
 
         services.AddMvc();
         services.AddSwagger();
