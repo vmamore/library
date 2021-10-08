@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Data.Common;
 using Library.Api.Application.Inventories;
 using Library.Api.Application.Librarians;
@@ -61,6 +62,20 @@ public class Startup
         services.AddHttpClient<IAuthenticationClient, KeycloakClient>(client =>
         {
             client.BaseAddress = new Uri(this.configuration["Keycloack:Authority"]);
+        });
+        services.AddAccessTokenManagement(options =>
+        {
+            options.Client.Clients.Add("keycloak", new IdentityModel.Client.ClientCredentialsTokenRequest
+            {
+                Address = "http://localhost:8080/auth/realms/library/protocol/openid-connect/token",
+                GrantType = "password",
+                ClientId = "library-api",
+                Parameters = new IdentityModel.Client.Parameters(new Dictionary<string, string>
+                {
+                    { "username","vmamore" },
+                    { "password","mamore123" }
+                })
+            });
         });
         services.AddCors();
         services.AddAuth(this.configuration);
