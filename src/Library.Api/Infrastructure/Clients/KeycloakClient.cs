@@ -43,8 +43,7 @@ namespace Library.Api.Infrastructure.Clients
 
             var content = new StringContent(JsonSerializer.Serialize(body));
 
-            return this.httpClient.PostAsync("/library-api/users", content);
-
+            return this.httpClient.PostAsync("auth/admin/realms/library/users", content);
         }
     }
 }
