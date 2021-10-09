@@ -21,7 +21,7 @@ namespace Library.Api.Infrastructure.BookRentals
             var reader = await connection.QueryMultipleAsync(
                 "SELECT count(*) FROM \"rentals\".\"books\"" +
                 "WHERE \"Title\" ILIKE CONCAT('%', @title, '%');" +
-                "SELECT \"Id\", \"Title\", \"Author\", \"PhotoUrl\"" +
+                "SELECT \"Id\", \"Title\", \"Author\", \"PhotoUrl\", \"Status\"" +
                 "FROM \"rentals\".\"books\" " +
                 "WHERE \"Title\" ILIKE CONCAT('%', @title, '%') " +
                 "LIMIT @rows " +
@@ -57,11 +57,9 @@ namespace Library.Api.Infrastructure.BookRentals
                         "WHEN r.\"Status\" = 2 THEN 'Done'" +
                         "WHEN r.\"Status\" = 3 THEN 'Late'" +
                     "END \"Status\"," +
-                    "CONCAT(l.\"FirstName\",' ', l.\"LastName\") as \"LibrarianName\"," +
                     "b.\"Title\"," +
                     "b.\"Author\"" +
                 "FROM \"rentals\".\"rentals\" r " +
-                "INNER JOIN \"rentals\".\"librarians\" l ON r.\"LibrarianId\" = l.\"Id\"" +
                 "INNER JOIN \"rentals\".\"booksrentals\" br ON br.\"BookRentalId\" = r.\"Id\"" +
                 "INNER JOIN \"rentals\".\"books\" b ON b.\"Id\" = br.\"BookId\"" +
                 "WHERE r.\"LocatorId\" = @locatorId",
@@ -80,7 +78,7 @@ namespace Library.Api.Infrastructure.BookRentals
                      return bookRentalEntry;
                  }, new { query.locatorId }, splitOn: "Title");
 
-            if (list.Any())
+            if (list.Count() == 0)
             {
                 return null;
             }
