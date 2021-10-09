@@ -69,8 +69,8 @@ public class Startup
             {
                 Address = "http://localhost:8080/auth/realms/library/protocol/openid-connect/token",
                 GrantType = "client_credentials",
-                ClientId = "library-api",
-                ClientSecret = "62d4ae4e-3fa5-413c-9a81-d63e5b1d403f"
+                ClientId = "library-credential-api",
+                ClientSecret = "55b5a7b7-aaaa-4919-88ae-dc62015de3e3"
             });
         });
         services.AddCors();
