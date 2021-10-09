@@ -43,15 +43,13 @@ namespace Library.Api.Application.Rentals
 
         private async Task HandleCreate(V1.RentBooks command)
         {
-            var librarian = await _librarianRepository.Load(command.LibrarianId);
-
             var locator = await _locatorRepository.Load(command.LocatorId);
 
             var books = await _bookRentalRepository.LoadBooks(command.BooksId);
 
             var date = await _holidayClient.GetNextBusinessDate();
 
-            var bookRental = BookRental.Create(librarian, locator, books, date);
+            var bookRental = BookRental.Create(locator, books, date);
 
             await _bookRentalRepository.Add(bookRental);
 

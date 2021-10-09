@@ -42,11 +42,10 @@ namespace Library.Api.Domain.BookRentals
 
         private BookRental() { }
 
-        private BookRental(IEnumerable<Book> books, Locator locator, Librarian librarian, BookReturnDate dayToReturnBook)
+        private BookRental(IEnumerable<Book> books, Locator locator, BookReturnDate dayToReturnBook)
         {
             _books = books.ToList();
             Locator = locator;
-            Librarian = librarian;
             DayToReturn = dayToReturnBook;
 
             Apply(new RentalCreated
@@ -57,7 +56,7 @@ namespace Library.Api.Domain.BookRentals
             });
         }
 
-        public static BookRental Create(Librarian librarian, Locator locator, IEnumerable<Book> books, DateTime dayToReturnBooks)
+        public static BookRental Create(Locator locator, IEnumerable<Book> books, DateTime dayToReturnBooks)
         {
             if (locator is null)
                 throw new InvalidOperationException("Locator must be valid.");
@@ -68,7 +67,7 @@ namespace Library.Api.Domain.BookRentals
             if (books.Any(c => c.IsRented()))
                 throw new InvalidOperationException("Cannot rent a book that is rented.");
 
-            return new BookRental(books, locator, librarian, BookReturnDate.Create(dayToReturnBooks));
+            return new BookRental(books, locator, BookReturnDate.Create(dayToReturnBooks));
         }
 
         public void Returned(ISystemClock clock)
