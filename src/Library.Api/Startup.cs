@@ -8,12 +8,13 @@ using Library.Api.Application.Shared;
 using Library.Api.Domain.BookRentals;
 using Library.Api.Domain.BookRentals.Users;
 using Library.Api.Domain.Inventory;
-using Library.Api.Domain.Shared;
 using Library.Api.Extensions;
+using Library.Api.Infrastructure;
 using Library.Api.Infrastructure.BookRentals;
 using Library.Api.Infrastructure.Clients;
 using Library.Api.Infrastructure.Integrations;
 using Library.Api.Infrastructure.Inventory;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -22,7 +23,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Npgsql;
 using BookRentalsIntegrationEventHandler = Library.Api.Infrastructure.BookRentals.IntegrationEventHandler;
 using IntegrationEventHandler = Library.Api.Infrastructure.Integrations.IntegrationEventHandler;
-
+using ISystemClock = Library.Api.Domain.Shared.ISystemClock;
+using SystemClock = Library.Api.Application.Shared.SystemClock;
 public class Startup
 {
     private readonly IConfiguration configuration;
@@ -63,6 +65,7 @@ public class Startup
             client.BaseAddress = new Uri(this.configuration["Keycloack:Authority"]);
         })
             .AddClientAccessTokenHandler("keycloak");
+        services.AddTransient<IClaimsTransformation, KeycloakClaimsTransformer>();
         services.AddAccessTokenManagement(options =>
         {
             options.Client.Clients.Add("keycloak", new IdentityModel.Client.ClientCredentialsTokenRequest
