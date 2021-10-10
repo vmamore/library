@@ -7,7 +7,6 @@ namespace Library.Api.Application.Rentals
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
-    [Authorize]
     [Route("rentals/books")]
     public class BookRentalsCatalogQueryApi : Controller
     {
@@ -17,6 +16,7 @@ namespace Library.Api.Application.Rentals
 
         [HttpGet]
         [Route("all")]
+        [Authorize(Roles="locator,librarian")]
         public Task<IActionResult> Get(QueryModels.GetAllBooks request)
             => RequestHandler.HandleQuery(() => _connection.Query(request));
     }

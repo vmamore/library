@@ -4,6 +4,7 @@ namespace Library.Api.Application.Rentals
     using System.Threading.Tasks;
     using Library.Api.Infrastructure;
     using Library.Api.Infrastructure.BookRentals;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
     [Route("rentals")]
@@ -15,6 +16,7 @@ namespace Library.Api.Application.Rentals
 
         [HttpGet]
         [Route("{locatorId}")]
+        [Authorize(Roles = "locator,librarian")]
         public Task<IActionResult> GetRentalByLocator(QueryModels.GetRentalByLocator request)
             => RequestHandler.HandleQuery(() => _connection.Query(request));
     }
