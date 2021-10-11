@@ -84,9 +84,9 @@ namespace Library.Api.Infrastructure.BookRentals
             return bookRentalDictionary.First().Value;
         }
 
-        public static async Task<BookRental> Query(
+        public static async Task<IEnumerable<BookRental>> Query(
             this DbConnection connection,
-            QueryModels.GetAllRentals query)
+            QueryModels.GetAllRentals _)
         {
             var bookRentalDictionary = new Dictionary<Guid, BookRental>();
 
@@ -124,7 +124,7 @@ namespace Library.Api.Infrastructure.BookRentals
                 return null;
             }
 
-            return bookRentalDictionary.First().Value;
+            return bookRentalDictionary.Values.ToList();
         }
     }
 }
