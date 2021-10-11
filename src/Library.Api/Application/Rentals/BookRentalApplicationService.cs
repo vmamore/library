@@ -37,7 +37,7 @@ namespace Library.Api.Application.Rentals
             V1.RentBooks cmd =>
                 HandleCreate(cmd),
             V1.ReturnBookRental cmd =>
-                HandleUpdate(cmd.BookRentalIdId, c => c.Returned(_clock)),
+                HandleUpdate(cmd.BookRentalId, c => c.Returned(_clock)),
             _ => Task.CompletedTask
         };
 

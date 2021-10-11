@@ -22,11 +22,11 @@ namespace Library.Api.Application.Rentals
         [Authorize(Roles = "librarian")]
         public async Task<IActionResult> Post([FromRoute] Guid rentalId, [FromBody] Commands.V1.ReturnBookRental request)
         {
-            if (rentalId != request.BookRentalIdId)
+            if (rentalId != request.BookRentalId)
             {
                 return new BadRequestObjectResult(new
                 {
-                    error = "RentalId from route is different from body's RentalId"
+                    error = "Invalid Rental"
                 });
             }
 
