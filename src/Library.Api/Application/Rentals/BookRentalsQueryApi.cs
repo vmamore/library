@@ -19,5 +19,10 @@ namespace Library.Api.Application.Rentals
         [Authorize(Roles = "locator,librarian")]
         public Task<IActionResult> GetRentalByLocator(QueryModels.GetRentalByLocator request)
             => RequestHandler.HandleQuery(() => _connection.Query(request));
+
+        [HttpGet]
+        [Authorize(Roles = "librarian")]
+        public Task<IActionResult> GetAllRentals(QueryModels.GetAllRentals request)
+            => RequestHandler.HandleQuery(() => _connection.Query(request));
     }
 }

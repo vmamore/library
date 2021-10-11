@@ -16,7 +16,7 @@ namespace Library.Api.Application.Rentals
 
         [HttpGet]
         [Route("all")]
-        [Authorize(Roles="locator,librarian")]
+        [Authorize(Roles = "locator,librarian")]
         public Task<IActionResult> Get(QueryModels.GetAllBooks request)
             => RequestHandler.HandleQuery(() => _connection.Query(request));
     }

@@ -65,9 +65,7 @@ namespace Library.Api.Infrastructure.BookRentals
                 "WHERE r.\"LocatorId\" = @locatorId",
                  (bookRental, bookRented) =>
                  {
-                     BookRental bookRentalEntry;
-
-                     if (!bookRentalDictionary.TryGetValue(bookRental.Id, out bookRentalEntry))
+                     if (!bookRentalDictionary.TryGetValue(bookRental.Id, out var bookRentalEntry))
                      {
                          bookRentalEntry = bookRental;
                          bookRentalEntry.Books = new List<BookRental.BookRented>();
@@ -77,6 +75,49 @@ namespace Library.Api.Infrastructure.BookRentals
                      bookRentalEntry.Books.Add(bookRented);
                      return bookRentalEntry;
                  }, new { query.locatorId }, splitOn: "Title");
+
+            if (list.Count() == 0)
+            {
+                return null;
+            }
+
+            return bookRentalDictionary.First().Value;
+        }
+
+        public static async Task<BookRental> Query(
+            this DbConnection connection,
+            QueryModels.GetAllRentals query)
+        {
+            var bookRentalDictionary = new Dictionary<Guid, BookRental>();
+
+            var list = await connection.QueryAsync<BookRental, BookRental.BookRented, BookRental>(
+                 "SELECT " +
+                    "r.\"Id\"," +
+                    "r.\"RentedDay\"," +
+                    "r.\"DayToReturn\"," +
+                    "r.\"ReturnedDay\", " +
+                    "CASE " +
+                        "WHEN r.\"Status\" = 1 THEN 'On Going'" +
+                        "WHEN r.\"Status\" = 2 THEN 'Done'" +
+                        "WHEN r.\"Status\" = 3 THEN 'Late'" +
+                    "END \"Status\"," +
+                    "b.\"Title\"," +
+                    "b.\"Author\"" +
+                "FROM \"rentals\".\"rentals\" r " +
+                "INNER JOIN \"rentals\".\"booksrentals\" br ON br.\"BookRentalId\" = r.\"Id\"" +
+                "INNER JOIN \"rentals\".\"books\" b ON b.\"Id\" = br.\"BookId\"",
+                 (bookRental, bookRented) =>
+                 {
+                     if (!bookRentalDictionary.TryGetValue(bookRental.Id, out var bookRentalEntry))
+                     {
+                         bookRentalEntry = bookRental;
+                         bookRentalEntry.Books = new List<BookRental.BookRented>();
+                         bookRentalDictionary.Add(bookRentalEntry.Id, bookRentalEntry);
+                     }
+
+                     bookRentalEntry.Books.Add(bookRented);
+                     return bookRentalEntry;
+                 }, splitOn: "Title");
 
             if (list.Count() == 0)
             {

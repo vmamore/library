@@ -11,5 +11,7 @@ namespace Library.Api.Application.Rentals
         public record GetBookById([FromRoute][Required] Guid Id);
 
         public record GetRentalByLocator([FromRoute][Required] Guid locatorId);
+
+        public record GetAllRentals();
     }
 }
