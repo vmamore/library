@@ -1,4 +1,3 @@
-using System;
 using System.Data.Common;
 using Library.Api.Application.Inventories;
 using Library.Api.Application.Librarians;
@@ -60,23 +59,10 @@ public class Startup
         services.AddScoped<BookRentalsIntegrationEventHandler>();
         services.AddHostedService<IntegrationService>();
         services.AddSingleton<BackgroundWorkerQueue>();
-        services.AddHttpClient<IAuthenticationClient, KeycloakClient>("keycloak", client =>
-        {
-            client.BaseAddress = new Uri(this.configuration["Keycloack:Authority"]);
-        })
-            .AddClientAccessTokenHandler("keycloak");
-        services.AddTransient<IClaimsTransformation, KeycloakClaimsTransformer>();
-        services.AddAccessTokenManagement(options =>
-        {
-            options.Client.Clients.Add("keycloak", new IdentityModel.Client.ClientCredentialsTokenRequest
-            {
-                Address = "http://localhost:8080/auth/realms/library/protocol/openid-connect/token",
-                GrantType = "client_credentials",
-                ClientId = "library-credential-api",
-                ClientSecret = "55b5a7b7-aaaa-4919-88ae-dc62015de3e3"
-            });
-        });
+
+        services.AddKeycloakClient(this.configuration);
         services.AddCors();
+        services.AddTransient<IClaimsTransformation, KeycloakClaimsTransformer>();
         services.AddAuth(this.configuration);
         services.AddAuthorization(options => options.AddPolicy("Bearer", new AuthorizationPolicyBuilder()
                     .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
