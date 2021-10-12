@@ -40,7 +40,7 @@ namespace Library.Api.Infrastructure.BookRentals
             };
         }
 
-        public static async Task<BookRental> Query(
+        public static async Task<IEnumerable<BookRental>> Query(
             this DbConnection connection,
             QueryModels.GetRentalByLocator query)
         {
@@ -81,7 +81,7 @@ namespace Library.Api.Infrastructure.BookRentals
                 return null;
             }
 
-            return bookRentalDictionary.First().Value;
+            return bookRentalDictionary.Values.ToList();
         }
 
         public static async Task<IEnumerable<BookRental>> Query(
