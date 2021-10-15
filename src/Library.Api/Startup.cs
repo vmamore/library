@@ -24,6 +24,7 @@ using BookRentalsIntegrationEventHandler = Library.Api.Infrastructure.BookRental
 using IntegrationEventHandler = Library.Api.Infrastructure.Integrations.IntegrationEventHandler;
 using ISystemClock = Library.Api.Domain.Shared.ISystemClock;
 using SystemClock = Library.Api.Application.Shared.SystemClock;
+
 public class Startup
 {
     private readonly IConfiguration configuration;
