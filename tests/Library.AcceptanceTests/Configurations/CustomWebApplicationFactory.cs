@@ -37,7 +37,7 @@ namespace Library.AcceptanceTests.Tests.Configurations
                     options.UseInMemoryDatabase("InMemoryDbForTesting");
                 });
 
-                
+
             });
         }
     }

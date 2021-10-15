@@ -13,7 +13,7 @@ namespace Library.AcceptanceTests.Configurations
 {
     public abstract class AcceptanceTest : IClassFixture<CustomWebApplicationFactory<Startup>>
     {
-        private AuthenticationTokenResponse _authenticationTokenResponse;
+        private static AuthenticationToken AuthenticationToken { get; set; }
 
         private const string INVENTORY_POST_BOOK = "inventory/books";
 
@@ -42,8 +42,10 @@ namespace Library.AcceptanceTests.Configurations
         public async Task<HttpResponseMessage> CreateBookInInventory(StringContent content)
         {
             var token = await GetAuthToken();
-            Client.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
-            return await Client.PostAsync(INVENTORY_POST_BOOK, content);
+            using var request = new HttpRequestMessage(HttpMethod.Post, INVENTORY_POST_BOOK);
+            request.Content = content;
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            return await Client.SendAsync(request);
         }
 
         public async Task<HttpResponseMessage> GetAllBooksInRentals(int page = 1, string title = null) => await Client.GetAsync($"{RENTALS_GET_ALL_BOOKS}?page={page}&title={title}");
@@ -52,25 +54,25 @@ namespace Library.AcceptanceTests.Configurations
 
         public async Task<string> GetAuthToken()
         {
-            if (_authenticationTokenResponse == null)
+            if (AuthenticationToken == null)
             {
-                _authenticationTokenResponse = await FetchAuthenticationToken();
-                return _authenticationTokenResponse.AccessToken;
+                AuthenticationToken = await FetchAuthenticationToken();
+                return AuthenticationToken.AccessToken;
             }
 
-            if (_authenticationTokenResponse.AccessTokenExpireTime < DateTime.Now)
+            if (AuthenticationToken.AccessTokenExpireTime < DateTime.Now)
             {
-                _authenticationTokenResponse = await FetchAuthenticationToken();
-                return _authenticationTokenResponse.AccessToken;
+                AuthenticationToken = await FetchAuthenticationToken();
+                return AuthenticationToken.AccessToken;
             }
 
-            return _authenticationTokenResponse.AccessToken;
+            return AuthenticationToken.AccessToken;
 
-            async Task<AuthenticationTokenResponse> FetchAuthenticationToken()
+            async Task<AuthenticationToken> FetchAuthenticationToken()
             {
                 var endpoint = "http://localhost:8080/auth/realms/library/protocol/openid-connect/token";
                 var response = await new HttpClient().PostAsync(endpoint, new FormUrlEncodedContent(GetUserAuthenticationParameters()));
-                return await JsonSerializer.DeserializeAsync<AuthenticationTokenResponse>(await response.Content.ReadAsStreamAsync());
+                return await JsonSerializer.DeserializeAsync<AuthenticationToken>(await response.Content.ReadAsStreamAsync());
             }
 
             List<KeyValuePair<string, string>> GetUserAuthenticationParameters()
@@ -86,7 +88,7 @@ namespace Library.AcceptanceTests.Configurations
 
     }
 
-    public class AuthenticationTokenResponse
+    public class AuthenticationToken
     {
         [JsonPropertyName("access_token")]
         public string AccessToken { get; set; }
@@ -96,12 +98,13 @@ namespace Library.AcceptanceTests.Configurations
 
         [JsonPropertyName("token_type")]
         public string TokenType { get; set; }
+        private DateTime CreatedAt { get; } = DateTime.Now;
 
         public DateTime AccessTokenExpireTime
         {
             get
             {
-                return DateTime.Now.AddSeconds(ExpiresIn);
+                return CreatedAt.AddSeconds(ExpiresIn);
             }
         }
     }
