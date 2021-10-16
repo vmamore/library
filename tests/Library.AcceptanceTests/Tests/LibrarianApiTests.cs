@@ -27,7 +27,7 @@ namespace Library.AcceptanceTests.Tests
         [InlineData(null, "Mamoré", "00011122233")]
         [InlineData("Vinícius", null, "00011122233")]
         [InlineData("Vinícius", "Mamoré", null)]
-        public async Task PostBookWithInvalidProperties_ShouldReturn_400(string firstName, string lastName, string cpf)
+        public async Task PostLibrarianWithInvalidProperties_ShouldReturn_400(string firstName, string lastName, string cpf)
         {
             // Act
             var content = CreatePayload(new { FirstName = firstName, LastName = lastName, BirthDate = new DateTime(1997, 10, 25), CPF = cpf, Street = "Rua Alegria", City = "São Paulo", Number = "200", District = "São José" });
