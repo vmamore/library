@@ -61,7 +61,7 @@ namespace Library.Api.Domain.BookRentals
             if (locator is null)
                 throw new InvalidOperationException("Locator must be valid.");
 
-            if (books.Count() == 0)
+            if (books == null || books.Count() == 0)
                 throw new ArgumentException("Cannot create rental with empty books.");
 
             if (books.Any(c => c.IsRented()))
