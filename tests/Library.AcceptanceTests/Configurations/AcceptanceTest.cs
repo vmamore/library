@@ -40,17 +40,21 @@ namespace Library.AcceptanceTests.Configurations
         }
 
         public async Task<HttpResponseMessage> CreateBookInInventory(StringContent content)
+            => await SendAuthenticatedRequestAsync(content, HttpMethod.Post, INVENTORY_POST_BOOK);
+
+        public async Task<HttpResponseMessage> GetAllBooksInRentals(int page = 1, string title = null) => await Client.GetAsync($"{RENTALS_GET_ALL_BOOKS}?page={page}&title={title}");
+
+        public async Task<HttpResponseMessage> CreateLibrarian(StringContent content)
+            => await SendAuthenticatedRequestAsync(content, HttpMethod.Post, RENTALS_POST_Librarians);
+
+        private async Task<HttpResponseMessage> SendAuthenticatedRequestAsync(StringContent content, HttpMethod httpMethod, string endpoint)
         {
             var token = await GetAuthToken();
-            using var request = new HttpRequestMessage(HttpMethod.Post, INVENTORY_POST_BOOK);
+            using var request = new HttpRequestMessage(httpMethod, endpoint);
             request.Content = content;
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
             return await Client.SendAsync(request);
         }
-
-        public async Task<HttpResponseMessage> GetAllBooksInRentals(int page = 1, string title = null) => await Client.GetAsync($"{RENTALS_GET_ALL_BOOKS}?page={page}&title={title}");
-
-        public async Task<HttpResponseMessage> CreateLibrarian(StringContent content) => await Client.PostAsync(RENTALS_POST_Librarians, content);
 
         public async Task<string> GetAuthToken()
         {
