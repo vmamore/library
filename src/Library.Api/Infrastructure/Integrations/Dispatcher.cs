@@ -1,13 +1,10 @@
-namespace Library.Api.Infrastructure.Integrations;
-
-using System;
-using System.Threading.Tasks;
-
-public static class Dispatcher
+namespace Library.Api.Infrastructure.Integrations
 {
-    public static async Task HandleIntegrationEvent<T>(
-            T request, Func<T, Task> handler)
+    using System;
+    using System.Threading.Tasks;
+
+    public static class Dispatcher
     {
-        await handler(request);
+        public static async Task HandleIntegrationEvent<T>(T request, Func<T, Task> handler) => await handler(request);
     }
 }

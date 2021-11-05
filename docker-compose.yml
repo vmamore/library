@@ -15,6 +15,8 @@ services:
 
   auth:
     image: jboss/keycloak
+    networks:
+      - keycloak-network
     ports:
       - 8080:8080
     volumes:
@@ -24,6 +26,26 @@ services:
       KEYCLOAK_USER: admin
       KEYCLOAK_PASSWORD: secret
       KEYCLOAK_FRONTEND_URL: http://localhost:8080/auth
+      DB_VENDOR: POSTGRES
+      DB_USER: keycloak
+      DB_PASSWORD: post_keycloak_pwd123
+      DB_ADDR: keycloak_db
+      DB_DATABASE: keycloak
+      DB_PORT: 5432
+    depends_on:
+     - keycloak_db
+
+  keycloak_db:
+    image: postgres
+    restart: always 
+    networks:
+        - keycloak-network
+    ports:
+      - 5433:5432
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak 
+      POSTGRES_PASSWORD: post_keycloak_pwd123
 
   library_db:
     image: postgres
@@ -36,3 +58,7 @@ services:
     environment:
       POSTGRES_DB: library_db
       POSTGRES_PASSWORD: post_pwd123
+  
+networks:
+  keycloak-network:
+    driver: bridge

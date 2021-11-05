@@ -48,6 +48,7 @@ namespace Library.AcceptanceTests.StepDefinitions
             {
                 var endpoint = "http://localhost:8080/auth/realms/library/protocol/openid-connect/token";
                 var response = await new HttpClient().PostAsync(endpoint, new FormUrlEncodedContent(GetUserAuthenticationParameters(role)));
+                if (!response.IsSuccessStatusCode) throw new InvalidOperationException("Error when fetching access token.");
                 return await JsonSerializer.DeserializeAsync<AuthenticationToken>(await response.Content.ReadAsStreamAsync());
             }
 

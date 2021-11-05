@@ -19,7 +19,7 @@ namespace Library.AcceptanceTests.Features
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.9.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public partial class LibrarianFeature : object, Xunit.IClassFixture<LibrarianFeature.FixtureData>, System.IDisposable
+    public partial class LocatorFeature : object, Xunit.IClassFixture<LocatorFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
@@ -28,10 +28,10 @@ namespace Library.AcceptanceTests.Features
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
-#line 1 "Librarian.feature"
+#line 1 "Locator.feature"
 #line hidden
         
-        public LibrarianFeature(LibrarianFeature.FixtureData fixtureData, Library_AcceptanceTests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public LocatorFeature(LocatorFeature.FixtureData fixtureData, Library_AcceptanceTests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();
@@ -40,7 +40,7 @@ namespace Library.AcceptanceTests.Features
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Librarian", null, ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Locator", null, ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -89,14 +89,14 @@ namespace Library.AcceptanceTests.Features
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Create Librarian")]
-        [Xunit.TraitAttribute("FeatureTitle", "Librarian")]
-        [Xunit.TraitAttribute("Description", "Create Librarian")]
-        public virtual void CreateLibrarian()
+        [Xunit.SkippableFactAttribute(DisplayName="Create Locator")]
+        [Xunit.TraitAttribute("FeatureTitle", "Locator")]
+        [Xunit.TraitAttribute("Description", "Create Locator")]
+        public virtual void CreateLocator()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create Librarian", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create Locator", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
 #line 6
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -120,32 +120,32 @@ this.ScenarioInitialize(scenarioInfo);
 #line 3
 this.FeatureBackground();
 #line hidden
-                TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
                             "Key",
                             "Value"});
-                table1.AddRow(new string[] {
+                table2.AddRow(new string[] {
                             "FirstName",
                             "Vinicius"});
-                table1.AddRow(new string[] {
+                table2.AddRow(new string[] {
                             "LastName",
                             "Mamoré"});
-                table1.AddRow(new string[] {
+                table2.AddRow(new string[] {
                             "CPF",
-                            "00012422233"});
-                table1.AddRow(new string[] {
+                            "00011122233"});
+                table2.AddRow(new string[] {
                             "Street",
                             "Alegrete"});
-                table1.AddRow(new string[] {
+                table2.AddRow(new string[] {
                             "City",
                             "Rio Grande do Sul"});
-                table1.AddRow(new string[] {
+                table2.AddRow(new string[] {
                             "Number",
                             "157"});
-                table1.AddRow(new string[] {
+                table2.AddRow(new string[] {
                             "District",
                             "Tiradentes"});
 #line 7
- testRunner.When("creating a librarian with", ((string)(null)), table1, "When ");
+ testRunner.When("creating a locator with", ((string)(null)), table2, "When ");
 #line hidden
 #line 16
  testRunner.Then("should create with success", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
@@ -161,12 +161,12 @@ this.FeatureBackground();
             
             public FixtureData()
             {
-                LibrarianFeature.FeatureSetup();
+                LocatorFeature.FeatureSetup();
             }
             
             void System.IDisposable.Dispose()
             {
-                LibrarianFeature.FeatureTearDown();
+                LocatorFeature.FeatureTearDown();
             }
         }
     }

@@ -1,10 +1,11 @@
 namespace Library.Api.Application.Inventories
 {
+    using System;
     using System.Threading.Tasks;
-    using Library.Api.Application.Core;
-    using Library.Api.Domain.Inventory;
-    using Library.Api.Infrastructure.Integrations;
-    using static Library.Api.Application.Inventories.Commands;
+    using Core;
+    using Domain.Inventory;
+    using Infrastructure.Integrations;
+    using static Commands;
 
     public class BookApplicationService : IApplicationService
     {
@@ -14,28 +15,29 @@ namespace Library.Api.Application.Inventories
 
         public BookApplicationService(IBookRepository repository, IIntegrationEventsMapper integrationEventsMapper, BackgroundWorkerQueue backgroundWorkerQueue)
         {
-            _repository = repository;
-            _integrationEventsMapper = integrationEventsMapper;
-            _backgroundWorkerQueue = backgroundWorkerQueue;
+            this._repository = repository;
+            this._integrationEventsMapper = integrationEventsMapper;
+            this._backgroundWorkerQueue = backgroundWorkerQueue;
         }
 
         public Task Handle(ICommand command) => command switch
         {
-            V1.RegisterBook cmd => HandleCreate(cmd)
+            V1.RegisterBook cmd => this.HandleCreate(cmd),
+            _ => throw new ArgumentOutOfRangeException(nameof(command), command, null)
         };
 
         private async Task HandleCreate(V1.RegisterBook command)
         {
             var newBook = Book.Create(command.Title, command.Author, command.ReleasedYear, command.ISBN, command.Pages, command.Version, command.PhotoUrl);
 
-            await _repository.Add(newBook);
+            await this._repository.Add(newBook);
 
-            _backgroundWorkerQueue.QueueBackgroundWorkItem(async token =>
+            this._backgroundWorkerQueue.QueueBackgroundWorkItem(async token =>
             {
-                await _integrationEventsMapper.Handle(newBook.GetChanges());
+                await this._integrationEventsMapper.Handle(newBook.GetChanges());
             });
 
-            await _repository.Commit();
+            await this._repository.Commit();
         }
     }
 }
