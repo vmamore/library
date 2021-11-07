@@ -15,6 +15,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.gitignore = .gitignore
 		docker-compose.yml = docker-compose.yml
 		README.md = README.md
+		scripts\generate-sql.bat = scripts\generate-sql.bat
+		scripts\create-users.ps1 = scripts\create-users.ps1
+		sql\migrations.sql = sql\migrations.sql
+		sql\data.sql = sql\data.sql
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library.FunctionalTests", "tests\Library.FunctionalTests\Library.FunctionalTests.csproj", "{3FC100F4-450D-4595-ABDB-EC0B48572904}"

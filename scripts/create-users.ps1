@@ -47,12 +47,12 @@ try {
 }
 
 $librarianBody = "{
-    `n   `"firstName`":`"Amanda`",
-    `n   `"lastName`":`"Lacerda`",
-    `n   `"email`":`"amanda.lacerda@gmail.com`",
+    `n   `"firstName`":`"John`",
+    `n   `"lastName`":`"Hiake`",
+    `n   `"email`":`"john.hiake@gmail.com`",
     `n   `"enabled`":`"true`",
     `n   `"emailVerified`":true,
-    `n   `"username`":`"amanda.lacerda`",
+    `n   `"username`":`"john.hiake`",
     `n   `"attributes`":{
     `n      `"library_id`":`"e2487e01-5cf7-43bc-b186-a64312e4bb49`"
     `n   },

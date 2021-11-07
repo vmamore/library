@@ -17,7 +17,7 @@ Project applying CQRS and DDD concepts learned on [Hands-On Domain-Driven Design
    - username: bob.aerso
    - password: @test123
 4. To enter as a librarian use:
-   - username: amand.lacerda
+   - username: john.hiake
    - password: @test123
 
 ## 🧵 Libs 

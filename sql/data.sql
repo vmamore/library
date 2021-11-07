@@ -4,7 +4,7 @@ INSERT INTO rentals.locators ("Id", "FirstName", "LastName", "BirthDate", "Stree
 ('e4eafac2-0e6d-463d-b76a-cab2a9ff2f7c','Bob', 'Aerso', '1980-11-11', 'Rua Pinhanco', 'São Paulo', '467', 'São Paulo', '72414306033');
 
 INSERT INTO rentals.librarians ("Id", "FirstName", "LastName", "BirthDate", "Street", "City", "Number", "District", "Cpf") VALUES 
-('e2487e01-5cf7-43bc-b186-a64312e4bb49','Amanda', 'Lacerda', '1967-01-11', 'Parque Primavera', 'São Paulo', '338', 'São Paulo', '72414306033');
+('e2487e01-5cf7-43bc-b186-a64312e4bb49','John', 'Hiake', '1967-01-11', 'Parque Primavera', 'São Paulo', '338', 'São Paulo', '72414306033');
 
 
 INSERT INTO rentals.books ("Id", "Title", "Author", "Status", "PhotoUrl") VALUES 
