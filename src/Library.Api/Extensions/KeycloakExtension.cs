@@ -12,17 +12,17 @@ namespace Library.Api.Extensions
         {
             services.AddHttpClient<IAuthenticationClient, KeycloakClient>("keycloak", client =>
             {
-                client.BaseAddress = new Uri(configuration["Keycloack:Authority"]);
+                client.BaseAddress = new Uri(configuration["Keycloak:Authority"]);
             })
             .AddClientAccessTokenHandler("keycloak");
             services.AddAccessTokenManagement(options =>
             {
                 options.Client.Clients.Add("keycloak", new IdentityModel.Client.ClientCredentialsTokenRequest
                 {
-                    Address = configuration["Keycloack:TokenEndpoint"],
+                    Address = configuration["Keycloak:TokenEndpoint"],
                     GrantType = "client_credentials",
-                    ClientId = configuration["Keycloack:ClientId"],
-                    ClientSecret = configuration["Keycloack:ClientSecret"]
+                    ClientId = configuration["Keycloak:ClientId"],
+                    ClientSecret = configuration["Keycloak:ClientSecret"]
                 });
             });
 
