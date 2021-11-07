@@ -37,7 +37,7 @@ services:
 
   keycloak_db:
     image: postgres
-    restart: always 
+    restart: always
     networks:
         - keycloak-network
     ports:
