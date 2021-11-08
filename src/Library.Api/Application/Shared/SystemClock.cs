@@ -1,9 +1,10 @@
 using System;
 using Library.Api.Domain.Shared;
 
-namespace Library.Api.Application.Shared;
-
-public class SystemClock : ISystemClock
+namespace Library.Api.Application.Shared
 {
-    public DateTime UtcNow => DateTime.UtcNow;
+    public class SystemClock : ISystemClock
+    {
+        public DateTime UtcNow => DateTime.UtcNow;
+    }
 }

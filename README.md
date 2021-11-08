@@ -27,7 +27,7 @@ Project applying CQRS and DDD concepts learned on [Hands-On Domain-Driven Design
 </ul>
 
 ## 🔹 Todo 
-- [ ] Integration Tests
+- [x] Integration Tests
 - [ ] Book stock context
   - [ ] Register new books by donation   
   - [ ] Register new books buy in batch (excel, json files, api)
