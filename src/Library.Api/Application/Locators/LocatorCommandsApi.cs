@@ -14,7 +14,7 @@ namespace Library.Api.Application.Users
         public LocatorCommandsApi(LocatorApplicationService applicationService) => _applicationService = applicationService;
 
         [HttpPost]
-        [Authorize(Roles = "librarian,locator")]
+        [AllowAnonymous]
         public Task<IActionResult> Post([FromBody] Commands.V1.RegisterLocator request)
             => RequestHandler.HandleCommand(request, _applicationService.Handle);
     }

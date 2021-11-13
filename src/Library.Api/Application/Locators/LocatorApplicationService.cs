@@ -32,6 +32,7 @@ namespace Library.Api.Application.Locators
                 cmd.LastName,
                 cmd.BirthDate,
                 cmd.CPF,
+                cmd.Email,
                 cmd.City, cmd.District, cmd.Street, cmd.Number);
 
             var response = await this.authenticationClient.CreateLocator(locator);

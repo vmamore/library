@@ -13,6 +13,7 @@ namespace Library.Api.Domain.BookRentals
         public Guid Id { get; private set; }
         public Name Name { get; private set; }
         public Age Age { get; private set; }
+        public Email Email { get; private set; }
         public Address Address { get; private set; }
         public CPF Cpf { get; private set; }
 
@@ -35,6 +36,7 @@ namespace Library.Api.Domain.BookRentals
                     Name = Name.Create(e.FirstName, e.LastName);
                     Age = new(e.BirthDate);
                     Cpf = new(e.CPF);
+                    Email = new(e.Email);
                     Address = new(e.Street, e.City, e.Number, e.District);
                     break;
                 case LocatorPenalized e:
@@ -50,7 +52,7 @@ namespace Library.Api.Domain.BookRentals
 
         public static Locator Create(
             string firstName, string lastName, DateTime birthDate,
-            string cpf, string city, string district,
+            string cpf, string email, string city, string district,
             string street, string number)
         {
             var locator = new Locator();
@@ -60,6 +62,7 @@ namespace Library.Api.Domain.BookRentals
                 FirstName = firstName,
                 LastName = lastName,
                 CPF = cpf,
+                Email = email,
                 City = city,
                 District = district,
                 Street = street,

@@ -29,8 +29,8 @@ namespace Library.UnitTests.Domain.BookRentals
             _systemClock = new();
         }
 
-        Locator Locator { get; } = Locator.Create("Vinicius", "Mamoré", new DateTime(1997, 10, 25),
-            "00011122233", "Campo Grande", "MS", "Rua Hehehe", "80");
+        Locator Locator { get; } = Locator.Create("Vinicius", "Mamorï¿½", new DateTime(1997, 10, 25),
+            "00011122233", "joao@bol.com.br", "Campo Grande", "MS", "Rua Hehehe", "80");
 
 
         [Fact]

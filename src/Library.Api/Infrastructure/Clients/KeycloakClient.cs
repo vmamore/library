@@ -17,7 +17,7 @@ namespace Library.Api.Infrastructure.Clients
         {
             var body = new
             {
-                email = "vinicius.mamore12346@gmail.com",
+                email = locator.Email.Value,
                 emailVerified = true,
                 enabled = true,
                 firstName = locator.Name.FirstName,
@@ -26,6 +26,10 @@ namespace Library.Api.Infrastructure.Clients
                 attributes = new
                 {
                     library_id = locator.Id
+                },
+                groups = new[]
+                {
+                    "locators"
                 },
                 credentials = new[]
                 {

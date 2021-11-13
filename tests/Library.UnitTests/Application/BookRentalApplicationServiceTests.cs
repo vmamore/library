@@ -35,7 +35,7 @@ namespace Library.UnitTests.Application
         public void Given_CreatingRental_When_CommandIsValid_ThenShouldNotThrowException()
         {
             var locator = Locator.Create("Vinicius", "Mamoré", new DateTime(1997, 10, 25),
-            "00011122233", "Campo Grande", "MS", "Rua Hehehe", "80");
+            "00011122233", "joao@bol.com.br", "Campo Grande", "MS", "Rua Hehehe", "80");
 
             var books = new List<Book>()
             {
