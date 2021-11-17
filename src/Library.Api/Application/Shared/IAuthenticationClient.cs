@@ -6,6 +6,6 @@ namespace Library.Api.Application.Shared
 
     public interface IAuthenticationClient
     {
-        Task<HttpResponseMessage> CreateLocator(Locator locator);
+        Task<HttpResponseMessage> CreateLocator(Locator locator, string email, string password, string username);
     }
 }

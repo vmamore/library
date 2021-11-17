@@ -13,16 +13,16 @@ namespace Library.Api.Infrastructure.Clients
 
         public KeycloakClient(HttpClient httpClient) => this.httpClient = httpClient;
 
-        public Task<HttpResponseMessage> CreateLocator(Locator locator)
+        public Task<HttpResponseMessage> CreateLocator(Locator locator, string email, string password, string username)
         {
             var body = new
             {
-                email = locator.Email.Value,
+                email,
                 emailVerified = true,
                 enabled = true,
                 firstName = locator.Name.FirstName,
                 lastName = locator.Name.LastName,
-                username = locator.Cpf.Value,
+                username = username,
                 attributes = new
                 {
                     library_id = locator.Id
@@ -33,7 +33,7 @@ namespace Library.Api.Infrastructure.Clients
                 },
                 credentials = new[]
                 {
-                    new { type = "password", value = "test123", temporary = false }
+                    new { type = "password", value = password, temporary = false }
                 }
             };
 

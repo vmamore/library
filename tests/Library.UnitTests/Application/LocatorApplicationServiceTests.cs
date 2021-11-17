@@ -29,7 +29,7 @@ namespace Library.UnitTests.Application
         {
             var registerLocatorCommand = CreateRegistrationCommand();
 
-            authenticationClientMock.Setup(a => a.CreateLocator(It.IsAny<Locator>()))
+            authenticationClientMock.Setup(a => a.CreateLocator(It.IsAny<Locator>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
                 .ReturnsAsync(new HttpResponseMessage(HttpStatusCode.InternalServerError));
 
             Func<Task> action = async () => await GetSut().Handle(registerLocatorCommand);
@@ -43,7 +43,7 @@ namespace Library.UnitTests.Application
         {
             var registerLocatorCommand = CreateRegistrationCommand();
 
-            authenticationClientMock.Setup(a => a.CreateLocator(It.IsAny<Locator>()))
+            authenticationClientMock.Setup(a => a.CreateLocator(It.IsAny<Locator>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
                 .ReturnsAsync(new HttpResponseMessage(HttpStatusCode.OK));
 
             Func<Task> action = async () => await GetSut().Handle(registerLocatorCommand);

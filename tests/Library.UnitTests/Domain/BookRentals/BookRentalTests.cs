@@ -30,7 +30,7 @@ namespace Library.UnitTests.Domain.BookRentals
         }
 
         Locator Locator { get; } = Locator.Create("Vinicius", "Mamor�", new DateTime(1997, 10, 25),
-            "00011122233", "joao@bol.com.br", "Campo Grande", "MS", "Rua Hehehe", "80");
+            "00011122233", "Campo Grande", "MS", "Rua Hehehe", "80");
 
 
         [Fact]
