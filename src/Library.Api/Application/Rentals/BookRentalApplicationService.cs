@@ -45,6 +45,11 @@ namespace Library.Api.Application.Rentals
         {
             var locator = await _locatorRepository.Load(command.LocatorId);
 
+            if (locator.IsPenalized(this._clock))
+            {
+                throw new InvalidOperationException("Locator is penalized, cannot rent any books.");
+            }
+
             var books = await _bookRentalRepository.LoadBooks(command.BooksId);
 
             var date = await _holidayClient.GetNextBusinessDate();

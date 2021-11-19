@@ -27,8 +27,8 @@ Project applying CQRS and DDD concepts learned on [Hands-On Domain-Driven Design
 </ul>
 
 ## 🔹 Todo 
-- [ ] Register new locators
-- [ ] Show error messages when trying to create new user or book
+- [x] Register new locators
+- [x] Show error messages when trying to create new user or book
 - [ ] Style Book cards in Book Catalog to have the same size
-- [ ] Locators registration and penalty for return book late
+- [x] Locators registration and penalty for return book late
 

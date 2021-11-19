@@ -17,6 +17,7 @@ namespace Library.Api.Infrastructure.BookRentals
         public async ValueTask<bool> Exists(Guid id) => await Load(id) != null;
         public async ValueTask<BookRental> Load(Guid id) => await _dbContext.BookRentals
             .Include(br => br.Books)
+            .Include(br => br.Locator)
             .FirstOrDefaultAsync(br => br.Id == id);
 
         public async Task<IEnumerable<Book>> LoadBooks(Guid[] booksId) => await _dbContext.Books.Where(b => booksId.Contains(b.Id)).ToListAsync();
