@@ -37,7 +37,7 @@ namespace Library.Api.Domain.BookRentals
 
         public bool IsRented() => this.Status == BookStatus.Rented;
 
-        protected override void When(DomainEvent @event)
+        protected override void When(IDomainEvent @event)
         {
             switch (@event)
             {

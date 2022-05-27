@@ -5,25 +5,25 @@ namespace Library.Api.Domain.Core
 
     public abstract class AggregateRoot : IInternalEventHandler
     {
-        List<DomainEvent> events = new List<DomainEvent>();
+        List<IDomainEvent> events = new();
 
-        public IEnumerable<DomainEvent> GetChanges() => events.AsEnumerable();
+        public IEnumerable<IDomainEvent> GetChanges() => events.AsEnumerable();
 
-        public void Apply(DomainEvent @event)
+        public void Apply(IDomainEvent @event)
         {
             When(@event);
             EnsureValidState();
             events.Add(@event);
         }
 
-        public abstract void When(DomainEvent @event);
+        public abstract void When(IDomainEvent @event);
 
         public abstract void EnsureValidState();
-        void IInternalEventHandler.Handle(DomainEvent @event) => When(@event);
+        void IInternalEventHandler.Handle(IDomainEvent @event) => When(@event);
 
-        protected void ApplyToEntity(IInternalEventHandler entity, DomainEvent @event) => entity?.Handle(@event);
+        protected void ApplyToEntity(IInternalEventHandler entity, IDomainEvent @event) => entity?.Handle(@event);
 
-        protected void ApplyToEntity(IEnumerable<IInternalEventHandler> entities, DomainEvent @event)
+        protected void ApplyToEntity(IEnumerable<IInternalEventHandler> entities, IDomainEvent @event)
         {
             foreach (var entity in entities)
                 this.ApplyToEntity(entity, @event);

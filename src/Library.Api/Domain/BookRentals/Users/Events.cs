@@ -1,13 +1,13 @@
 namespace Library.Api.Domain.BookRentals.Users
 {
     using System;
-    using Library.Api.Domain.Core;
+    using Core;
 
     public static class Events
     {
         public static class V1
         {
-            public class LibrarianCreated : DomainEvent
+            public class LibrarianCreated : IDomainEvent
             {
                 public string FirstName { get; set; }
                 public string LastName { get; set; }

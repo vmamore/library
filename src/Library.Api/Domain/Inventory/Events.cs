@@ -1,12 +1,12 @@
 namespace Library.Api.Domain.Inventory
 {
-    using Library.Api.Domain.Core;
+    using Core;
 
     public static class Events
     {
         public static class V1
         {
-            public class BookRegistered : DomainEvent
+            public class BookRegistered : IDomainEvent
             {
                 public string ISBN { get; set; }
                 public string Title { get; set; }

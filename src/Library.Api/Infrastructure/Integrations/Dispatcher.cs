@@ -1,10 +1,25 @@
 namespace Library.Api.Infrastructure.Integrations
 {
-    using System;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
+    using Application.Shared;
+    using Domain.Core;
 
-    public static class Dispatcher
+    public  class Dispatcher : IDispatcher
     {
-        public static async Task HandleIntegrationEvent<T>(T request, Func<T, Task> handler) => await handler(request);
+        private readonly MessagesChannel _channel;
+
+        public Dispatcher(MessagesChannel channel) => this._channel = channel;
+
+        public async Task PublishAsync<T>(T message) where T : IDomainEvent
+            => await this._channel.Writer.WriteAsync(message);
+
+        public async Task PublishAsync<T>(IEnumerable<T> messages) where T : IDomainEvent
+        {
+            foreach (var message in messages)
+            {
+                await this.PublishAsync(message);
+            }
+        }
     }
 }

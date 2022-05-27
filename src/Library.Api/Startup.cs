@@ -9,9 +9,11 @@ using Library.Api.Domain.BookRentals.Users;
 using Library.Api.Domain.Inventory;
 using Library.Api.Extensions;
 using Library.Api.Infrastructure;
+using Library.Api.Infrastructure.BackgroundJobs;
 using Library.Api.Infrastructure.BookRentals;
 using Library.Api.Infrastructure.Clients;
 using Library.Api.Infrastructure.Integrations;
+using Library.Api.Infrastructure.Integrations.Events;
 using Library.Api.Infrastructure.Inventory;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -20,8 +22,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Npgsql;
-using BookRentalsIntegrationEventHandler = Library.Api.Infrastructure.BookRentals.IntegrationEventHandler;
-using IntegrationEventHandler = Library.Api.Infrastructure.Integrations.IntegrationEventHandler;
 using ISystemClock = Library.Api.Domain.Shared.ISystemClock;
 using SystemClock = Library.Api.Application.Shared.SystemClock;
 
@@ -34,15 +34,12 @@ public class Startup
     public void ConfigureServices(IServiceCollection services)
     {
         var connectionString = this.configuration.GetConnectionString("LibraryDb");
-        services.AddHealthChecks()
-                .AddNpgSql(connectionString);
         services.AddEntityFrameworkNpgsql();
         services.AddPostgresDbContext<InventoryDbContext>(connectionString);
         services.AddPostgresDbContext<BookRentalDbContext>(connectionString);
         services.AddScoped<DbConnection>(c => new NpgsqlConnection(connectionString));
 
         services.AddSingleton<ISystemClock, SystemClock>();
-
         services.AddScoped<IHolidayClient, HolidayClient>();
 
         services.AddScoped<IBookRentalRepository, BookRentalRepository>();
@@ -55,11 +52,12 @@ public class Startup
         services.AddScoped<LocatorApplicationService>();
         services.AddScoped<LibrarianApplicationService>();
 
-        services.AddScoped<IIntegrationEventsMapper, Mapper>();
-        services.AddScoped<IIntegrationEventHandler, IntegrationEventHandler>();
-        services.AddScoped<BookRentalsIntegrationEventHandler>();
-        services.AddHostedService<IntegrationService>();
-        services.AddSingleton<BackgroundWorkerQueue>();
+        services.AddScoped<IIntegrationEventMapper, IntegrationEventMapper>();
+        services.AddScoped<IIntegrationEventHandler<BookRegistered>, BookRegisteredIntegrationEventHandler>();
+        services.AddSingleton<MessagesChannel>();
+        services.AddSingleton<IDispatcher, Dispatcher>();
+        services.AddHostedService<MessageProcessor>();
+        services.AddEvents();
 
         services.AddKeycloakClient(this.configuration);
         services.AddCors();
@@ -68,6 +66,9 @@ public class Startup
         services.AddAuthorization(options => options.AddPolicy("Bearer", new AuthorizationPolicyBuilder()
                     .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
                     .RequireAuthenticatedUser().Build()));
+
+        services.AddHealthChecks()
+            .AddNpgSql(connectionString);
 
         services.AddMvc();
         services.AddSwagger();

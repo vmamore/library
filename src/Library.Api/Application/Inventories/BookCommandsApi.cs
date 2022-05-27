@@ -1,7 +1,7 @@
 namespace Library.Api.Application.Inventories
 {
     using System.Threading.Tasks;
-    using Library.Api.Infrastructure;
+    using Infrastructure;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 

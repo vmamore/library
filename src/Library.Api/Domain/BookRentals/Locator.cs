@@ -24,7 +24,7 @@ namespace Library.Api.Domain.BookRentals
 
         public IReadOnlyCollection<Penalty> Penalties => _penalties.AsReadOnly();
 
-        public override void When(DomainEvent @event)
+        public override void When(IDomainEvent @event)
         {
             Penalty penalty;
 
