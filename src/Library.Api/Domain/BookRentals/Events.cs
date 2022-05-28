@@ -47,7 +47,7 @@ namespace Library.Api.Domain.BookRentals
                 public string Reason { get; set; }
             }
 
-            public class PenaltyFinished : IDomainEvent
+            public class PenaltyExpired : IDomainEvent
             {
                 public DateTime CurrentDate { get; set; }
                 public string Reason { get; set; }

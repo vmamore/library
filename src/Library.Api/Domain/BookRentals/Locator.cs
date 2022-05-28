@@ -42,6 +42,9 @@ namespace Library.Api.Domain.BookRentals
                     ApplyToEntity(penalty, e);
                     _penalties.Add(penalty);
                     break;
+                case PenaltyExpired e:
+                    ApplyToEntity(ActivePenalty, e);
+                    break;
                 default:
                     break;
             }
@@ -69,8 +72,11 @@ namespace Library.Api.Domain.BookRentals
             return locator;
         }
 
-        public override void EnsureValidState() { }
-
         public bool IsPenalized() => _penalties != null && _penalties.Any(c => c.IsActive);
+
+        public void DeactivatePenaltyDueToExpiration(string reason, DateTime date)
+            => When(new PenaltyExpired() {CurrentDate = date, Reason = reason});
+
+        public override void EnsureValidState() { }
     }
 }

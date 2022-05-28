@@ -30,7 +30,7 @@ namespace Library.Api.Domain.BookRentals
                     Reason = $"{CreatedDate}: {e.Reason}";
                     IsActive = true;
                     break;
-                case PenaltyFinished e:
+                case PenaltyExpired e:
                     ActualEndDate = e.CurrentDate;
                     Reason = $"\n{ActualEndDate}: {e.Reason}";
                     IsActive = false;
