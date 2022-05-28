@@ -7,18 +7,16 @@ using Integrations;
 using Integrations.Events;
 using Microsoft.Extensions.Hosting;
 
-public sealed class MessageProcessor : BackgroundService
+public sealed class EventsProcessor : BackgroundService
 {
     private readonly MessagesChannel channel;
     private readonly IIntegrationEventMapper integrationEventMapper;
-    private readonly IServiceProvider serviceProvider;
     private readonly IEventDispatcher eventDispatcher;
 
-    public MessageProcessor(MessagesChannel channel, IIntegrationEventMapper integrationEventMapper, IServiceProvider serviceProvider, IEventDispatcher eventDispatcher)
+    public EventsProcessor(MessagesChannel channel, IIntegrationEventMapper integrationEventMapper, IEventDispatcher eventDispatcher)
     {
         this.channel = channel;
         this.integrationEventMapper = integrationEventMapper;
-        this.serviceProvider = serviceProvider;
         this.eventDispatcher = eventDispatcher;
     }
 
@@ -32,7 +30,7 @@ public sealed class MessageProcessor : BackgroundService
                 return;
             }
 
-            await eventDispatcher.PublishAsync(integrationEvent);
+            await this.eventDispatcher.PublishAsync(integrationEvent);
         }
     }
 }

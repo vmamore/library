@@ -1,9 +1,10 @@
-namespace Library.Api.Infrastructure.BookRentals
+namespace Library.Api.Application.Rentals
 {
     using System.Threading.Tasks;
-    using Integrations.Events;
-    using Library.Api.Domain.BookRentals;
-    using Integrations;
+    using Infrastructure.BookRentals;
+    using Infrastructure.Integrations;
+    using Infrastructure.Integrations.Events;
+    using Domain.BookRentals;
 
     public sealed class BookRegisteredIntegrationEventHandler : IIntegrationEventHandler<BookRegistered>
     {

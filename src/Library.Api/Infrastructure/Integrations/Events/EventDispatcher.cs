@@ -17,8 +17,11 @@ internal sealed class EventDispatcher : IEventDispatcher
         where TEvent : class, IIntegrationEvent
     {
         using var scope = _serviceProvider.CreateScope();
-        var handlers = scope.ServiceProvider.GetServices<IIntegrationEventHandler<TEvent>>();
-        var tasks = handlers.Select(x => x.HandleAsync(@event));
+        var handlerType = typeof(IIntegrationEventHandler<>).MakeGenericType(@event.GetType());
+        var handlers = scope.ServiceProvider.GetServices(handlerType);
+        var tasks = handlers.Select(x => (Task) handlerType
+            .GetMethod(nameof(IIntegrationEventHandler<TEvent>.HandleAsync))
+            ?.Invoke(x, new object[] {@event}));
         await Task.WhenAll(tasks);
     }
 }
