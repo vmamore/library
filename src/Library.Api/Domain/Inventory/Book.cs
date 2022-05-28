@@ -37,7 +37,7 @@ namespace Library.Api.Domain.Inventory
         public int Version { get; private set; }
         public ISBN ISBN { get; private set; }
 
-        public override void When(DomainEvent @event)
+        public override void When(IDomainEvent @event)
         {
             switch (@event)
             {

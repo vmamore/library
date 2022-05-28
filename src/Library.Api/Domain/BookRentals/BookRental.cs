@@ -87,7 +87,7 @@ namespace Library.Api.Domain.BookRentals
             });
         }
 
-        public override void When(DomainEvent @event)
+        public override void When(IDomainEvent @event)
         {
             switch (@event)
             {

@@ -1,12 +1,12 @@
 namespace Library.Api.Extensions
 {
     using System;
-    using Library.Api.Application.Shared;
-    using Library.Api.Infrastructure.Clients;
+    using Application.Shared;
+    using Infrastructure.Clients;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
 
-    public static class KeycloakExtension
+    public static class AuthExtension
     {
         public static IServiceCollection AddKeycloakClient(this IServiceCollection services, IConfiguration configuration)
         {

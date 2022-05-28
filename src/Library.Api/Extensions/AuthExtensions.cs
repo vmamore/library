@@ -1,7 +1,9 @@
 namespace Library.Api.Extensions
 {
-    using Library.Api.Infrastructure;
+    using Infrastructure;
+    using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.IdentityModel.Tokens;
@@ -32,6 +34,12 @@ namespace Library.Api.Extensions
                     };
                     options.TokenValidationParameters.ValidIssuer = options.Authority;
                 });
+
+            services.AddKeycloakClient(configuration);
+            services.AddTransient<IClaimsTransformation, KeycloakClaimsTransformer>();
+            services.AddAuthorization(options => options.AddPolicy("Bearer", new AuthorizationPolicyBuilder()
+                .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
+                .RequireAuthenticatedUser().Build()));
 
             return services;
         }

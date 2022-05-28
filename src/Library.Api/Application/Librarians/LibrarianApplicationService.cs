@@ -2,9 +2,9 @@ namespace Library.Api.Application.Librarians
 {
     using System;
     using System.Threading.Tasks;
-    using Library.Api.Application.Core;
+    using Core;
     using Library.Api.Domain.BookRentals.Users;
-    using static Library.Api.Application.Librarians.Commands;
+    using static Commands;
 
     public class LibrarianApplicationService : IApplicationService
     {

@@ -19,7 +19,7 @@ namespace Library.Api.Domain.BookRentals
         public string Reason { get; set; }
 
         public bool IsActive(ISystemClock _clock) => this.EndDate > _clock.UtcNow;
-        protected override void When(DomainEvent @event)
+        protected override void When(IDomainEvent @event)
         {
             switch (@event)
             {

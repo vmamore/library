@@ -14,7 +14,7 @@ namespace Library.Api.Domain.BookRentals.Users
         public Address Address { get; private set; }
         public CPF Cpf { get; private set; }
 
-        public override void When(DomainEvent @event)
+        public override void When(IDomainEvent @event)
         {
             switch (@event)
             {
