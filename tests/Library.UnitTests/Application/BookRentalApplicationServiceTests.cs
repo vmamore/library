@@ -2,7 +2,6 @@
 using Library.Api.Application.Rentals;
 using Library.Api.Application.Shared;
 using Library.Api.Domain.BookRentals;
-using Library.Api.Domain.BookRentals.Users;
 using Library.Api.Domain.Shared;
 using Moq;
 using System;
@@ -17,7 +16,6 @@ namespace Library.UnitTests.Application
     public class BookRentalApplicationServiceTests
     {
         private readonly Mock<IBookRentalRepository> _bookRentalRepositoryMock;
-        private readonly Mock<ILibrarianRepository> _librarianRepositoryMock;
         private readonly Mock<ILocatorRepository> _locatorRepositoryMock;
         private readonly Mock<IHolidayClient> _holidayClientMock;
         private readonly Mock<ISystemClock> _clockMock;
@@ -25,7 +23,6 @@ namespace Library.UnitTests.Application
         public BookRentalApplicationServiceTests()
         {
             _bookRentalRepositoryMock = new();
-            _librarianRepositoryMock = new();
             _locatorRepositoryMock = new();
             _holidayClientMock = new();
             _clockMock = new();
@@ -66,8 +63,7 @@ namespace Library.UnitTests.Application
         private V1.RentBooks CreateBooksRentCommand(List<Book> books, Locator locator) =>
             new(books.Select(b => b.Id).ToArray(), locator.Id);
 
-        private BookRentalApplicationService GetSut() => new BookRentalApplicationService(_bookRentalRepositoryMock.Object,
-            _librarianRepositoryMock.Object,
+        private BookRentalApplicationService GetSut() => new(_bookRentalRepositoryMock.Object,
             _locatorRepositoryMock.Object,
             _holidayClientMock.Object,
             _clockMock.Object);

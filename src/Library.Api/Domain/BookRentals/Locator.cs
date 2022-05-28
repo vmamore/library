@@ -3,10 +3,9 @@ namespace Library.Api.Domain.BookRentals
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Library.Api.Domain.Core;
-    using Library.Api.Domain.Shared;
-    using Library.Api.Domain.Shared.ValueObjects;
-    using static Library.Api.Domain.BookRentals.Events.V1;
+    using Shared.ValueObjects;
+    using Shared.Core;
+    using static Events.V1;
 
     public class Locator : AggregateRoot
     {
@@ -18,11 +17,11 @@ namespace Library.Api.Domain.BookRentals
 
         private List<Penalty> _penalties;
 
-        public bool IsPenalized(ISystemClock _clock) => _penalties != null && _penalties.Any(c => c.IsActive(_clock));
-
         private Locator() { }
 
         public IReadOnlyCollection<Penalty> Penalties => _penalties.AsReadOnly();
+
+        public Penalty ActivePenalty => Penalties.FirstOrDefault(p => p.IsActive);
 
         public override void When(IDomainEvent @event)
         {
@@ -71,5 +70,7 @@ namespace Library.Api.Domain.BookRentals
         }
 
         public override void EnsureValidState() { }
+
+        public bool IsPenalized() => _penalties != null && _penalties.Any(c => c.IsActive);
     }
 }

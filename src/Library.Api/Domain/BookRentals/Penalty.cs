@@ -1,9 +1,8 @@
 namespace Library.Api.Domain.BookRentals
 {
     using System;
-    using Library.Api.Domain.Core;
-    using Library.Api.Domain.Shared;
-    using static Library.Api.Domain.BookRentals.Events.V1;
+    using Shared.Core;
+    using static Events.V1;
 
     public class Penalty : Entity
     {
@@ -11,14 +10,15 @@ namespace Library.Api.Domain.BookRentals
 
         public Penalty(Locator locator) => Locator = locator;
 
-        public Locator Locator { get; private set; }
+        public Locator Locator { get; }
 
         public Guid Id { get; private set; }
         public DateTime CreatedDate { get; private set; }
         public DateTime EndDate { get; private set; }
-        public string Reason { get; set; }
+        public DateTime ActualEndDate { get; private set; }
+        public string Reason { get; private set; }
+        public bool IsActive { get; private set; }
 
-        public bool IsActive(ISystemClock _clock) => this.EndDate > _clock.UtcNow;
         protected override void When(IDomainEvent @event)
         {
             switch (@event)
@@ -27,7 +27,13 @@ namespace Library.Api.Domain.BookRentals
                     Id = Guid.NewGuid();
                     CreatedDate = DateTime.UtcNow;
                     EndDate = e.PenaltyEnd;
-                    Reason = e.Reason;
+                    Reason = $"{CreatedDate}: {e.Reason}";
+                    IsActive = true;
+                    break;
+                case PenaltyFinished e:
+                    ActualEndDate = e.CurrentDate;
+                    Reason = $"\n{ActualEndDate}: {e.Reason}";
+                    IsActive = false;
                     break;
                 default:
                     break;

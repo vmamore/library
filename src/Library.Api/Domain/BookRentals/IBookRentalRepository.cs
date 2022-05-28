@@ -8,6 +8,8 @@ namespace Library.Api.Domain.BookRentals
     {
         ValueTask<BookRental> Load(Guid id);
 
+        ValueTask<BookRental> GetActive(Guid locatorId);
+
         ValueTask Add(BookRental entity);
 
         ValueTask<bool> Exists(Guid id);

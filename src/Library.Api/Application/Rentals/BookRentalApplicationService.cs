@@ -3,30 +3,27 @@ namespace Library.Api.Application.Rentals
 {
     using System;
     using System.Threading.Tasks;
-    using Library.Api.Application.Core;
-    using Library.Api.Application.Shared;
-    using Library.Api.Domain.BookRentals;
-    using Library.Api.Domain.BookRentals.Users;
-    using Library.Api.Domain.Shared;
-    using static Library.Api.Application.Rentals.Commands;
+    using Core;
+    using Domain.BookRentals;
+    using Domain.BookRentals.Exceptions;
+    using Domain.Shared;
+    using Shared;
+    using static Commands;
 
     public class BookRentalApplicationService : IApplicationService
     {
         private readonly IBookRentalRepository _bookRentalRepository;
-        private readonly ILibrarianRepository _librarianRepository;
         private readonly ILocatorRepository _locatorRepository;
         private readonly IHolidayClient _holidayClient;
         private readonly ISystemClock _clock;
 
         public BookRentalApplicationService(
             IBookRentalRepository bookRentalRepository,
-            ILibrarianRepository librarianRepository,
             ILocatorRepository locatorRepository,
             IHolidayClient holidayClient,
             ISystemClock clock)
         {
             _bookRentalRepository = bookRentalRepository;
-            _librarianRepository = librarianRepository;
             _locatorRepository = locatorRepository;
             _holidayClient = holidayClient;
             _clock = clock;
@@ -45,10 +42,11 @@ namespace Library.Api.Application.Rentals
         {
             var locator = await _locatorRepository.Load(command.LocatorId);
 
-            if (locator.IsPenalized(this._clock))
-            {
-                throw new InvalidOperationException("Locator is penalized, cannot rent any books.");
-            }
+            if (locator.IsPenalized()) throw new LocatorIsPenalized(locator.ActivePenalty.EndDate);
+
+            var activeBookRental = await this._bookRentalRepository.GetActive(command.LocatorId);
+
+            if (activeBookRental != null) throw new LocatorHasActiveRental(activeBookRental.RentedDay);
 
             var books = await _bookRentalRepository.LoadBooks(command.BooksId);
 

@@ -21,7 +21,13 @@ namespace Library.Api.Infrastructure.BookRentals
             .FirstOrDefaultAsync(br => br.Id == id);
 
         public async Task<IEnumerable<Book>> LoadBooks(Guid[] booksId) => await _dbContext.Books.Where(b => booksId.Contains(b.Id)).ToListAsync();
+        public async ValueTask<BookRental> GetActive(Guid locatorId) =>
+            await _dbContext.BookRentals
+                .Where(br => br.Status != BookRental.BookRentStatus.Done)
+                .FirstOrDefaultAsync(br => br.Locator.Id == locatorId);
+
         public async ValueTask Add(Book entity) => await _dbContext.Books.AddAsync(entity);
         public async Task Commit() => await _dbContext.SaveChangesAsync();
+
     }
 }
