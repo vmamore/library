@@ -1,7 +1,7 @@
 ﻿namespace Library.Api.Infrastructure.Integrations;
 
 using System.Threading.Channels;
-using Domain.Core;
+using Domain.Shared.Core;
 
 public sealed class MessagesChannel
 {

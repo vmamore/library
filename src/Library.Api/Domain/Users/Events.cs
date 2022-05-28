@@ -1,7 +1,7 @@
-namespace Library.Api.Domain.BookRentals.Users
+namespace Library.Api.Domain.Users
 {
     using System;
-    using Core;
+    using Shared.Core;
 
     public static class Events
     {

@@ -3,7 +3,7 @@ namespace Library.Api.Application.Librarians
     using System;
     using System.Threading.Tasks;
     using Core;
-    using Library.Api.Domain.BookRentals.Users;
+    using Domain.Users;
     using static Commands;
 
     public class LibrarianApplicationService : IApplicationService

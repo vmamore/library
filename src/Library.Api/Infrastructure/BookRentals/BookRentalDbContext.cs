@@ -1,7 +1,7 @@
 namespace Library.Api.Infrastructure.BookRentals
 {
+    using Domain.Users;
     using Library.Api.Domain.BookRentals;
-    using Library.Api.Domain.BookRentals.Users;
     using Microsoft.EntityFrameworkCore;
 
     public class BookRentalDbContext : DbContext

@@ -2,7 +2,7 @@
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Domain.Core;
+using Domain.Shared.Core;
 
 public interface IDispatcher
 {

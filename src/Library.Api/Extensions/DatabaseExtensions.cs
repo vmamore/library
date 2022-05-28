@@ -2,8 +2,8 @@ namespace Library.Api.Extensions
 {
     using System.Data.Common;
     using Domain.BookRentals;
-    using Domain.BookRentals.Users;
     using Domain.Inventory;
+    using Domain.Users;
     using Infrastructure.BookRentals;
     using Infrastructure.Inventory;
     using Microsoft.EntityFrameworkCore;

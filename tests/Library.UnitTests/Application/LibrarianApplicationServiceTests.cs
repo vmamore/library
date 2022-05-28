@@ -1,9 +1,9 @@
 ﻿using FluentAssertions;
 using Library.Api.Application.Librarians;
-using Library.Api.Domain.BookRentals.Users;
 using Moq;
 using System;
 using System.Threading.Tasks;
+using Library.Api.Domain.Users;
 using Xunit;
 using static Library.Api.Application.Librarians.Commands;
 

@@ -2,7 +2,7 @@ namespace Library.Api.Infrastructure.BookRentals
 {
     using System;
     using System.Threading.Tasks;
-    using Library.Api.Domain.BookRentals.Users;
+    using Domain.Users;
 
     public class LibrarianRepository : ILibrarianRepository, IDisposable
     {

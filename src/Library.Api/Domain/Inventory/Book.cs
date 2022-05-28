@@ -1,9 +1,9 @@
 namespace Library.Api.Domain.Inventory
 {
     using System;
-    using Library.Api.Domain.Core;
-    using Library.Api.Domain.Shared.ValueObjects;
-    using static Library.Api.Domain.Inventory.Events.V1;
+    using Shared.ValueObjects;
+    using Shared.Core;
+    using static Events.V1;
 
     public class Book : AggregateRoot
     {

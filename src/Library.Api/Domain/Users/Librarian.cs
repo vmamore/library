@@ -1,9 +1,9 @@
-namespace Library.Api.Domain.BookRentals.Users
+namespace Library.Api.Domain.Users
 {
     using System;
-    using Library.Api.Domain.Core;
-    using Library.Api.Domain.Shared.ValueObjects;
-    using static Library.Api.Domain.BookRentals.Users.Events.V1;
+    using Shared.Core;
+    using Shared.ValueObjects;
+    using static Events.V1;
 
     public class Librarian : AggregateRoot
     {
@@ -19,11 +19,11 @@ namespace Library.Api.Domain.BookRentals.Users
             switch (@event)
             {
                 case LibrarianCreated e:
-                    Id = Guid.NewGuid();
-                    Name = Name.Create(e.FirstName, e.LastName);
-                    Age = new(e.BirthDate);
-                    Cpf = new(e.CPF);
-                    Address = new(e.Street, e.City, e.Number, e.District);
+                    this.Id = Guid.NewGuid();
+                    this.Name = Name.Create(e.FirstName, e.LastName);
+                    this.Age = new(e.BirthDate);
+                    this.Cpf = new(e.CPF);
+                    this.Address = new(e.Street, e.City, e.Number, e.District);
                     break;
                 default:
                     break;

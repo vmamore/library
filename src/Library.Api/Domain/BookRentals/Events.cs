@@ -1,7 +1,7 @@
 namespace Library.Api.Domain.BookRentals
 {
     using System;
-    using Core;
+    using Shared.Core;
 
     public static class Events
     {
@@ -44,6 +44,12 @@ namespace Library.Api.Domain.BookRentals
             {
                 public DateTime PenalizedDate { get; set; }
                 public DateTime PenaltyEnd { get; set; }
+                public string Reason { get; set; }
+            }
+
+            public class PenaltyFinished : IDomainEvent
+            {
+                public DateTime CurrentDate { get; set; }
                 public string Reason { get; set; }
             }
         }

@@ -1,6 +1,6 @@
 namespace Library.Api.Infrastructure.Integrations
 {
-    using Domain.Core;
+    using Domain.Shared.Core;
     using BookRegisteredDomain = Domain.Inventory.Events.V1.BookRegistered;
 
     public class IntegrationEventMapper : IIntegrationEventMapper

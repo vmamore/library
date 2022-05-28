@@ -1,9 +1,9 @@
 ﻿using FluentAssertions;
-using Library.Api.Domain.BookRentals.Users;
 using System;
 using System.Linq;
+using Library.Api.Domain.Users;
 using Xunit;
-using static Library.Api.Domain.BookRentals.Users.Events.V1;
+using static Library.Api.Domain.Users.Events.V1;
 
 namespace Library.UnitTests.Domain.BookRentals
 {

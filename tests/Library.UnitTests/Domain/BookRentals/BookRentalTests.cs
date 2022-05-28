@@ -22,9 +22,9 @@ namespace Library.UnitTests.Domain.BookRentals
         {
             Books = new List<Book>()
             {
-                Book.Create("Fight Club", "Chuck Palahniuk", "https://photo"),
-                Book.Create("Fight Club", "Chuck Palahniuk", "https://photo"),
-                Book.Create("Fight Club", "Chuck Palahniuk", "https://photo"),
+                Create("Fight Club", "Chuck Palahniuk", "https://photo"),
+                Create("Fight Club", "Chuck Palahniuk", "https://photo"),
+                Create("Fight Club", "Chuck Palahniuk", "https://photo"),
             };
             _systemClock = new();
         }
@@ -65,14 +65,14 @@ namespace Library.UnitTests.Domain.BookRentals
         {
             _systemClock.Setup(c => c.UtcNow).Returns(DateTime.UtcNow.AddDays(3));
 
-            var bookRental = BookRental.Create(Locator, Books, DateTime.UtcNow.AddDays(1));
+            var bookRental = Create(Locator, Books, DateTime.UtcNow.AddDays(1));
 
             bookRental.Status.Should().Be(BookRentStatus.OnGoing);
             bookRental.Returned(_systemClock.Object);
             var rentalReturnedEvent = bookRental.GetChanges().Last();
             rentalReturnedEvent.Should().BeOfType<RentalReturned>();
             bookRental.Status.Should().Be(BookRentStatus.Done);
-            bookRental.Locator.IsPenalized(_systemClock.Object).Should().BeTrue();
+            bookRental.Locator.IsPenalized().Should().BeTrue();
         }
 
         [Fact]
@@ -106,7 +106,7 @@ namespace Library.UnitTests.Domain.BookRentals
         }
 
         public static List<object[]> InvalidBooksData()
-            => new List<object[]>
+            => new()
             {
                 new object[] { null },
                 new object[] { new List<Book>() }

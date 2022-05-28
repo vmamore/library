@@ -3,10 +3,10 @@ namespace Library.Api.Domain.BookRentals
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Library.Api.Domain.BookRentals.Users;
-    using Library.Api.Domain.Core;
-    using Library.Api.Domain.Shared;
-    using static Library.Api.Domain.BookRentals.Events.V1;
+    using Shared;
+    using Shared.Core;
+    using Users;
+    using static Events.V1;
 
     public class BookRental : AggregateRoot
     {
@@ -103,8 +103,6 @@ namespace Library.Api.Domain.BookRentals
                     ReturnedDay = e.ReturnedDay;
                     ApplyToEntity(_books, e);
                     ApplyToEntity(Locator, e);
-                    break;
-                default:
                     break;
             }
         }

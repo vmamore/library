@@ -3,7 +3,7 @@ namespace Library.Api.Infrastructure.Integrations
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Application.Shared;
-    using Domain.Core;
+    using Domain.Shared.Core;
 
     public  class Dispatcher : IDispatcher
     {

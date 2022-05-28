@@ -1,6 +1,6 @@
 namespace Library.Api.Infrastructure.Integrations
 {
-    using Domain.Core;
+    using Domain.Shared.Core;
 
     public interface IIntegrationEventMapper
     {

@@ -1,6 +1,6 @@
 namespace Library.Api.Domain.Inventory
 {
-    using Core;
+    using Shared.Core;
 
     public static class Events
     {
