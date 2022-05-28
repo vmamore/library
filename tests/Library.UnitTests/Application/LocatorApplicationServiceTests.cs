@@ -34,7 +34,7 @@ namespace Library.UnitTests.Application
 
             Func<Task> action = async () => await GetSut().Handle(registerLocatorCommand);
 
-            action.Should().ThrowExactly<InvalidOperationException>()
+            action.Should().ThrowExactlyAsync<InvalidOperationException>()
                 .WithMessage("Error when creating user in authentication server.");
         }
 
