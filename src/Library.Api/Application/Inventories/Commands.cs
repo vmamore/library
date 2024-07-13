@@ -1,7 +1,7 @@
 namespace Library.Api.Application.Inventories
 {
     using System.ComponentModel.DataAnnotations;
-    using Library.Api.Application.Core;
+    using Shared;
 
     public static class Commands
     {

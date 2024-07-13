@@ -1,8 +1,7 @@
-using System;
-using Library.Api.Application.Core;
-
 namespace Library.Api.Application.Locators
 {
+    using Shared;
+
     public static class Commands
     {
         public static class V1

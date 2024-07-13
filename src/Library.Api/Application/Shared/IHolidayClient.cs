@@ -1,10 +1,8 @@
-namespace Library.Api.Application.Shared
-{
-    using System;
-    using System.Threading.Tasks;
+namespace Library.Api.Application.Shared;
 
-    public interface IHolidayClient
-    {
-        Task<DateTime> GetNextBusinessDate();
-    }
+using System.Threading.Tasks;
+
+public interface IHolidayClient
+{
+    Task<DateTime> GetNextBusinessDate();
 }

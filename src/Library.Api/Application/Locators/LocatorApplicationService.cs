@@ -2,22 +2,13 @@ namespace Library.Api.Application.Locators
 {
     using System;
     using System.Threading.Tasks;
-    using Library.Api.Application.Core;
-    using Library.Api.Application.Shared;
-    using Library.Api.Domain.BookRentals;
-    using static Library.Api.Application.Locators.Commands;
+    using Shared;
+    using Domain.BookRentals;
+    using static Commands;
 
-    public class LocatorApplicationService : IApplicationService
+    public class LocatorApplicationService(ILocatorRepository repository, IAuthenticationClient authenticationClient)
+        : IApplicationService
     {
-        private readonly ILocatorRepository repository;
-        private readonly IAuthenticationClient authenticationClient;
-
-        public LocatorApplicationService(ILocatorRepository repository, IAuthenticationClient authenticationClient)
-        {
-            this.repository = repository;
-            this.authenticationClient = authenticationClient;
-        }
-
         public Task Handle(ICommand command) => command switch
         {
             V1.RegisterLocator cmd =>
@@ -34,16 +25,16 @@ namespace Library.Api.Application.Locators
                 cmd.CPF,
                 cmd.City, cmd.District, cmd.Street, cmd.Number);
 
-            var response = await this.authenticationClient.CreateLocator(locator, cmd.Email, cmd.Password, cmd.Username);
+            var response = await authenticationClient.CreateLocator(locator, cmd.Email, cmd.Password, cmd.Username);
 
             if (!response.IsSuccessStatusCode)
             {
                 throw new InvalidOperationException("Error when creating user in authentication server.");
             }
 
-            await this.repository.Add(locator);
+            await repository.Add(locator);
 
-            await this.repository.Commit();
+            await repository.Commit();
         }
 
         private async Task HandleUpdate(

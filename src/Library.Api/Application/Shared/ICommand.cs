@@ -1,4 +1,3 @@
-namespace Library.Api.Application.Core
-{
-    public interface ICommand { }
-}
+namespace Library.Api.Application.Shared;
+
+public interface ICommand { }

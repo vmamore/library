@@ -1,7 +1,6 @@
 namespace Library.Api.Application.Librarians
 {
-    using System;
-    using Library.Api.Application.Core;
+    using Shared;
 
     public static class Commands
     {

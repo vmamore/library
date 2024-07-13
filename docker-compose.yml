@@ -16,7 +16,7 @@ services:
   #     - auth
 
   auth:
-    image: jboss/keycloak
+    image: keycloak/keycloak
     networks:
       - keycloak-network
     ports:

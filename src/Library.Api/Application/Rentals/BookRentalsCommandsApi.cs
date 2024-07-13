@@ -2,21 +2,17 @@ namespace Library.Api.Application.Rentals
 {
     using System;
     using System.Threading.Tasks;
-    using Library.Api.Infrastructure;
+    using Infrastructure;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
     [Route("rentals")]
-    public class BookRentalsCommandsApi : Controller
+    public class BookRentalsCommandsApi(BookRentalApplicationService applicationService) : Controller
     {
-        private readonly BookRentalApplicationService _applicationService;
-
-        public BookRentalsCommandsApi(BookRentalApplicationService applicationService) => _applicationService = applicationService;
-
         [HttpPost]
         [Authorize(Roles = "locator,librarian")]
         public Task<IActionResult> Post([FromBody] Commands.V1.RentBooks request)
-            => RequestHandler.HandleCommand(request, _applicationService.Handle);
+            => RequestHandler.HandleCommand(request, applicationService.Handle);
 
         [HttpPatch("{rentalId}/return")]
         [Authorize(Roles = "librarian")]
@@ -30,7 +26,7 @@ namespace Library.Api.Application.Rentals
                 });
             }
 
-            return await RequestHandler.HandleCommand(request, _applicationService.Handle);
+            return await RequestHandler.HandleCommand(request, applicationService.Handle);
         }
     }
 }

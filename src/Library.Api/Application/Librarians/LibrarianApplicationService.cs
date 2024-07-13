@@ -1,24 +1,15 @@
 namespace Library.Api.Application.Librarians
 {
-    using System;
     using System.Threading.Tasks;
-    using Core;
     using Domain.Users;
+    using Shared;
     using static Commands;
 
-    public class LibrarianApplicationService : IApplicationService
+    public class LibrarianApplicationService(ILibrarianRepository repository) : IApplicationService
     {
-        private readonly ILibrarianRepository _repository;
-
-        public LibrarianApplicationService(ILibrarianRepository repository)
-        {
-            _repository = repository;
-        }
-
         public Task Handle(ICommand command) => command switch
         {
-            V1.RegisterLibrarian cmd =>
-                HandleCreate(cmd),
+            V1.RegisterLibrarian cmd => this.HandleCreate(cmd),
             _ => Task.CompletedTask
         };
 
@@ -31,9 +22,9 @@ namespace Library.Api.Application.Librarians
                 cmd.CPF,
                 cmd.City, cmd.District, cmd.Street, cmd.Number);
 
-            await _repository.Add(newLibrarian);
+            await repository.Add(newLibrarian);
 
-            await _repository.Commit();
+            await repository.Commit();
         }
 
         private async Task HandleUpdate(
@@ -41,7 +32,7 @@ namespace Library.Api.Application.Librarians
             Action<Librarian> operation
         )
         {
-            var book = await _repository
+            var book = await repository
                 .Load(librarianId);
 
             if (book == null)

@@ -1,23 +1,12 @@
 namespace Library.Api.Application.Inventories
 {
-    using System;
     using System.Threading.Tasks;
-    using Core;
     using Domain.Inventory;
     using Shared;
     using static Commands;
 
-    public class BookApplicationService : IApplicationService
+    public class BookApplicationService(IBookRepository bookRepository, IDispatcher dispatcher) : IApplicationService
     {
-        private readonly IBookRepository _bookRepository;
-        private readonly IDispatcher _dispatcher;
-
-        public BookApplicationService(IBookRepository bookRepository, IDispatcher dispatcher)
-        {
-            this._bookRepository = bookRepository;
-            this._dispatcher = dispatcher;
-        }
-
         public Task Handle(ICommand command) => command switch
         {
             V1.RegisterBook cmd => this.HandleCreate(cmd),
@@ -28,13 +17,13 @@ namespace Library.Api.Application.Inventories
         {
             var newBook = Book.Create(command.Title, command.Author, command.ReleasedYear, command.ISBN, command.Pages, command.Version, command.PhotoUrl);
 
-            await this._bookRepository.Add(newBook);
+            await bookRepository.Add(newBook);
 
             var events = newBook.GetChanges();
 
-            await this._bookRepository.Commit();
+            await bookRepository.Commit();
 
-            await this._dispatcher.PublishAsync(events);
+            await dispatcher.PublishAsync(events);
         }
     }
 }

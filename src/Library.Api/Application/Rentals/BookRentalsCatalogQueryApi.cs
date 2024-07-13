@@ -2,22 +2,18 @@ namespace Library.Api.Application.Rentals
 {
     using System.Data.Common;
     using System.Threading.Tasks;
-    using Library.Api.Infrastructure;
-    using Library.Api.Infrastructure.BookRentals;
+    using Infrastructure;
+    using Infrastructure.BookRentals;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
     [Route("rentals/books")]
-    public class BookRentalsCatalogQueryApi : Controller
+    public class BookRentalsCatalogQueryApi(DbConnection connection) : Controller
     {
-        private readonly DbConnection _connection;
-
-        public BookRentalsCatalogQueryApi(DbConnection connection) => _connection = connection;
-
         [HttpGet]
         [Route("all")]
         [Authorize(Roles = "locator,librarian")]
         public Task<IActionResult> Get(QueryModels.GetAllBooks request)
-            => RequestHandler.HandleQuery(() => _connection.Query(request));
+            => RequestHandler.HandleQuery(() => connection.Query(request));
     }
 }

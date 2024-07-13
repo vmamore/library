@@ -2,7 +2,7 @@ namespace Library.Api.Application.Rentals
 {
     using System;
     using System.ComponentModel.DataAnnotations;
-    using Library.Api.Application.Core;
+    using Shared;
 
     public static class Commands
     {

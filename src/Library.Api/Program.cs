@@ -1,16 +1,45 @@
-using System;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
+using Library.Api.Application.Shared;
+using Library.Api.Domain.Shared;
+using Library.Api.Extensions;
+using Library.Api.Infrastructure.Clients;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
 
-static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<Startup>());
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDatabaseIntegration(builder.Configuration);
+builder.Services.AddRepositories();
+builder.Services.AddApplicationServices();
+builder.Services.AddIntegrationEvents();
+builder.Services.AddAuth(builder.Configuration);
+builder.Services.AddCors();
+builder.Services.AddMvc();
+builder.Services.AddSwagger();
+builder.Services.AddBackgroundJobs();
+builder.Services.AddSingleton<ISystemClock, SystemClock>();
+builder.Services.AddScoped<IHolidayClient, HolidayClient>();
 
-try
+var app = builder.Build();
+
+app.UseMiddleware<ExceptionHandlerMiddleware>();
+app.UseCors(x => x
+    .AllowAnyOrigin()
+    .AllowAnyMethod()
+    .AllowAnyHeader());
+app.UseRouting();
+app.UseAuthentication();
+app.UseAuthorization();
+app.UseHttpLogging();
+app.UseEndpoints(endpoints =>
 {
-    CreateHostBuilder(args).Build().Run();
-}
-catch (Exception ex)
+    endpoints.MapControllers();
+
+    endpoints.MapHealthChecks("/health");
+});
+app.UseSwagger();
+app.UseSwaggerUI(c =>
 {
-    Console.WriteLine(ex);
-}
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Library v1");
+    c.RoutePrefix = string.Empty;
+});
+
+await app.RunAsync();
